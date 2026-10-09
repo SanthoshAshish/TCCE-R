@@ -54,6 +54,17 @@ class Config:
     degree_fix: bool = False        # v0.3 fix: d_max applies only to the endpoints of the new link, and violating
                                     #   candidates are dropped before the gate (False = v0.1/v0.2 behaviour)
 
+    # --- v0.4 options (all defaults reproduce v0.1-v0.3 exactly) ---
+    degree_basis: str = "live"      # "configured": d_max counts failed and pending configured links too
+                                    #   (ports stay occupied); "live" = v0.3 rule, which repairs can violate
+    feedback_after_setup: bool = False  # True: feedback 'after' window starts when the new link is usable
+    failed_link_value: str = "zero" # rewire removal value of a failed link: "zero" (v0.3: always the cheapest
+                                    #   to release) or "if_up" (valued as if it were up; no free replacement)
+    burst_rate: float = 0.0         # per-epoch probability that a spatial burst outage starts (0 = off)
+    burst_radius: float = 0.15      # links whose midpoint lies within this distance of the burst centre fail
+    burst_min_len: int = 2          # burst duration (epochs) ~ uniform integer in [min_len, max_len]
+    burst_max_len: int = 6
+
     # --- Baselines ---
     reactive_threshold: float = 0.5
     period: int = 5

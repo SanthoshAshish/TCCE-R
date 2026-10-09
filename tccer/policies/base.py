@@ -19,6 +19,7 @@ class Policy:
 
     def _mutate(self, k, state, mode="lexicographic"):
         if self.capped():
+            self.pipeline.last["select_outcome"] = "capped"
             return None
         m = self.pipeline.select(state, k, mode=mode, rng=self.rng)
         if m is not None:

@@ -4,7 +4,8 @@ A mutation is accepted only if, on the live graph after the mutation:
   1. the number of connected components does not increase;
   2. if connected, lambda2 >= min(lambda2_min, lambda2_before)   (resilience floor R_min; never
      push a graph that is already above the floor below it, never make a weak graph weaker);
-  3. no node exceeds degree d_max;
+  3. no endpoint of the new link exceeds degree d_max (degree_fix; counted on live or, with
+     degree_basis="configured", on all configured links); without degree_fix: no node at all (v0.1/v0.2);
   4. a pure addition keeps live links <= edge budget;
   5. no touched edge is in cooldown (stability constraint, prevents flapping);
   6. with link_setup_epochs > 0, rules 1-2 must also hold in the interim state (old link removed,
@@ -13,7 +14,7 @@ A mutation is accepted only if, on the live graph after the mutation:
 import networkx as nx
 import numpy as np
 
-from tccer.core.mutations import budget_count
+from tccer.core.mutations import budget_count, degrees
 from tccer.metrics.resilience import lambda2
 
 
@@ -40,6 +41,13 @@ class SafetyGate:
 
         u, v = state.eu[after], state.ev[after]
         deg = np.bincount(u, minlength=state.n) + np.bincount(v, minlength=state.n)
+        if self.cfg.degree_fix and self.cfg.degree_basis == "configured":
+            cfg_after = state.configured.copy()
+            if mutation.add is not None:
+                cfg_after[mutation.add] = True
+            if mutation.remove is not None:
+                cfg_after[mutation.remove] = False
+            deg = degrees(state, "configured", cfg_after)
         if self.cfg.degree_fix:
             # only the endpoints of the new link gain degree; pre-existing high-degree nodes do not block
             ends = [state.eu[mutation.add], state.ev[mutation.add]] if mutation.add is not None else []

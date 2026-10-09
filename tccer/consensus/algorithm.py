@@ -42,6 +42,8 @@ def run_epoch(x0: np.ndarray, u: np.ndarray, v: np.ndarray, up_mask_fn, rounds: 
     """
     xbar = x0.mean()
     norm0 = np.linalg.norm(x0 - xbar)
+    if norm0 == 0:                      # already in consensus: no disagreement to remove (v0.4 guard)
+        return np.zeros(rounds + 1)
     x = x0.copy()
     err = np.empty(rounds + 1)
     err[0] = 1.0

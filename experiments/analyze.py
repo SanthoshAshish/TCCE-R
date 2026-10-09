@@ -42,6 +42,18 @@ def ci95(x):
     return stats.t.ppf(0.975, len(x) - 1) * x.std(ddof=1) / np.sqrt(len(x))
 
 
+def holm(pvals) -> pd.Series:
+    """Holm-Bonferroni step-down adjusted p-values. NaN p-values (no non-zero differences) count as 1."""
+    p = pd.Series(pvals, dtype=float).fillna(1.0)
+    order = p.sort_values(kind="mergesort").index
+    m, running = len(p), 0.0
+    adj = pd.Series(index=p.index, dtype=float)
+    for rank, i in enumerate(order):
+        running = max(running, min(1.0, (m - rank) * p[i]))
+        adj[i] = running
+    return adj
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("dir")
@@ -67,14 +79,7 @@ def main():
             p = stats.wilcoxon(base[m], other[m]).pvalue if (d != 0).any() and len(d) >= 5 else np.nan
             rows.append({"baseline": pol, "metric": m, "mean_diff_tccer_minus_baseline": d.mean(), "wilcoxon_p": p})
     tests = pd.DataFrame(rows)
-    # Holm-Bonferroni adjustment across all comparisons in this table
-    order = tests.wilcoxon_p.fillna(1).sort_values().index
-    m, running = len(order), 0.0
-    adj = pd.Series(index=tests.index, dtype=float)
-    for rank, i in enumerate(order):
-        running = max(running, min(1.0, (m - rank) * (tests.wilcoxon_p.fillna(1)[i])))
-        adj[i] = running
-    tests["holm_p"] = adj
+    tests["holm_p"] = holm(tests.wilcoxon_p)   # across all comparisons in this table
     tests.to_csv(os.path.join(args.dir, "paired_tests.csv"), index=False)
     print("\nPaired Wilcoxon (TCCE-R minus baseline; raw p and Holm-adjusted p):")
     print(tests.to_string(index=False, float_format=lambda v: f"{v:.4f}"))
