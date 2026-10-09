@@ -2,3 +2,16 @@ results/
 __pycache__/
 .venv/
 *.pyc
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python environments
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
