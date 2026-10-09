@@ -19,6 +19,7 @@ METRICS = {
     "lambda2": "algebraic connectivity (higher better)",
     "disconnected": "fraction of epochs disconnected (lower better)",
     "live_edges": "live links (cost)",
+    "configured_edges": "configured links (budget usage)",
 }
 
 

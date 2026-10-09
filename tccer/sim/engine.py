@@ -31,6 +31,7 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True):
 
     epoch_rows, round_rows, changes = [], [], []
     for k in range(cfg.epochs):
+        state.epoch = k
         # 1. environment
         new_down = trace.epoch_update(k, state.down)
         changes.append(int(((new_down != state.down) & state.configured).sum()))
@@ -56,6 +57,7 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True):
             "V": volatility(changes, int(state.configured.sum()), cfg.vol_window),
             "live_edges": len(live),
             "configured_edges": int(state.configured.sum()),
+            "pending_links": int((state.configured & (state.ready_at > k)).sum()),
             "n_down_potential": int(state.down.sum()),
         }
 
@@ -64,7 +66,7 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True):
 
         # 5. apply
         if m is not None:
-            state.apply(m)
+            state.apply(m, cfg.link_setup_epochs)
             pipeline.commit(m, k)
 
         epoch_rows.append({"seed": seed, "policy": policy_name, "epoch": k, **obs, **policy.info(),

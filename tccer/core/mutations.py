@@ -28,19 +28,42 @@ class Mutation:
         return " ".join(parts)
 
 
-def generate_candidates(state, budget: int, tabu: np.ndarray, fiedler: Optional[np.ndarray]):
+def budget_count(state, budget_on: str, configured=None) -> int:
+    """Links counted against the edge budget: live links ("live") or all configured links ("configured")."""
+    cfg = state.configured if configured is None else configured
+    return int(cfg.sum() if budget_on == "configured" else state.live_mask(cfg).sum())
+
+
+def _degree_ok(state, live, addable, d_max, removed=None):
+    """Drop additions that would exceed d_max on the live graph (the gate would reject them anyway;
+    filtering here keeps the selector's limited gate attempts for feasible moves). v0.3 fix."""
+    if d_max is None:
+        return addable
+    deg = np.bincount(state.eu[live], minlength=state.n) + np.bincount(state.ev[live], minlength=state.n)
+    if removed is not None and live[removed]:
+        deg[state.eu[removed]] -= 1
+        deg[state.ev[removed]] -= 1
+    return addable[(deg[state.eu[addable]] < d_max) & (deg[state.ev[addable]] < d_max)]
+
+
+def generate_candidates(state, budget: int, tabu: np.ndarray, fiedler: Optional[np.ndarray], budget_on: str = "live",
+                        d_max: Optional[int] = None):
     """tabu[i] True -> edge i is in cooldown and may not be touched."""
     live = state.live_mask()
     addable = np.flatnonzero(~state.configured & ~state.down & ~tabu)
-    if live.sum() < budget:
-        return [Mutation(add=int(a)) for a in addable]
+    if budget_count(state, budget_on) < budget:
+        return [Mutation(add=int(a)) for a in _degree_ok(state, live, addable, d_max)]
 
-    # Budget full: rewire. Remove the non-bridge live link with the smallest first-order lambda2 loss.
+    # Budget full: rewire. Remove the configured link with the smallest first-order lambda2 loss.
+    # A failed (not live) link costs 0 now but forfeits its possible repair; a live link must not be a bridge.
+    # If the live graph is disconnected the Fiedler vector is undefined: only failed links may be released
+    # (v0.3 fix; before, no rewire was ever generated while disconnected).
     g = state.graph()
     bridges = {tuple(sorted(e)) for e in nx.bridges(g)}
-    removable = [i for i in np.flatnonzero(live & ~tabu) if state.edge(i) not in bridges]
-    if not removable or fiedler is None:
+    removable = [i for i in np.flatnonzero(state.configured & ~tabu)
+                 if not live[i] or (fiedler is not None and state.edge(i) not in bridges)]
+    if not removable:
         return []
-    loss = [(fiedler[state.eu[i]] - fiedler[state.ev[i]]) ** 2 for i in removable]
+    loss = [0.0 if not live[i] else (fiedler[state.eu[i]] - fiedler[state.ev[i]]) ** 2 for i in removable]
     r = int(removable[int(np.argmin(loss))])
-    return [Mutation(add=int(a), remove=r) for a in addable]
+    return [Mutation(add=int(a), remove=r) for a in _degree_ok(state, live, addable, d_max, removed=r)]

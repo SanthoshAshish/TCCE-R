@@ -47,6 +47,12 @@ class Config:
     d_max: int = 10
     edge_budget_frac: float = 1.15  # max live links = frac * initial links
     edge_cooldown: int = 5          # an edge just mutated cannot be touched for this many epochs
+    budget_on: str = "live"         # "live" (v0.1/v0.2): failed links free budget; "configured": strict,
+                                    #   failed links still occupy budget until the controller removes them
+    link_setup_epochs: int = 0      # break-before-make cost: a removed link goes immediately, a new link
+                                    #   becomes usable only this many epochs later (0 = v0.1/v0.2 behaviour)
+    degree_fix: bool = False        # v0.3 fix: d_max applies only to the endpoints of the new link, and violating
+                                    #   candidates are dropped before the gate (False = v0.1/v0.2 behaviour)
 
     # --- Baselines ---
     reactive_threshold: float = 0.5

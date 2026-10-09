@@ -1,9 +1,16 @@
-# TCCE-R simulator (v0.2)
-
-**v0.2 diagnostic results: see [`DIAGNOSTIC_v0.2.md`](DIAGNOSTIC_v0.2.md).** v0.1 is preserved as git tag `v0.1`, with results in `archive/v0.1/`.
-In short: after a pre-specified sweep and evaluation on held-out seeds, TCCE-R still loses to the reactive baseline on consensus error and λ2.
+# TCCE-R simulator (v0.3)
 
 Resilience-debt driven topology–consensus co-evolution. Python + NetworkX + NumPy.
+
+| version | git tag | report | results |
+|---|---|---|---|
+| v0.1 prototype | `v0.1` | this README (bottom) | `archive/v0.1/` |
+| v0.2 debt diagnostic + sweep | `v0.2` | [`DIAGNOSTIC_v0.2.md`](DIAGNOSTIC_v0.2.md) | `archive/v0.2/` |
+| v0.3 binding budget + reconfiguration cost | `v0.3` | [`RESULTS_v0.3.md`](RESULTS_v0.3.md) | `archive/v0.3/` |
+
+**Current status:** in every setting tested so far, TCCE-R is significantly worse than a simple reactive
+baseline on consensus error and λ2 at an equal mutation budget. There is no significant difference in
+disconnection fraction. No superiority claim is supported.
 
 ## Setup and run (Windows PowerShell, from this folder)
 
@@ -12,7 +19,7 @@ python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 
-python -m pytest -q                                                        # 22 tests
+python -m pytest -q                                                        # 28 tests
 python -m experiments.run --config configs/default.yaml --seeds 20 --out results/default
 python -m experiments.analyze results/default
 
@@ -20,6 +27,11 @@ python -m experiments.analyze results/default
 python -m experiments.sweep --out results/sweep
 python -m experiments.run --config configs/v0.2_selected.yaml --seed-start 1000 --seeds 30 --no-rounds --out results/eval_v0.2_selected
 python -m experiments.analyze results/eval_v0.2_selected
+
+# v0.3 binding-budget experiment: see RESULTS_v0.3.md, section 3, for the full command list
+python -m experiments.sweep --config configs/v0.3_binding_base.yaml --out results/sweep_v0.3
+python -m experiments.run --config configs/v0.3_selected.yaml --seed-start 4000 --seeds 30 --no-rounds --policies static periodic reactive tccer tccer_fixed --out results/eval_v0.3_matched
+python -m experiments.analyze results/eval_v0.3_matched
 ```
 
 The default config runs 20 seeds × 6 policies in about 25 s. Add `--no-rounds` to skip the large per-round CSV.

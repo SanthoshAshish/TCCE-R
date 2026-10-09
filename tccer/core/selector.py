@@ -24,7 +24,8 @@ class MutationPipeline:
         connected = nx.is_connected(g)
         fiedler = lambda2_fiedler(state.n, state.eu[live], state.ev[live])[1] if connected else None
         tabu = self.tabu(k)
-        cands = generate_candidates(state, self.budget, tabu, fiedler)
+        cands = generate_candidates(state, self.budget, tabu, fiedler, self.cfg.budget_on,
+                                    self.cfg.d_max if self.cfg.degree_fix else None)
         if mode == "random":
             order = [cands[i] for i in rng.permutation(len(cands))]
         else:

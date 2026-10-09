@@ -29,6 +29,8 @@ def main():
     ap.add_argument("--policies", nargs="+", default=DEFAULT_POLICIES)
     ap.add_argument("--out", default="results/default")
     ap.add_argument("--no-rounds", action="store_true", help="skip per-round CSV (smaller output)")
+    ap.add_argument("--unmatched", action="store_true",
+                    help="secondary analysis only: baselines run uncapped with the config's own period/threshold")
     args = ap.parse_args()
 
     cfg = load_config(args.config)
@@ -43,6 +45,8 @@ def main():
         rounds += r
         M = e[-1]["n_mutations"]
         matched = replace(cfg, mutation_cap=M, period=max(1, cfg.epochs // (M + 1)) if M else cfg.epochs + 1)
+        if args.unmatched:
+            matched = cfg
         for p in args.policies:
             if p == "tccer":
                 continue
