@@ -1,4 +1,7 @@
-# TCCE-R simulator (v0.1 prototype)
+# TCCE-R simulator (v0.2)
+
+**v0.2 diagnostic results: see [`DIAGNOSTIC_v0.2.md`](DIAGNOSTIC_v0.2.md).** v0.1 is preserved as git tag `v0.1`, with results in `archive/v0.1/`.
+In short: after a pre-specified sweep and evaluation on held-out seeds, TCCE-R still loses to the reactive baseline on consensus error and λ2.
 
 Resilience-debt driven topology–consensus co-evolution. Python + NetworkX + NumPy.
 
@@ -12,6 +15,11 @@ pip install -r requirements.txt
 python -m pytest -q                                                        # 22 tests
 python -m experiments.run --config configs/default.yaml --seeds 20 --out results/default
 python -m experiments.analyze results/default
+
+# v0.2 diagnostic: sweep on tuning seeds 100-119, then held-out evaluation on seeds 1000-1029
+python -m experiments.sweep --out results/sweep
+python -m experiments.run --config configs/v0.2_selected.yaml --seed-start 1000 --seeds 30 --no-rounds --out results/eval_v0.2_selected
+python -m experiments.analyze results/eval_v0.2_selected
 ```
 
 The default config runs 20 seeds × 6 policies in about 25 s. Add `--no-rounds` to skip the large per-round CSV.
@@ -75,7 +83,7 @@ Verify all citations during the literature review.
 - All policies share the candidate set, safety gate and edge budget.
 - Budget matching: baselines get `mutation_cap = M_TCCE-R` per seed; periodic and random space their M mutations evenly.
 
-## First results (20 seeds, default config). Preliminary, untuned, single scenario.
+## v0.1 first results (seeds 0–19, default config). Superseded by DIAGNOSTIC_v0.2.md
 
 | policy | E (lower better) | fraction of epochs disconnected | λ2 | mutations |
 |---|---|---|---|---|

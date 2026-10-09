@@ -27,6 +27,10 @@ def per_seed(df):
     g = df.groupby(["policy", "seed"])
     out = g[list(METRICS)].mean()
     out["mutations"] = g.n_mutations.last()
+    # epoch of first mutation (= n_epochs if none): exposes timing differences between policies
+    muts = df[df.mutation.fillna("") != ""]
+    first = muts.groupby(["policy", "seed"]).epoch.min()
+    out["first_mut_epoch"] = first.reindex(out.index).fillna(df.epoch.max() + 1)
     return out.reset_index()
 
 
@@ -43,7 +47,7 @@ def main():
     args = ap.parse_args()
     df = pd.read_csv(os.path.join(args.dir, "epochs.csv"))
     ps = per_seed(df)
-    cols = list(METRICS) + ["mutations"]
+    cols = list(METRICS) + ["mutations", "first_mut_epoch"]
 
     summary = ps.groupby("policy")[cols].agg(["mean", ci95])
     summary.columns = [f"{m}_{s}" for m, s in summary.columns]
@@ -62,8 +66,16 @@ def main():
             p = stats.wilcoxon(base[m], other[m]).pvalue if (d != 0).any() and len(d) >= 5 else np.nan
             rows.append({"baseline": pol, "metric": m, "mean_diff_tccer_minus_baseline": d.mean(), "wilcoxon_p": p})
     tests = pd.DataFrame(rows)
+    # Holm-Bonferroni adjustment across all comparisons in this table
+    order = tests.wilcoxon_p.fillna(1).sort_values().index
+    m, running = len(order), 0.0
+    adj = pd.Series(index=tests.index, dtype=float)
+    for rank, i in enumerate(order):
+        running = max(running, min(1.0, (m - rank) * (tests.wilcoxon_p.fillna(1)[i])))
+        adj[i] = running
+    tests["holm_p"] = adj
     tests.to_csv(os.path.join(args.dir, "paired_tests.csv"), index=False)
-    print("\nPaired Wilcoxon (TCCE-R minus baseline; unadjusted p-values):")
+    print("\nPaired Wilcoxon (TCCE-R minus baseline; raw p and Holm-adjusted p):")
     print(tests.to_string(index=False, float_format=lambda v: f"{v:.4f}"))
 
     plot(df, ps, args.dir)
