@@ -118,10 +118,10 @@ The figures are in `results/v0.4/report/`:
 
   All of them are the λ₂-floor rule correctly refusing rewires that would weaken connectivity.
 - **Reconnection failures** (a strategy tried to act while disconnected and found no valid move): 1 in total (TCCE-R, delay 2).
-- **Reconnect-impossible epochs** (79–159 per condition). Causes, from an instrumented replay of delays 2 and 8 (TCCE-R, budget-matched reactive and periodic; 1,125 epochs):
-  - 71% physically impossible, because every in-range link between components had failed;
-  - 26% a reconnecting link was already in setup;
-  - 3% blocked by cooldown or the gate.
+- **Reconnect-impossible epochs** (79–159 per condition). Causes, from an instrumented replay of delays 2 and 8 (TCCE-R, budget-matched reactive and periodic; 842 epochs):
+  - 72% (610) physically impossible, because every in-range link between components had failed;
+  - 24% (206) a reconnecting link was already in setup;
+  - 3% (26) blocked by cooldown or the gate.
 
   Every strategy therefore had the same opportunity to reconnect.
 - **Reconfiguration cost:** pending link-epochs were essentially equal across strategies (for example at delay 8: 68 periodic, 67 reactive, 64 TCCE-R).
