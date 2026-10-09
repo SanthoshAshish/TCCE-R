@@ -1,0 +1,8 @@
+reactive_rule: q50
+reactive_threshold: 0.3777
+tccer_kappa: 0.3
+tccer_kappa_rule: v01
+tccer_weights: W1_E
+tune_seeds:
+- 100
+- 119

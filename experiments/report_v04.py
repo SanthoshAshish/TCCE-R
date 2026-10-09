@@ -23,6 +23,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import matplotlib.ticker
 import numpy as np
 import pandas as pd
 from scipy import stats
@@ -118,7 +119,7 @@ def paired(ps: pd.DataFrame):
 
 
 def fig_metric_vs_delay(summary, metric, path, title):
-    fig, ax = plt.subplots(figsize=(6.4, 4.2))
+    fig, ax = plt.subplots(figsize=(8.6, 4.2))
     for pol in POLICIES:
         s = summary[(summary.policy == pol) & (summary.metric == metric)].sort_values("delay")
         if s.empty:
@@ -132,7 +133,7 @@ def fig_metric_vs_delay(summary, metric, path, title):
     ax.set_title(title, fontsize=11)
     ax.grid(axis="y", color="#e5e5e5", lw=0.8)
     ax.spines[["top", "right"]].set_visible(False)
-    ax.legend(fontsize=8, frameon=False)
+    ax.legend(fontsize=8, frameon=False, loc="upper left", bbox_to_anchor=(1.01, 1.0))
     fig.text(0.01, 0.01, "Mean over 30 held-out seeds; error bars = 95% CI", fontsize=7, color="#555")
     fig.tight_layout(rect=(0, 0.03, 1, 1))
     fig.savefig(path, dpi=150)
@@ -156,6 +157,7 @@ def fig_forest(tests, path):
         ax.set_xlabel(f"TCCE-R − Reactive, {m}  ({better})", fontsize=9)
         ax.spines[["top", "right"]].set_visible(False)
         ax.grid(axis="x", color="#e5e5e5", lw=0.8)
+        ax.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(5))
     fig.suptitle("Paired difference TCCE-R minus Reactive (mean ± 95% CI over 30 held-out seeds)", fontsize=11)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
