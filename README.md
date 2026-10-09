@@ -1,4 +1,4 @@
-# TCCE-R simulator (v0.4)
+# TCCE-R simulator (v0.5)
 
 Resilience-debt driven topology–consensus co-evolution. Python + NetworkX + NumPy.
 
@@ -15,6 +15,7 @@ Resilience-debt driven topology–consensus co-evolution. Python + NetworkX + Nu
 | v0.2 debt diagnostic + sweep | `v0.2` | [`DIAGNOSTIC_v0.2.md`](DIAGNOSTIC_v0.2.md) | `archive/v0.2/` |
 | v0.3 binding budget + reconfiguration cost | `v0.3` | [`RESULTS_v0.3.md`](RESULTS_v0.3.md) | `archive/v0.3/` |
 | v0.4 audit + bursty failures × delay {0,2,4,8} | `v0.4` | [`RESULTS_SUMMARY.md`](RESULTS_SUMMARY.md) | `archive/v0.4/` |
+| v0.5 scenario files, network pictures, summary.txt, demo config (no algorithm change) | `v0.5` | [`SIMULATOR_GUIDE.md`](SIMULATOR_GUIDE.md) §2–5 | `archive/v0.5/` (example run) |
 
 **Current status:** in every pre-specified held-out condition tested (v0.2–v0.4), TCCE-R is significantly worse than a simple reactive baseline on consensus error and λ2, at an equal mutation budget. There is no supported difference in disconnection fraction. No superiority claim is supported.
 
@@ -25,7 +26,7 @@ python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 
-python -m pytest -q                                                        # 47 tests
+python -m pytest -q                                                        # 85 tests
 python -m experiments.run --config configs/default.yaml --seeds 20 --out results/default
 python -m experiments.analyze results/default
 

@@ -2,6 +2,8 @@
 from dataclasses import dataclass, asdict, fields, replace
 from typing import Optional
 
+import os
+
 import yaml
 
 
@@ -65,6 +67,11 @@ class Config:
     burst_min_len: int = 2          # burst duration (epochs) ~ uniform integer in [min_len, max_len]
     burst_max_len: int = 6
 
+    # --- v0.5 option ---
+    scenario_file: Optional[str] = None  # YAML with custom nodes/links/initial values/failure events
+                                    #   (see SIMULATOR_GUIDE.md); a relative path is resolved against the
+                                    #   config file's folder. None = seed-generated network (v0.1-v0.4)
+
     # --- Baselines ---
     reactive_threshold: float = 0.5
     period: int = 5
@@ -74,13 +81,19 @@ class Config:
 def load_config(path: Optional[str] = None, **overrides) -> Config:
     data = {}
     if path:
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             data = yaml.safe_load(f) or {}
+        if not isinstance(data, dict):
+            raise ValueError(f"Config file {path} must contain 'key: value' lines")
     data.update({k: v for k, v in overrides.items() if v is not None})
     known = {f.name for f in fields(Config)}
     unknown = set(data) - known
     if unknown:
-        raise ValueError(f"Unknown config keys: {sorted(unknown)}")
+        raise ValueError(f"Unknown config keys: {sorted(unknown)} in {path or 'overrides'}. "
+                         f"Check the spelling; valid keys are listed in tccer/config.py")
+    sf = data.get("scenario_file")
+    if sf and path and not os.path.isabs(sf):
+        data["scenario_file"] = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(path)), sf))
     return Config(**data)
 
 

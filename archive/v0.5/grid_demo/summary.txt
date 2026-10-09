@@ -1,0 +1,37 @@
+TCCE-R simulation summary
+=========================
+folder:    E:\SEM5\CN\CN LAB PROJECT\tcce_r\results\grid_demo
+network:   scenario file E:\SEM5\CN\CN LAB PROJECT\tcce_r\examples\grid_scenario.yaml
+seeds:     5 (0..4),  epochs per run: 30
+policies:  periodic, reactive, static, tccer
+
+Mean over seeds, 95% CI half-width in brackets. Lower is better for E (consensus stress)
+and disconnected (fraction of epochs); higher is better for lambda2 (algebraic connectivity).
+
+policy                      E     disconnected          lambda2  mutations  1st mutation
+----------------------------------------------------------------------------------------
+periodic        0.663 (0.001)    0.367 (0.000)    0.126 (0.000)       6.00           4.0
+reactive        0.652 (0.088)    0.313 (0.108)    0.104 (0.008)       6.00           4.0
+static          0.501 (0.002)    0.233 (0.000)    0.134 (0.000)       0.00          30.0
+tccer           0.568 (0.003)    0.267 (0.000)    0.121 (0.000)       6.00           7.0
+
+Paired comparison, TCCE-R minus each baseline (same seeds, same failures):
+  vs periodic     E_hat         diff = -0.0944   Wilcoxon p = 0.0625   Holm p = 0.5625
+  vs periodic     disconnected  diff = -0.1000   Wilcoxon p = 0.0625   Holm p = 0.5625
+  vs periodic     lambda2       diff = -0.0044   Wilcoxon p = 0.0625   Holm p = 0.5625
+  vs reactive     E_hat         diff = -0.0838   Wilcoxon p = 0.0625   Holm p = 0.5625
+  vs reactive     disconnected  diff = -0.0467   Wilcoxon p = 0.5000   Holm p = 0.5625
+  vs reactive     lambda2       diff = +0.0176   Wilcoxon p = 0.0625   Holm p = 0.5625
+  vs static       E_hat         diff = +0.0671   Wilcoxon p = 0.0625   Holm p = 0.5625
+  vs static       disconnected  diff = +0.0333   Wilcoxon p = 0.0625   Holm p = 0.5625
+  vs static       lambda2       diff = -0.0123   Wilcoxon p = 0.0625   Holm p = 0.5625
+
+Notes:
+  * Baselines are capped at TCCE-R's mutation count on each seed (fair budget), so TCCE-R
+    is always simulated first, even when it is not listed in --policies.
+  * p = n/a: the Wilcoxon test needs at least 5 seeds with non-zero differences.
+  * With 5 seeds the smallest possible two-sided Wilcoxon p is 0.0625: with this few seeds no difference can be significant.
+  * Scenario run: every seed uses the same network and scripted events; seeds differ only in
+    the random parts (transient losses, random failures, x(0) if not given). Narrow CIs reflect
+    that, not robustness across networks.
+  * The reported v0.4 results use 30 held-out seeds; see RESULTS_SUMMARY.md.

@@ -11,6 +11,7 @@ Usage:  python -m experiments.run --config configs/default.yaml --seeds 20 --out
 """
 import argparse
 import os
+import shutil
 import time
 
 import pandas as pd
@@ -26,7 +27,9 @@ def main():
     ap.add_argument("--config", default="configs/default.yaml")
     ap.add_argument("--seeds", type=int, default=10)
     ap.add_argument("--seed-start", type=int, default=0)
-    ap.add_argument("--policies", nargs="+", default=DEFAULT_POLICIES)
+    ap.add_argument("--policies", nargs="+", default=DEFAULT_POLICIES,
+                    help="strategies to compare. TCCE-R is ALWAYS simulated (first), because the baselines are "
+                         "capped at its mutation count on each seed; its rows appear even if not listed")
     ap.add_argument("--out", default="results/default")
     ap.add_argument("--no-rounds", action="store_true", help="skip per-round CSV (smaller output)")
     ap.add_argument("--unmatched", action="store_true",
@@ -36,6 +39,8 @@ def main():
     cfg = load_config(args.config)
     os.makedirs(args.out, exist_ok=True)
     save_config(cfg, os.path.join(args.out, "config_used.yaml"))
+    if cfg.scenario_file:                     # v0.5: keep the exact scenario next to the results
+        shutil.copyfile(cfg.scenario_file, os.path.join(args.out, "scenario_used.yaml"))
 
     epochs, rounds = [], []
     t0 = time.time()

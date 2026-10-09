@@ -1,7 +1,7 @@
 """Simulation engine: one run = one (config, seed, policy). Implements the epoch loop.
 
 Per epoch k:
-  1. environment events (background failures/repairs, bursts)     -> (1) Dynamic Network State
+  1. environment events (background, bursts, scripted events)     -> (1) Dynamic Network State
   2. T consensus rounds with transient failures, fresh x(0)        -> (2) Consensus Monitor
   3. resilience metrics (lambda2, components, bridges, volatility)
   4. policy.decide: debt / trigger / evaluator / gate / selector   -> (3)-(7), (9)
@@ -17,15 +17,27 @@ from tccer.core.selector import EMPTY_SELECTION, MutationPipeline
 from tccer.metrics.resilience import lambda2, vulnerability
 from tccer.network.events import FailureTrace
 from tccer.network.generators import random_geometric
+from tccer.network.scenario import load_scenario
 from tccer.network.state import NetworkState
 from tccer.policies import POLICIES
 
 
-def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True):
-    pos, eu, ev, length, init_idx = random_geometric(cfg.n_nodes, cfg.init_radius, cfg.radio_range, seed)
+def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch=None):
+    """on_epoch(k, state, mutation): optional read-only observer called at the end of every epoch
+    (used by the network visualizer). It must not modify `state`."""
+    if cfg.scenario_file:                     # v0.5: user-supplied topology / values / scripted events
+        sc = load_scenario(cfg.scenario_file, cfg)
+        pos, eu, ev, length, init_idx = sc.pos, sc.eu, sc.ev, sc.length, sc.init_idx
+        scripted = sc.scripted_down
+    else:                                     # seed-generated network (v0.1-v0.4 behaviour)
+        sc = None
+        pos, eu, ev, length, init_idx = random_geometric(cfg.n_nodes, cfg.init_radius, cfg.radio_range, seed)
+        scripted = np.zeros((cfg.epochs, len(eu)), dtype=bool)
     state = NetworkState(pos, eu, ev, length, init_idx)
     trace = FailureTrace(cfg, seed, state.P, edge_mid=(pos[eu] + pos[ev]) / 2)
-    x0_all = np.random.default_rng([seed, 2]).random((cfg.epochs, cfg.n_nodes))
+    x0_all = np.random.default_rng([seed, 2]).random((cfg.epochs, state.n))
+    if sc is not None and sc.initial_values is not None:
+        x0_all = sc.initial_values
     pipeline = MutationPipeline(cfg, len(init_idx), state.P)
     policy = POLICIES[policy_name](cfg, pipeline, np.random.default_rng([seed, 3]))
 
@@ -35,7 +47,7 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True):
         state.epoch = k
         # 1. environment
         background_down = trace.epoch_update(k, background_down)
-        new_down = background_down | trace.burst[k]
+        new_down = background_down | trace.burst[k] | scripted[k]
         changes.append(int(((new_down != state.down) & state.configured).sum()))
         state.down = new_down
 
@@ -62,6 +74,7 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True):
             "pending_links": int((state.configured & (state.ready_at > k)).sum()),
             "n_down_potential": int(state.down.sum()),
             "n_burst_down": int(trace.burst[k].sum()),
+            "n_scripted_down": int(scripted[k].sum()),
             "budget": pipeline.budget,
             # logging only: could the shared selector+gate reconnect the network this epoch?
             "reconnect_possible": pipeline.can_reconnect(state, k) if comps > 1 else True,
@@ -75,6 +88,8 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True):
         if m is not None:
             state.apply(m, cfg.link_setup_epochs)
             pipeline.commit(m, k)
+        if on_epoch is not None:
+            on_epoch(k, state, m)
 
         epoch_rows.append({"seed": seed, "policy": policy_name, "epoch": k, **obs, **policy.info(),
                            "mutation": m.describe(state) if m else "", "mutation_kind": m.kind() if m else "",

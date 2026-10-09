@@ -85,7 +85,59 @@ def main():
     print(tests.to_string(index=False, float_format=lambda v: f"{v:.4f}"))
 
     plot(df, ps, args.dir)
-    print(f"\nwrote summary.csv, paired_tests.csv, *.png to {args.dir}")
+    write_summary_txt(args.dir, df, summary, tests)
+    print(f"\nwrote summary.csv, paired_tests.csv, summary.txt, *.png to {args.dir}")
+
+
+def write_summary_txt(out, df, summary, tests):
+    """Human-readable summary of one run folder (v0.5). Plain ASCII so it displays in any console/editor."""
+    n_seeds = df.seed.nunique()
+    scen = None
+    cfg_path = os.path.join(out, "config_used.yaml")
+    if os.path.exists(cfg_path):
+        import yaml
+        with open(cfg_path, encoding="utf-8") as f:
+            scen = (yaml.safe_load(f) or {}).get("scenario_file")
+    L = ["TCCE-R simulation summary", "=" * 25,
+         f"folder:    {os.path.abspath(out)}",
+         f"network:   {'scenario file ' + str(scen) if scen else 'seed-generated random geometric graph'}",
+         f"seeds:     {n_seeds} ({df.seed.min()}..{df.seed.max()}),  epochs per run: {df.epoch.nunique()}",
+         f"policies:  {', '.join(sorted(df.policy.unique()))}",
+         "",
+         "Mean over seeds, 95% CI half-width in brackets. Lower is better for E (consensus stress)",
+         "and disconnected (fraction of epochs); higher is better for lambda2 (algebraic connectivity).",
+         ""]
+    hdr = (f"{'policy':<12} {'E':>16} {'disconnected':>16} {'lambda2':>16} {'mutations':>10} "
+           f"{'1st mutation':>13}")
+    L += [hdr, "-" * len(hdr)]
+    for pol, r in summary.iterrows():
+        def cell(m):
+            return f"{r[m + '_mean']:.3f} ({r[m + '_ci95']:.3f})".rjust(16)
+        L.append(f"{pol:<12} {cell('E_hat')} {cell('disconnected')} {cell('lambda2')} "
+                 f"{r['mutations_mean']:>10.2f} {r['first_mut_epoch_mean']:>13.1f}")
+    L += ["", "Paired comparison, TCCE-R minus each baseline (same seeds, same failures):"]
+    for _, t in tests.iterrows():
+        p = "n/a" if pd.isna(t.wilcoxon_p) else f"{t.wilcoxon_p:.4f}"
+        h = "n/a" if pd.isna(t.wilcoxon_p) else f"{t.holm_p:.4f}"
+        L.append(f"  vs {t.baseline:<12} {t.metric:<13} diff = {t.mean_diff_tccer_minus_baseline:+.4f}"
+                 f"   Wilcoxon p = {p}   Holm p = {h}")
+    L += ["", "Notes:",
+          "  * Baselines are capped at TCCE-R's mutation count on each seed (fair budget), so TCCE-R",
+          "    is always simulated first, even when it is not listed in --policies.",
+          "  * p = n/a: the Wilcoxon test needs at least 5 seeds with non-zero differences."]
+    if n_seeds < 5:
+        L.append(f"  * Only {n_seeds} seed(s): treat these numbers as an ILLUSTRATION, not as evidence.")
+    if n_seeds <= 6:
+        L.append(f"  * With {n_seeds} seeds the smallest possible two-sided Wilcoxon p is "
+                 f"{2 / 2 ** n_seeds:.4f}: with this few seeds no difference can be significant.")
+    if scen:
+        L.append("  * Scenario run: every seed uses the same network and scripted events; seeds differ only in")
+        L.append("    the random parts (transient losses, random failures, x(0) if not given). Narrow CIs reflect")
+        L.append("    that, not robustness across networks.")
+    if n_seeds < 20:
+        L.append("  * The reported v0.4 results use 30 held-out seeds; see RESULTS_SUMMARY.md.")
+    with open(os.path.join(out, "summary.txt"), "w", encoding="utf-8") as fh:
+        fh.write("\n".join(L) + "\n")
 
 
 def plot(df, ps, out):

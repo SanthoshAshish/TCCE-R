@@ -1,0 +1,32 @@
+# Configuration for the 4x4 grid example. Keys not listed here use the defaults in tccer/config.py.
+scenario_file: grid_scenario.yaml      # resolved relative to this file's folder
+
+epochs: 30                 # topology decisions (scenario events use epochs 0..29)
+rounds_per_epoch: 15       # consensus iterations per epoch
+eps: 0.01                  # consensus target: disagreement below 1% of its starting value
+
+# Random failures: keep a small per-round link loss so seeds differ; no random breakdowns or bursts.
+# For a purely scripted scenario, set p_transient to 0 as well.
+p_transient: 0.05
+p_fail: 0.0
+p_repair: 0.10
+burst_rate: 0.0
+
+# Strict edge budget: every change must be a rewire (release one link, request another)
+budget_on: configured
+edge_budget_frac: 1.0
+link_setup_epochs: 1       # a requested link starts working 1 epoch later
+
+# TCCE-R and reactive settings selected by the v0.4 tuning (40-node RGG, delay 2).
+# They were NOT tuned for this small grid; this example is a demonstration, not an evaluation.
+w_E: 1.0
+w_C: 0.0
+w_V: 0.0
+kappa: 0.30
+reactive_threshold: 0.3777
+
+# v0.4 correctness fixes (keep on)
+degree_fix: true
+degree_basis: configured
+feedback_after_setup: true
+failed_link_value: if_up

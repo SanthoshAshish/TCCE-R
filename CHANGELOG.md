@@ -2,6 +2,24 @@
 
 Every version is a git tag, and its results are archived under `archive/`. Model changes after v0.1 sit behind config flags whose defaults reproduce earlier versions. **The current code re-runs v0.1, v0.2 and v0.3 bit-identically on every archived column**; this was checked during the v0.4 audit.
 
+## v0.5: demonstration features (no algorithm change)
+
+TCCE-R and the baselines are unchanged. Without a scenario file, the simulator reproduces v0.1–v0.4 bit for bit; this was checked on all archived columns with `python -m audit.regression_check`.
+
+| change | file | notes |
+|---|---|---|
+| `scenario_file` config key | `tccer/config.py`, `tccer/network/scenario.py` (new), `tccer/sim/engine.py` | Custom nodes, potential/initial links, initial values, and scripted link fail/recover and region outages. Scripted failures are layered on the random ones and are identical for every strategy. Every input error is reported with the file and entry. |
+| `n_scripted_down` column; `on_epoch` read-only observer hook | `tccer/sim/engine.py` | The hook is used by the visualizer and does not affect results. |
+| `scenario_used.yaml` copied into each run folder | `experiments/run.py` | Provenance. The `--policies` help now states that TCCE-R is always simulated for budget matching. |
+| `summary.txt` written automatically | `experiments/analyze.py` | Plain-ASCII summary table, paired comparisons, and notes (budget matching, `n/a` p-values, few-seed warning). The CSV outputs are unchanged. |
+| network visualizer | `experiments/visualize.py` (new) | Initial topology plus a strategies × epochs snapshot grid; failed, in-setup, rewired-in and removed links each in a distinct colour **and** line style; `edge_states.csv` holds the raw data. |
+| demo config fixed | `configs/v0.5/demo.yaml` (new) | Equal to `configs/v0.4/selected_d2.yaml`; replaces `configs/v0.4/main.yaml` (untuned weights) as the demo config. |
+| example scenario | `examples/grid_scenario.yaml`, `examples/grid_scenario_config.yaml` | 4×4 grid with scripted outages that split the network. |
+| archive regression script | `audit/regression_check.py` (new) | Re-runs every archived experiment into a scratch folder and compares. |
+| config loader | `tccer/config.py` | Reads files as UTF-8, gives a clearer unknown-key message, and resolves `scenario_file` relative to the config. |
+| tests 47 → 85 | `tests/test_scenario.py` (new) | See SIMULATOR_GUIDE §9. |
+| docs | `SIMULATOR_GUIDE.md` | Beginner walkthrough, scenario format, policy-selection behaviour, visualizer. |
+
 ## v0.4: audit, fixes, bursty-failure experiment
 
 **Code (all opt-in unless marked "always"):**
