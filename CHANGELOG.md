@@ -2,6 +2,18 @@
 
 Every version is a git tag, and its results are archived under `archive/`. Model changes after v0.1 sit behind config flags whose defaults reproduce earlier versions. **The current code re-runs v0.1, v0.2 and v0.3 bit-identically on every archived column**; this was checked during the v0.4 audit.
 
+## v0.6: trigger-comparison experiment (protocol docs/PROTOCOL_v0.6.md)
+
+Existing policies and the engine are unchanged. Default and earlier configs reproduce v0.1–v0.4 bit for bit (`audit/regression_check.py`).
+
+| change | file | notes |
+|---|---|---|
+| arms A1–A7 and A2-reset | `tccer/policies/v06.py` (new); registered in `tccer/policies/__init__.py` | Shared rules (one attempt per epoch, cooldown 2, cap M, same selector and gate), backlog semantics for A6/A7, A5 Θ bounds [Θ₀/4, 4Θ₀]. Protocol constants are hard-coded, not configurable. |
+| `v06_threshold`, `v06_kappa` config keys | `tccer/config.py` | Read only by the v06 arms; default None means never act |
+| experiment scripts | `experiments/v06_common.py`, `calibrate_v06.py`, `run_v06.py`, `analyze_v06.py` (new) | Seed-isolation guards; SHA-256 manifest; eval refuses a dirty tree or a second run; policy-free episode labels; §5 metrics; §6 statistics and verdicts |
+| tests | `tests/test_v06.py`, `tests/test_v06_pipeline.py` (new) | Arm mechanics, backlog, Static invariance, common traces, isolation, checksums, analysis functions, end-to-end mini pipeline |
+| docs | `docs/PROTOCOL_v0.6.md`, `docs/LITERATURE_REVIEW.md`, `docs/KEY_PAPERS_VERIFICATION.md` | Protocol revision 3 (frozen at the implementation commit) |
+
 ## v0.5: demonstration features (no algorithm change)
 
 TCCE-R and the baselines are unchanged. Without a scenario file, the simulator reproduces v0.1–v0.4 bit for bit; this was checked on all archived columns with `python -m audit.regression_check`.

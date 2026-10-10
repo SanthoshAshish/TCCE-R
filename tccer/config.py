@@ -72,6 +72,10 @@ class Config:
                                     #   (see SIMULATOR_GUIDE.md); a relative path is resolved against the
                                     #   config file's folder. None = seed-generated network (v0.1-v0.4)
 
+    # --- v0.6 options (read only by the v06_* policies; docs/PROTOCOL_v0.6.md) ---
+    v06_threshold: Optional[float] = None  # calibrated h (A1, A2), Theta (A3, A4) or Theta0 (A5); None = never act
+    v06_kappa: Optional[float] = None      # frozen CUSUM drift allowance: kappa_E (A3) or kappa_s (A4, A5)
+
     # --- Baselines ---
     reactive_threshold: float = 0.5
     period: int = 5
