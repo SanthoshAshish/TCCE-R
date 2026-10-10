@@ -2,6 +2,16 @@
 
 Every version is a git tag, and its results are archived under `archive/`. Model changes after v0.1 sit behind config flags whose defaults reproduce earlier versions. **The current code re-runs v0.1, v0.2 and v0.3 bit-identically on every archived column**; this was checked during the v0.4 audit.
 
+## v0.7: readiness for the eight-method comparison
+
+**Archive regression:** v0.1–v0.4 (7 cases) are identical after each commit. The v0.6 tuning-seed dry run reproduces, including the A5 legacy rule.
+
+| commit | change | files |
+|---|---|---|
+| v0.7a | Parameter validation (ε ∈ (0,1); weights, κ ≥ 0; H, w ≥ 1; θ_min ≤ Θ₀ ≤ θ_max; α ≥ 0; 0 ≤ β < 1). Docstring fix. Direct tests for volatility, ranking/tie-breaks, and first-order vs exact Δλ₂ (Ghosh & Boyd eqs. 8, 10). | `tccer/config.py`, `tccer/consensus/monitor.py`, `tests/test_math_v07.py` |
+| v0.7b | **Counterfactual feedback** (`feedback_rule: counterfactual`; the default `before_after` is unchanged): matched with/without-mutation replays under the observed exogenous record; success / failure / neutral; isolated per mutation; no future information. Engine records observations and attaches them to policies. TCCE-R and the A5 arm support both rules. | `tccer/core/counterfactual.py` (new), `tccer/sim/engine.py`, `tccer/policies/{base,tccer,v06}.py`, `tests/test_feedback_v07.py`, `docs/MATH_SPEC_v0.7.md` |
+| v0.7c | Frozen eight-method protocol; scenarios; calibration, run and analysis scripts; smoke test. | `docs/PROTOCOL_v0.7.md`, `configs/v0.7/scenarios/`, `experiments/{v07_common,calibrate_v07,run_v07,analyze_v07}.py`, `tests/test_v07_pipeline.py` |
+
 ## v0.6.1: architecture compliance pass (no change to any decision logic)
 
 | change | file | notes |

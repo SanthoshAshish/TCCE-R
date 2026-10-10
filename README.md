@@ -6,6 +6,8 @@ Resilience-debt driven topology–consensus co-evolution. Python + NetworkX + Nu
 - [`SIMULATOR_GUIDE.md`](SIMULATOR_GUIDE.md): architecture, commands, outputs
 - [`docs/ARCHITECTURE_COMPLIANCE.md`](docs/ARCHITECTURE_COMPLIANCE.md): what is implemented, simplified, deferred, vs the professor's nine-stage specification
 - [`RESULTS_v0.6.md`](RESULTS_v0.6.md): pre-registered trigger-comparison experiment (latest results)
+- [`docs/MATH_SPEC_v0.7.md`](docs/MATH_SPEC_v0.7.md): exact equations, M/R decisions, feedback rules
+- [`docs/PROTOCOL_v0.7.md`](docs/PROTOCOL_v0.7.md): frozen eight-method comparison protocol (not yet run)
 - [`RESULTS_SUMMARY.md`](RESULTS_SUMMARY.md): final v0.4 results
 - [`docs/AUDIT_v0.4.md`](docs/AUDIT_v0.4.md): audit findings
 - [`docs/PROTOCOL_v0.4.md`](docs/PROTOCOL_v0.4.md): experiment protocol
@@ -20,6 +22,7 @@ Resilience-debt driven topology–consensus co-evolution. Python + NetworkX + Nu
 | v0.5 scenario files, network pictures, summary.txt, demo config (no algorithm change) | `v0.5` | [`SIMULATOR_GUIDE.md`](SIMULATOR_GUIDE.md) §2–5 | `archive/v0.5/` (example run) |
 | v0.6 pre-registered trigger comparison (8 arms, held-out seeds 6000–6059) | `v0.6` | [`RESULTS_v0.6.md`](RESULTS_v0.6.md) | `archive/v0.6/` |
 | v0.6.1 architecture compliance pass (local-disagreement monitor, config duplicate-key warning, chain tests) | — | [`docs/ARCHITECTURE_COMPLIANCE.md`](docs/ARCHITECTURE_COMPLIANCE.md) | — |
+| v0.7 validation, counterfactual feedback, eight-method protocol and runner (comparison **not yet run**) | `v0.7` | [`docs/PROTOCOL_v0.7.md`](docs/PROTOCOL_v0.7.md) | smoke test only |
 
 **Current status:**
 - **v0.2–v0.4:** in every pre-specified held-out condition, TCCE-R was significantly worse than a simple reactive baseline on consensus error and λ2, at an equal mutation budget.
