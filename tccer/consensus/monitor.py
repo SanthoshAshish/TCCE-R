@@ -9,7 +9,7 @@ import numpy as np
 class ConsensusReport:
     final_error: float          # e(T)
     conv_round: Optional[int]   # first t with e(t) < eps, None if not reached in the epoch
-    E_hat: float                # consensus stress in [0, 1]: 1 - min(1, ln e(T) / ln eps)
+    E_hat: float                # consensus stress in [0, 1]: 1 - min(1, max(0, ln e(T) / ln eps))
     rate: float                 # empirical per-round contraction (geometric mean of e(t+1)/e(t))
 
 

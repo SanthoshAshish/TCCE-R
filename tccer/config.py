@@ -84,6 +84,30 @@ class Config:
     period: int = 5
     mutation_cap: Optional[int] = None
 
+    def __post_init__(self):
+        """Reject mathematically invalid parameter combinations (v0.7). Every archived valid config passes."""
+        errors = []
+        if not (0.0 < self.eps < 1.0):
+            errors.append(f"eps must be in (0, 1) (E uses ln e / ln eps); got {self.eps}")
+        for name in ("w_E", "w_C", "w_V", "kappa"):
+            if getattr(self, name) < 0:
+                errors.append(f"{name} must be >= 0 (debt stress and CUSUM drift allowance); got {getattr(self, name)}")
+        if self.feedback_horizon < 1:
+            errors.append(f"feedback_horizon must be >= 1; got {self.feedback_horizon}")
+        if self.vol_window < 1:
+            errors.append(f"vol_window must be >= 1; got {self.vol_window}")
+        if not (0 < self.theta_min <= self.theta0 <= self.theta_max):
+            errors.append(f"need 0 < theta_min <= theta0 <= theta_max (otherwise the first clipped update can move "
+                          f"theta the wrong way); got theta_min={self.theta_min}, theta0={self.theta0}, "
+                          f"theta_max={self.theta_max}")
+        if self.alpha < 0 or not (0 <= self.beta < 1):
+            errors.append(f"need alpha >= 0 and 0 <= beta < 1 (theta must stay positive); got alpha={self.alpha}, "
+                          f"beta={self.beta}")
+        if self.rounds_per_epoch < 1 or self.epochs < 1:
+            errors.append("epochs and rounds_per_epoch must be >= 1")
+        if errors:
+            raise ValueError("Invalid configuration:\n  - " + "\n  - ".join(errors))
+
 
 def duplicate_top_level_keys(text: str):
     """Top-level keys that appear more than once in a YAML mapping (YAML silently keeps the last value)."""

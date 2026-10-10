@@ -106,7 +106,7 @@ def test_chain_when_selector_finds_no_candidate(tmp_path):
 
 def test_gate_and_cooldown_interaction_in_chain():
     """After a successful mutation the next attempt waits for the trigger cooldown, even if debt re-crosses theta."""
-    cfg = replace(load_quiet(CUSTOM), theta0=0.1, trigger_cooldown=3)
+    cfg = replace(load_quiet(CUSTOM), theta0=0.1, theta_min=0.05, trigger_cooldown=3)
     df = pd.DataFrame(simulate(cfg, 0, "tccer", log_rounds=False)[0])
     muts = df.epoch[df.select_outcome == "mutated"].tolist()
     assert all(b - a >= 3 for a, b in zip(muts, muts[1:]))
