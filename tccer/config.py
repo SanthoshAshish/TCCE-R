@@ -76,6 +76,8 @@ class Config:
     # --- v0.6 options (read only by the v06_* policies; docs/PROTOCOL_v0.6.md) ---
     v06_threshold: Optional[float] = None  # calibrated h (A1, A2), Theta (A3, A4) or Theta0 (A5); None = never act
     v06_kappa: Optional[float] = None      # frozen CUSUM drift allowance: kappa_E (A3) or kappa_s (A4, A5)
+    feedback_rule: str = "before_after"   # v0.7: "before_after" (legacy, v0.1-v0.6) or "counterfactual"
+                                           #   (matched with/without-mutation replay; core/counterfactual.py)
     v06_count_pmf: Optional[str] = None    # rev. 4, A6/A7 only: "p0,p1,...,pM" = probabilities of an intended
                                            #   count of 0..M per seed; None = intended count is mutation_cap (rev. 3)
 
@@ -103,6 +105,8 @@ class Config:
         if self.alpha < 0 or not (0 <= self.beta < 1):
             errors.append(f"need alpha >= 0 and 0 <= beta < 1 (theta must stay positive); got alpha={self.alpha}, "
                           f"beta={self.beta}")
+        if self.feedback_rule not in ("before_after", "counterfactual"):
+            errors.append(f"feedback_rule must be 'before_after' or 'counterfactual'; got {self.feedback_rule!r}")
         if self.rounds_per_epoch < 1 or self.epochs < 1:
             errors.append("epochs and rounds_per_epoch must be >= 1")
         if errors:

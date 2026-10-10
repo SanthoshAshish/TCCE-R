@@ -9,6 +9,10 @@ class Policy:
         self.cfg, self.pipeline, self.rng = cfg, pipeline, rng
         self.n_mutations = 0
         self.last_mutation_epoch = None
+        self.ctx = None          # observed exogenous record (engine-attached; counterfactual feedback)
+
+    def attach_context(self, ctx):
+        self.ctx = ctx
 
     def capped(self) -> bool:
         cap = self.cfg.mutation_cap

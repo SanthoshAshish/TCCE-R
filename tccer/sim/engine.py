@@ -12,6 +12,7 @@ import numpy as np
 
 from tccer.consensus.algorithm import local_disagreement, run_epoch_state
 from tccer.consensus.monitor import summarize
+from tccer.core.counterfactual import ExogenousRecord
 from tccer.core.debt import volatility
 from tccer.core.selector import EMPTY_SELECTION, MutationPipeline
 from tccer.metrics.resilience import lambda2, vulnerability
@@ -40,6 +41,8 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch
         x0_all = sc.initial_values
     pipeline = MutationPipeline(cfg, len(init_idx), state.P)
     policy = POLICIES[policy_name](cfg, pipeline, np.random.default_rng([seed, 3]))
+    record = ExogenousRecord(cfg, state, trace, x0_all)     # what the controller has observed (read-only use)
+    policy.attach_context(record)
 
     epoch_rows, round_rows, changes = [], [], []
     background_down = state.down.copy()          # background Markov state; bursts are layered on top
@@ -50,6 +53,7 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch
         new_down = background_down | trace.burst[k] | scripted[k]
         changes.append(int(((new_down != state.down) & state.configured).sum()))
         state.down = new_down
+        record.observe(k, state.down)
 
         # 2. consensus
         live = np.flatnonzero(state.live_mask())

@@ -11,6 +11,7 @@ Constants below are frozen by the protocol and deliberately not configurable.
 import numpy as np
 
 from tccer.config import replace
+from tccer.core.counterfactual import CounterfactualFeedback, Snapshot
 from tccer.core.feedback import FeedbackEvaluator
 from tccer.policies.base import Policy
 
@@ -164,35 +165,60 @@ class TCCERArm(CusumECVArm):
         # protocol 2.2: after-window m+1+d..m+d+3, before-window m-2..m, regardless of the base config's settings
         self.feedback = FeedbackEvaluator(replace(cfg, feedback_horizon=HORIZON, feedback_after_setup=True))
         self.E_hist = []
-        self.n_updates = self.n_success = self.n_failure = 0
+        self.n_updates = self.n_success = self.n_failure = self.n_neutral = 0
         self._update = ""
+        self._cf = cfg.feedback_rule == "counterfactual"     # v0.7; v0.6 frozen configs use the legacy rule
+        self._snap = None
+
+    def _apply_outcome(self, m, success):
+        self.n_updates += 1
+        if success:
+            self.n_success += 1
+            self.theta = max(THETA_LO * self.theta0, self.theta * (1 - BETA))
+        else:
+            self.n_failure += 1
+            self.theta = min(THETA_HI * self.theta0, self.theta * (1 + ALPHA))
 
     def update_statistic(self, k, obs):
         self.E_hist.append(obs["E_hat"])
         self._update = ""
+        if self._cf and not isinstance(self.feedback, CounterfactualFeedback):
+            self.feedback = CounterfactualFeedback(replace(self.cfg, feedback_horizon=HORIZON), self.ctx)
         if self.theta is not None:
-            for m, ok in self.feedback.evaluate(k, self.E_hist):
-                self.n_updates += 1
-                if ok:
-                    self.n_success += 1
-                    self.theta = max(THETA_LO * self.theta0, self.theta * (1 - BETA))
-                else:
-                    self.n_failure += 1
-                    self.theta = min(THETA_HI * self.theta0, self.theta * (1 + ALPHA))
-                self._update += f"{m}:{'S' if ok else 'F'};"
+            if self._cf:
+                for m, outcome, delta in self.feedback.evaluate(k, self.E_hist):
+                    if outcome == "N":
+                        self.n_neutral += 1                   # no effect: no threshold update
+                    else:
+                        self._apply_outcome(m, outcome == "S")
+                    self._update += f"{m}:{outcome}({delta:.6g});"
+            else:
+                for m, ok in self.feedback.evaluate(k, self.E_hist):
+                    self._apply_outcome(m, ok)
+                    self._update += f"{m}:{'S' if ok else 'F'};"
         super().update_statistic(k, obs)
 
     def wants_attempt(self, k):
         return self.theta is not None and self.stat > self.theta
 
+    def _attempt(self, k, state):
+        if self._cf:                                          # topology before the engine applies the mutation
+            self._snap = Snapshot(k, state.configured.copy(), state.ready_at.copy())
+        m = super()._attempt(k, state)
+        if m is not None and self._cf:
+            self.feedback.register(self._snap, m)
+        return m
+
     def on_success(self, k):
         super().on_success(k)
-        self.feedback.register(k)
+        if not self._cf:
+            self.feedback.register(k)
 
     def info(self):
         return {**super().info(), "theta": self.theta, "theta_update": self._update,
                 "theta_updates_total": self.n_updates, "theta_success_total": self.n_success,
-                "theta_failure_total": self.n_failure, "feedback_pending": len(self.feedback.pending)}
+                "theta_failure_total": self.n_failure, "theta_neutral_total": self.n_neutral,
+                "feedback_pending": len(self.feedback.pending)}
 
 
 def parse_pmf(text, M):

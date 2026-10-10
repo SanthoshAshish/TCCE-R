@@ -27,7 +27,7 @@
 | 7 | Topology Mutation Selector | Choose best mutation; apply | **implemented** | `core/selector.py`, `core/mutations.py` | Add, or rewire under a full budget |
 | 8 | Reconfigured Network | Updated topology; new consensus state | **implemented** | `NetworkState.apply`; break-before-make setup delay | |
 | | | "Improved resilience" | **not guaranteed** | outcome, measured (λ₂, C, disconnection) | v0.4–v0.6 show it is not always improved |
-| 9 | Adaptive Debt Threshold Update / feedback loop | Success/failure feedback; update Θ | **implemented** | `core/feedback.py`, `core/threshold.py`, `policies/tccer.py` | Success criterion is ours (§2) |
+| 9 | Adaptive Debt Threshold Update / feedback loop | Success/failure feedback; update Θ | **implemented**; v0.7 adds a bias-corrected rule | `core/feedback.py` (legacy before/after), `core/counterfactual.py` (v0.7 counterfactual), `core/threshold.py`, `policies/tccer.py` | The legacy rule is biased by regression to the mean: 67–73% "success" on the v0.6 Static placebo, 76% on dev seeds. The counterfactual rule gives 0 successes on 226 null-mutation placebos. See `docs/MATH_SPEC_v0.7.md` §4. |
 | | | Feedback of new state to monitor and estimator | **implemented** | next epoch's measurements | |
 
 ## 2. Equations actually implemented (our design unless cited)

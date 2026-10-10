@@ -1,4 +1,5 @@
 """TCCE-R policy: wires components (3) debt, (4) trigger + threshold, (5)-(7) pipeline, (9) feedback."""
+from tccer.core.counterfactual import CounterfactualFeedback, Snapshot
 from tccer.core.debt import CusumDebt
 from tccer.core.feedback import FeedbackEvaluator
 from tccer.core.threshold import AdaptiveThreshold
@@ -20,14 +21,26 @@ class TCCERPolicy(Policy):
         self._fired = False
         self._feedback = ""
 
+    def _counterfactual(self):
+        return self.cfg.feedback_rule == "counterfactual"
+
     def decide(self, k, obs, state):
         self.E_hist.append(obs["E_hat"])
+        if self._counterfactual() and not isinstance(self.feedback, CounterfactualFeedback):
+            self.feedback = CounterfactualFeedback(self.cfg, self.ctx)   # needs the engine-attached record
         # (9) feedback on earlier mutations -> threshold update
         results = self.feedback.evaluate(k, self.E_hist)
-        self._feedback = ";".join(f"{m}:{'S' if s else 'F'}" for m, s in results)
-        if self.adaptive:
-            for _, success in results:
-                self.threshold.update(success)
+        if self._counterfactual():
+            self._feedback = ";".join(f"{m}:{o}({d:.6g})" for m, o, d in results)
+            if self.adaptive:
+                for _, outcome, _ in results:
+                    if outcome != "N":                                      # neutral: no threshold update
+                        self.threshold.update(outcome == "S")
+        else:
+            self._feedback = ";".join(f"{m}:{'S' if s else 'F'}" for m, s in results)
+            if self.adaptive:
+                for _, success in results:
+                    self.threshold.update(success)
         # (3) debt
         D = self.debt.update(obs["E_hat"], obs["C"], obs["V"])
         # (4) trigger
@@ -35,10 +48,14 @@ class TCCERPolicy(Policy):
         if not self._fired:
             return None
         # (5)-(7) evaluate, gate, select
+        snap = Snapshot(k, state.configured.copy(), state.ready_at.copy()) if self._counterfactual() else None
         m = self._mutate(k, state)
         if m is not None:
             self.debt.repay()
-            self.feedback.register(k)
+            if self._counterfactual():
+                self.feedback.register(snap, m)                             # topology before the mutation
+            else:
+                self.feedback.register(k)
         return m
 
     def info(self):
