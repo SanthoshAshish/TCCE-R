@@ -1,0 +1,10 @@
+tau: 0.577591666
+kappa_E: 0.3776613044
+kappa_s: 0.2104704856
+tau_quantile: 0.75
+tuning_seeds:
+- 100
+- 119
+grid_points: 40
+feasibility: 0.15
+calibration_git_commit: e1a645d6da75091daf4f6a983b7527cbafc5cea9
