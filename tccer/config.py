@@ -75,6 +75,8 @@ class Config:
     # --- v0.6 options (read only by the v06_* policies; docs/PROTOCOL_v0.6.md) ---
     v06_threshold: Optional[float] = None  # calibrated h (A1, A2), Theta (A3, A4) or Theta0 (A5); None = never act
     v06_kappa: Optional[float] = None      # frozen CUSUM drift allowance: kappa_E (A3) or kappa_s (A4, A5)
+    v06_count_pmf: Optional[str] = None    # rev. 4, A6/A7 only: "p0,p1,...,pM" = probabilities of an intended
+                                           #   count of 0..M per seed; None = intended count is mutation_cap (rev. 3)
 
     # --- Baselines ---
     reactive_threshold: float = 0.5

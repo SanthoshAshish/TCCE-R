@@ -14,6 +14,18 @@ Existing policies and the engine are unchanged. Default and earlier configs repr
 | tests | `tests/test_v06.py`, `tests/test_v06_pipeline.py` (new) | Arm mechanics, backlog, Static invariance, common traces, isolation, checksums, analysis functions, end-to-end mini pipeline |
 | docs | `docs/PROTOCOL_v0.6.md`, `docs/LITERATURE_REVIEW.md`, `docs/KEY_PAPERS_VERIFICATION.md` | Protocol revision 3 (frozen at the implementation commit) |
 
+**Calibration (commit `c103c29`):** τ = 0.5776, κ_E = 0.3777, κ_s = 0.2105; all 20 calibrated arm–cells feasible.
+
+**Revision 4 (before held-out evaluation):** A6/A7 intended counts are drawn per seed from the tuning-seed distribution of A1–A5 realised counts (protocol §2.3a).
+- `tccer/policies/v06.py`: `parse_pmf`, `draw_intended_count`, per-seed cap.
+- `tccer/config.py`: new key `v06_count_pmf`.
+- `experiments/amend_v06_rev4.py`: rewrites only the 8 A6/A7 configs and adds `control_count_pmf.csv`; every other checksum is verified unchanged.
+- `run_v06.py`: `--out` for dry runs, never overwrites.
+- `analyze_v06.py`: per-seed intended counts; exploratory count-balance analyses.
+- `tests/test_v06_rev4.py`.
+- Revision-3 protocol kept as `docs/PROTOCOL_v0.6_rev3.md`.
+- Both dry runs archived in `archive/v0.6/`.
+
 ## v0.5: demonstration features (no algorithm change)
 
 TCCE-R and the baselines are unchanged. Without a scenario file, the simulator reproduces v0.1–v0.4 bit for bit; this was checked on all archived columns with `python -m audit.regression_check`.

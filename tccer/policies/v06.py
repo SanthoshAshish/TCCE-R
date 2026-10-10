@@ -195,16 +195,44 @@ class TCCERArm(CusumECVArm):
                 "theta_failure_total": self.n_failure, "feedback_pending": len(self.feedback.pending)}
 
 
+def parse_pmf(text, M):
+    """'p0,p1,...,pM' -> probabilities of intended counts 0..M (protocol rev. 4, section 2.3a)."""
+    p = np.array([float(x) for x in text.split(",")])
+    if len(p) != M + 1 or (p < 0).any() or abs(p.sum() - 1.0) > 1e-9:
+        raise ValueError(f"v06_count_pmf must have {M + 1} non-negative probabilities summing to 1, got {text!r}")
+    return p
+
+
+def draw_intended_count(pmf, u):
+    """Inverse-CDF draw: count n with F(n-1) <= u < F(n), u in [0, 1). Zero-probability counts are never drawn."""
+    cdf = np.round(np.cumsum(pmf), 12)       # exact decimal boundaries (pmf entries are multiples of 1/100)
+    cdf[-1] = 1.0
+    return int(np.searchsorted(cdf, u, side="right"))
+
+
 class ScheduledArm(V06Policy):
-    """A6/A7: attempts owed by a fixed schedule, tracked by the backlog counter P (protocol 2.3)."""
+    """A6/A7: attempts owed by a fixed schedule, tracked by the backlog counter P (protocol 2.3).
+
+    Intended count (protocol rev. 4, 2.3a): if cfg.v06_count_pmf is set, the FIRST draw of the policy stream
+    [seed,3] is u ~ U[0,1), and the intended count is the inverse-CDF draw from that frozen pmf. A6 and A7 make the
+    same first draw, so on a given seed and cell they get the same intended count. Without a pmf (rev. 3) the
+    intended count is mutation_cap. Realised successes can never exceed the intended count.
+    """
 
     def __init__(self, cfg, pipeline, rng):
         super().__init__(cfg, pipeline, rng)
         M = cfg.mutation_cap or 0
-        self.schedule = self.make_schedule(M, cfg.epochs)
+        if cfg.v06_count_pmf is not None:
+            self.intended = draw_intended_count(parse_pmf(cfg.v06_count_pmf, M), float(self.rng.random()))
+        else:
+            self.intended = M
+        self.schedule = self.make_schedule(self.intended, cfg.epochs)
         self._sched_set = set(self.schedule)
         self.backlog = 0
         self.realised_epochs = []
+
+    def _cap_reached(self):
+        return super()._cap_reached() or self.n_mutations >= self.intended
 
     def make_schedule(self, M, epochs):
         raise NotImplementedError
@@ -225,7 +253,8 @@ class ScheduledArm(V06Policy):
         return [r - s for r, s in zip(self.realised_epochs, self.schedule)]
 
     def info(self):
-        return {**super().info(), "v06_backlog": self.backlog, "v06_schedule": " ".join(map(str, self.schedule))}
+        return {**super().info(), "v06_backlog": self.backlog, "v06_intended": self.intended,
+                "v06_schedule": " ".join(map(str, self.schedule))}
 
 
 class RandomTimingArm(ScheduledArm):

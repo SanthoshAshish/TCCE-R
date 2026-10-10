@@ -72,11 +72,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["dry", "eval"], required=True)
     ap.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) - 1))
+    ap.add_argument("--out", help="dry mode only: output folder (default results/v0.6/dryrun); eval output is fixed")
     a = ap.parse_args()
     seeds = TUNING_SEEDS if a.mode == "dry" else EVAL_SEEDS
     assert_seeds(seeds, range(100, 120) if a.mode == "dry" else range(6000, 6060), f"{a.mode} run")
     listed = verify_manifest()                          # refuses if any frozen file changed
-    out = OUTS[a.mode]
+    if a.out and a.mode == "eval":
+        raise SystemExit("--out is not allowed in eval mode: the held-out output folder is fixed")
+    out = a.out or OUTS[a.mode]
+    if a.mode == "dry" and os.path.exists(os.path.join(out, "COMPLETE")):
+        raise SystemExit(f"{out} already holds a completed dry run; choose a new --out (outputs are never overwritten)")
     git = git_state()
     if a.mode == "eval":
         check_eval_allowed(out, git)

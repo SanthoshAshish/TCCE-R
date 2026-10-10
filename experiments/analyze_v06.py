@@ -100,7 +100,9 @@ def run_metrics(g, static_g, classes, d, M, down, index):
          "attempts": int(g.get("v06_attempts_total", pd.Series([0])).iloc[-1]),
          "failed_attempts": int(g.get("v06_failed_attempts_total", pd.Series([0])).iloc[-1])}
     r["cap_hit"] = bool(M is not None and r["mutations"] >= M)
-    r["unexecuted"] = (M - r["mutations"]) if M is not None else np.nan
+    if "v06_intended" in g and g.v06_intended.notna().any():      # rev. 4: A6/A7 per-seed intended count
+        r["intended"] = int(g.v06_intended.iloc[-1])
+    r["unexecuted"] = (r["intended"] - r["mutations"]) if r["intended"] is not None else np.nan
     for name, cls in classes.items():
         c = cls[mut_epochs] if n else np.array([])
         sfx = "" if name == "primary" else f"_{name}"
@@ -191,6 +193,15 @@ def paired(ps, cell, x, y, metric):
     j = a.index.intersection(b.index)
     diff = (a.loc[j] - b.loc[j]).dropna().to_numpy(dtype=float)
     return diff
+
+
+def paired_equal_counts(ps, cell, x, y):
+    """Paired E differences restricted to seeds where x and y realised the same number of mutations."""
+    a = ps[(ps.group == cell) & (ps.arm == x)].set_index("seed")
+    b = ps[(ps.group == cell) & (ps.arm == y)].set_index("seed")
+    j = a.index.intersection(b.index)
+    j = [s for s in j if a.at[s, "mutations"] == b.at[s, "mutations"]]
+    return (a.loc[j, "E"] - b.loc[j, "E"]).to_numpy(dtype=float)
 
 
 def describe(diff):
@@ -322,9 +333,12 @@ def main():
         arms = set(ps[ps.group == cell].arm)
         for x, y in [PRIMARY] + SECONDARY + [(a_, "A0") for a_ in sorted(arms - {"A0"})]:
             if x in arms and y in arms:
-                for m in EXPLORATORY + ["E"]:
+                for m in EXPLORATORY + ["E", "mutations"]:
                     expl.append({"cell": cell, "comparison": f"{x}-{y}", "metric": m,
                                  **describe(paired(ps, cell, x, y, m))})
+                # rev. 4 exploratory (not evidence of causal efficiency): seeds where both arms realised equal counts
+                expl.append({"cell": cell, "comparison": f"{x}-{y}", "metric": "E | equal realised counts",
+                             **describe(paired_equal_counts(ps, cell, x, y))})
     pd.DataFrame(expl).to_csv(os.path.join(out, "exploratory_diffs.csv"), index=False)
 
     sens = []

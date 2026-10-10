@@ -38,6 +38,7 @@ burst_max_len: 6
 scenario_file: null
 v06_threshold: null
 v06_kappa: null
+v06_count_pmf: 0.05,0.16,0.24,0.55
 reactive_threshold: 0.3777
 period: 5
 mutation_cap: 3

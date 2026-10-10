@@ -1,11 +1,15 @@
 # v0.6 experiment protocol: does accumulated resilience debt add information beyond an instantaneous error threshold?
 
-**Status: FINAL (revision 3, 2026-10-10).**
+**Status: FINAL (revision 4, 2026-10-10). Amended before any held-out evaluation.**
 - Revision 2 was approved, with D-1 to D-6.
-- Revision 3 makes two changes before freezing:
-  - defines the backlog and retry semantics precisely (§2.1, §2.3);
-  - pre-specifies the Wilcoxon all-zero-difference case (§6.4).
-- This file is frozen when it is committed together with the implementation, before calibration.
+- Revision 3 (frozen in commit `e1a645d`; verbatim copy in `docs/PROTOCOL_v0.6_rev3.md`):
+  - defined the backlog and retry semantics (§2.1, §2.3);
+  - pre-specified the Wilcoxon all-zero-difference case (§6.4).
+- **Revision 4** is approved Option 2, made after the revision-3 dry run on tuning seeds and before any held-out run. It changes **only** the intended mutation count of the two scheduled controls A6 and A7: each seed now draws its count from the tuning-seed distribution of A1–A5's realised counts (§2.3a). It also:
+  - adds exploratory count-balance analyses (§6.4);
+  - reconciles the dry-run accounting (§3.5).
+- **Unchanged:** all thresholds, constants, A0–A5 configs, the primary test and every decision rule.
+- **Why:** under the cap, A1–A5 realised fewer than M mutations on average while A6/A7 always realised exactly M. Tuning-seed means were 2.10–2.45 vs 3 (M = 3) and 4.15–5.10 vs 6 (M = 6). That broke the equal-reconfiguration premise for comparisons involving A6/A7.
 - Existing tags `v0.1`–`v0.5`, `archive/`, `configs/` and `results/` stay untouched.
 - Numbers marked *(measured)* come from read-only checks on the current code (`v0.5`) or on archived data.
 
@@ -106,6 +110,38 @@ Only the **trigger** varies between arms. These are identical for every arm:
 
 For **A1–A5**, "intended" means the calibration target M (§3.2), and realised is the per-seed count under the cap. Both are reported, together with how often the cap was hit.
 
+### 2.3a Intended count of A6 and A7 (revision 4)
+
+**Source distribution (tuning seeds only).**
+- For each cell (d, M), take the realised mutation counts of A1, A2, A3, A4 and A5 on tuning seeds 100–119 from the revision-3 dry run (`results/v0.6/dryrun/<cell>/epochs.csv`, final `n_mutations`): 5 × 20 = **100 values per cell**.
+- The empirical probability mass function is p_c(n) = #{values equal to n} / 100, for n = 0..M.
+- It is frozen in `configs/v0.6/frozen/control_count_pmf.csv` and embedded in each A6/A7 config as `v06_count_pmf` = "p(0),…,p(M)".
+- No held-out data can influence it: the dry run used only seeds 100–119 and the already-frozen thresholds.
+
+**Sampling rule (per seed, per cell).**
+- The **first** draw of the policy stream `default_rng([seed, 3])` is u ~ U[0, 1).
+- The intended count is N = min{n : F(n) > u}, where F is the cumulative sum of p_c rounded to 12 decimals. This is the inverse CDF; counts with probability 0 are never drawn.
+- A6 then draws its schedule of N epochs from the same generator, exactly as in §2.3 with M replaced by N. A7 uses {0, 2, …, 2(N−1)}.
+
+**Independence and reproducibility.**
+- Counts are drawn **independently across seeds**: a separate generator per seed.
+- Counts are **shared between A6 and A7 on the same seed and cell**: both make the identical first draw. The two controls therefore differ only in timing.
+- Draws in different cells use the same u for a given seed but different p_c. Cells are analysed separately, so this correlation affects no test.
+- Everything is a deterministic function of (seed, frozen pmf).
+
+**Constraints, unchanged from §2.1 and §2.3:**
+- one attempt per epoch;
+- cooldown of 2 epochs from the last success;
+- the same selector and safety gate;
+- the backlog rule.
+
+**Count limits:**
+- The hard cap is min(N, M): realised ≤ N ≤ M.
+- Retries and the backlog can never produce more than N successes, because the backlog only accumulates the N scheduled attempts.
+- Unexecuted = N − realised.
+
+**Logging.** The per-seed intended count is logged (`v06_intended`). Intended and realised counts are reported for every arm.
+
 ## 3. Calibration on tuning seeds 100–119 and freezing (D-2, D-4)
 
 ### 3.1 Static-derived constants (A0 on seeds 100–119 only)
@@ -139,11 +175,29 @@ All three are computed once, frozen and reported to 4 decimals. Static does not 
   - A2: w = 4;
   - all arms: cooldown 2, cap M.
 - **A6/A7 schedule rules;** episode rules (§4); metric definitions (§5); tests, families, margins and decision rules (§6); bootstrap seed 20261010.
+- **Revision 4:** the A6/A7 count distributions (`control_count_pmf.csv`, and `v06_count_pmf` in the 8 A6/A7 configs).
+  - The manifest is regenerated, and every other frozen file must keep its revision-3 checksum; this is checked by `experiments/amend_v06_rev4.py`.
+  - The revision-3 manifest is kept as `MANIFEST_rev3.sha256`.
 - **Evaluation seeds** 6000–6059.
 - **Code:** the git commit hash of the implementation, and the per-cell config files `configs/v0.6/frozen/<arm>_d<d>_M<M>.yaml`.
 
 ### 3.5 Dry run
 The full pipeline runs once on seeds 100–119 with the frozen values. Purpose: catch errors; its results are not reported as findings.
+
+**Accounting (revision 4).** One `run_v06 --mode dry` invocation makes **660** runs:
+
+| Item | Formula | Runs |
+|---|---|---|
+| Dry run proper | 20 A0 + 7 arms × 4 cells × 20 seeds | 580 |
+| C-4 A2-reset sensitivity, executed in the same invocation | 1 × 4 × 20 | 80 |
+| **Total** | | **660** |
+
+The 20 A0 runs used for τ and κ (§3.1) belong to calibration, which therefore had 8,020 runs.
+
+| Dry run | Folder | Runs | Role |
+|---|---|---|---|
+| Revision-3 dry run | `results/v0.6/dryrun` | 660 | Preserved unchanged. It is also the source of the §2.3a distributions. |
+| Revision-4 dry run | `results/v0.6/dryrun_rev4` | 660 | Re-runs the pipeline with the amended A6/A7 configs. A pipeline check only, never used to change anything. |
 
 ## 4. Episode labelling: policy-free (D-5)
 
@@ -221,7 +275,11 @@ A mutation "at epoch m" was decided at the end of epoch m. It takes the class of
 | Static-identity unit test | 2 runs × 1 seed | 2 |
 | C-2 uncapped sensitivity, part of the single evaluation run (seeds 6000–6059) | 5 arms (A1–A5) × 4 cells × 60 seeds | 1,200 |
 | C-4 A2-reset sensitivity (tuning seeds 100–119 only) | 1 arm × 4 cells × 20 seeds | 80 |
-| **Total, all stages** | | **11,622** |
+| **Total, all stages (revision 3 plan)** | | **11,622** |
+| Revision-4 dry run on tuning seeds (§3.5), including its C-4 runs | 580 + 80 | 660 |
+| **Total, all stages (revision 4)** | | **12,282** |
+
+The held-out evaluation count is unchanged by revision 4: **2,940 runs** (1,740 primary + 1,200 C-2).
 
 *Revision 3 correction:* the C-2 and C-4 rows were specified in §7 but missing from this table in revision 2. They are secondary and descriptive and do not affect any confirmatory test. The single evaluation run therefore has **2,940 runs**: 1,740 primary plus 1,200 C-2.
 
@@ -256,6 +314,11 @@ Runs are executed in parallel worker processes (12 cores available). Results are
 
   7 × 4 tests, Holm-adjusted together.
 - **Exploratory:** every other metric and comparison. Paired mean differences with CIs, no p-values in the main text.
+- **Count-balance analyses (exploratory, revision 4):** for every reported comparison,
+  - (a) the paired difference in realised mutation counts;
+  - (b) the paired E difference restricted to seeds on which both arms realised the **same** count, with its n.
+
+  These describe balance and robustness only. **No error-per-mutation ratio is computed.** None of these analyses is used as evidence of causal efficiency or enters any verdict.
 - **Not-calibratable** arm–cells are dropped from their family, and m (the number of tests in the Holm family) is reduced accordingly, with this stated.
 
 ### 6.5 Effect sizes
