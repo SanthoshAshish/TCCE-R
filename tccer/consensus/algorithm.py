@@ -34,16 +34,12 @@ def consensus_step(x: np.ndarray, u: np.ndarray, v: np.ndarray) -> np.ndarray:
     return out
 
 
-def run_epoch(x0: np.ndarray, u: np.ndarray, v: np.ndarray, up_mask_fn, rounds: int) -> np.ndarray:
-    """Run `rounds` iterations; up_mask_fn(t) -> bool mask over (u, v) of links up in round t.
-
-    Returns normalized disagreement e(t) = ||x(t) - xbar 1|| / ||x(0) - xbar 1||, t = 0..rounds,
-    where xbar is the true average of x(0).
-    """
+def run_epoch_state(x0: np.ndarray, u: np.ndarray, v: np.ndarray, up_mask_fn, rounds: int):
+    """As run_epoch, but also returns the final node states x(rounds). Arithmetic is identical to run_epoch."""
     xbar = x0.mean()
     norm0 = np.linalg.norm(x0 - xbar)
     if norm0 == 0:                      # already in consensus: no disagreement to remove (v0.4 guard)
-        return np.zeros(rounds + 1)
+        return np.zeros(rounds + 1), x0.copy()
     x = x0.copy()
     err = np.empty(rounds + 1)
     err[0] = 1.0
@@ -51,4 +47,27 @@ def run_epoch(x0: np.ndarray, u: np.ndarray, v: np.ndarray, up_mask_fn, rounds: 
         m = up_mask_fn(t)
         x = consensus_step(x, u[m], v[m])
         err[t + 1] = np.linalg.norm(x - xbar) / norm0
-    return err
+    return err, x
+
+
+def run_epoch(x0: np.ndarray, u: np.ndarray, v: np.ndarray, up_mask_fn, rounds: int) -> np.ndarray:
+    """Run `rounds` iterations; up_mask_fn(t) -> bool mask over (u, v) of links up in round t.
+
+    Returns normalized disagreement e(t) = ||x(t) - xbar 1|| / ||x(0) - xbar 1||, t = 0..rounds,
+    where xbar is the true average of x(0).
+    """
+    return run_epoch_state(x0, u, v, up_mask_fn, rounds)[0]
+
+
+def local_disagreement(x: np.ndarray, u: np.ndarray, v: np.ndarray) -> np.ndarray:
+    """Per-node local disagreement delta_i = sum_{j in N(i)} (x_i - x_j)^2 over the given (live) links.
+
+    Standard graph quantity (the spec names "local disagreement" without a formula): sum_i delta_i / 2 equals the
+    Laplacian disagreement x^T L x = sum over links of (x_i - x_j)^2. Monitoring only; it does not feed the debt.
+    """
+    d = np.zeros(len(x))
+    if len(u):
+        sq = (x[u] - x[v]) ** 2
+        np.add.at(d, u, sq)
+        np.add.at(d, v, sq)
+    return d

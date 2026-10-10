@@ -2,6 +2,15 @@
 
 Every version is a git tag, and its results are archived under `archive/`. Model changes after v0.1 sit behind config flags whose defaults reproduce earlier versions. **The current code re-runs v0.1, v0.2 and v0.3 bit-identically on every archived column**; this was checked during the v0.4 audit.
 
+## v0.6.1: architecture compliance pass (no change to any decision logic)
+
+| change | file | notes |
+|---|---|---|
+| local-disagreement monitor (diagram stage 2) | `tccer/consensus/algorithm.py` (`run_epoch_state`, `local_disagreement`), `tccer/sim/engine.py` | New logged columns `local_disagreement_total` and `local_disagreement_max`; monitoring only. All existing columns are unchanged: archived v0.1–v0.4 and the v0.6 tuning-seed dry run reproduce. |
+| duplicate-key warning | `tccer/config.py` (`duplicate_top_level_keys`) | Warning only; behaviour unchanged (last value wins). `configs/v0.5/custom_4node.yaml` repeats `epochs`, `rounds_per_epoch` and `burst_rate`. |
+| chain integration tests | `tests/test_architecture.py` (new) | Full chain on the custom 4-node scenario; no-candidate path; cooldown interaction; v0.6 dry-run reproduction |
+| compliance documentation | `docs/ARCHITECTURE_COMPLIANCE.md` (new), `README.md`, `SIMULATOR_GUIDE.md` | Stage-by-stage status, exact equations, documented ambiguities |
+
 ## v0.6: trigger-comparison experiment (protocol docs/PROTOCOL_v0.6.md)
 
 Existing policies and the engine are unchanged. Default and earlier configs reproduce v0.1–v0.4 bit for bit (`audit/regression_check.py`).

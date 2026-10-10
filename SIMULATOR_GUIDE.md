@@ -1,4 +1,4 @@
-# TCCE-R Simulator Guide (v0.5)
+# TCCE-R Simulator Guide (v0.6.1)
 
 A discrete-time simulator for **TCCE-R** (resilience-debt driven topology–consensus co-evolution), with three baseline controllers. Python 3.11, NetworkX, NumPy/SciPy, pandas and matplotlib.
 
@@ -146,13 +146,16 @@ Baselines (`policies/baselines.py`) share components (5)–(8) with TCCE-R and d
 | symbol | name in code / CSV | meaning | status |
 |---|---|---|---|
 | E | `E_hat` | consensus stress: 0 = reached ε, 1 = no progress | implemented, logged |
+| local disagreement | `local_disagreement_total`, `local_disagreement_max` | Σ over live links of (xᵢ − xⱼ)² at the end of the epoch, and the largest per-node value | implemented v0.6.1, logged; monitoring only (not in D) |
 | C | `C` | 1 if disconnected, otherwise the fraction of links that are bridges | implemented, logged; nearly binary in practice |
 | V | `V` | environmental link-state changes over 3 epochs / configured links | implemented, logged; small in practice |
 | D | `debt` | CUSUM resilience debt | implemented, logged |
 | Θ | `theta` | adaptive trigger threshold | implemented, logged |
 | M | `M_dcomp`, `M_gain`, `M_dbridges`, `M_length` | coupling score of the chosen mutation, as a **lexicographic vector** (not a scalar ratio; design decision D7) | implemented, logged per mutation |
 | R | `lambda2` | network resilience = algebraic connectivity; the gate floor R_min is `lambda2_min` | implemented, logged |
-| trust/uncertainty, traffic, node load | — | **not implemented** (deferred since v0.1) | absent |
+| trust/uncertainty, traffic, node load | — | **not implemented** (named in the specification without a model; deferred) | absent |
+
+Full stage-by-stage compliance, the exact equations, and the documented ambiguities (M as a ratio, R vs λ₂) are in [`docs/ARCHITECTURE_COMPLIANCE.md`](docs/ARCHITECTURE_COMPLIANCE.md). A config that repeats a key now triggers a warning; YAML keeps the last value.
 
 ### Established vs proposed parts
 

@@ -3,6 +3,7 @@ from dataclasses import dataclass, asdict, fields, replace
 from typing import Optional
 
 import os
+import warnings
 
 import yaml
 
@@ -84,11 +85,30 @@ class Config:
     mutation_cap: Optional[int] = None
 
 
+def duplicate_top_level_keys(text: str):
+    """Top-level keys that appear more than once in a YAML mapping (YAML silently keeps the last value)."""
+    node = yaml.compose(text, Loader=yaml.SafeLoader)
+    if not isinstance(node, yaml.MappingNode):
+        return []
+    seen, dups = set(), []
+    for key_node, _ in node.value:
+        k = key_node.value
+        if k in seen and k not in dups:
+            dups.append(k)
+        seen.add(k)
+    return dups
+
+
 def load_config(path: Optional[str] = None, **overrides) -> Config:
     data = {}
     if path:
         with open(path, encoding="utf-8") as f:
-            data = yaml.safe_load(f) or {}
+            text = f.read()
+        data = yaml.safe_load(text) or {}
+        dups = duplicate_top_level_keys(text)
+        if dups:
+            warnings.warn(f"Config file {path} repeats key(s) {dups}; the LAST value of each is used",
+                          UserWarning, stacklevel=2)
         if not isinstance(data, dict):
             raise ValueError(f"Config file {path} must contain 'key: value' lines")
     data.update({k: v for k, v in overrides.items() if v is not None})

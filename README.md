@@ -1,9 +1,11 @@
-# TCCE-R simulator (v0.5)
+# TCCE-R simulator (v0.6.1)
 
 Resilience-debt driven topology–consensus co-evolution. Python + NetworkX + NumPy.
 
 **Start here:**
 - [`SIMULATOR_GUIDE.md`](SIMULATOR_GUIDE.md): architecture, commands, outputs
+- [`docs/ARCHITECTURE_COMPLIANCE.md`](docs/ARCHITECTURE_COMPLIANCE.md): what is implemented, simplified, deferred, vs the professor's nine-stage specification
+- [`RESULTS_v0.6.md`](RESULTS_v0.6.md): pre-registered trigger-comparison experiment (latest results)
 - [`RESULTS_SUMMARY.md`](RESULTS_SUMMARY.md): final v0.4 results
 - [`docs/AUDIT_v0.4.md`](docs/AUDIT_v0.4.md): audit findings
 - [`docs/PROTOCOL_v0.4.md`](docs/PROTOCOL_v0.4.md): experiment protocol
@@ -16,8 +18,14 @@ Resilience-debt driven topology–consensus co-evolution. Python + NetworkX + Nu
 | v0.3 binding budget + reconfiguration cost | `v0.3` | [`RESULTS_v0.3.md`](RESULTS_v0.3.md) | `archive/v0.3/` |
 | v0.4 audit + bursty failures × delay {0,2,4,8} | `v0.4` | [`RESULTS_SUMMARY.md`](RESULTS_SUMMARY.md) | `archive/v0.4/` |
 | v0.5 scenario files, network pictures, summary.txt, demo config (no algorithm change) | `v0.5` | [`SIMULATOR_GUIDE.md`](SIMULATOR_GUIDE.md) §2–5 | `archive/v0.5/` (example run) |
+| v0.6 pre-registered trigger comparison (8 arms, held-out seeds 6000–6059) | `v0.6` | [`RESULTS_v0.6.md`](RESULTS_v0.6.md) | `archive/v0.6/` |
+| v0.6.1 architecture compliance pass (local-disagreement monitor, config duplicate-key warning, chain tests) | — | [`docs/ARCHITECTURE_COMPLIANCE.md`](docs/ARCHITECTURE_COMPLIANCE.md) | — |
 
-**Current status:** in every pre-specified held-out condition tested (v0.2–v0.4), TCCE-R is significantly worse than a simple reactive baseline on consensus error and λ2, at an equal mutation budget. There is no supported difference in disconnection fraction. No superiority claim is supported.
+**Current status:**
+- **v0.2–v0.4:** in every pre-specified held-out condition, TCCE-R was significantly worse than a simple reactive baseline on consensus error and λ2, at an equal mutation budget.
+- **v0.6 (pre-registered):** accumulated debt (CUSUM-E) did not add *meaningful* timing information beyond an instantaneous error threshold in any condition. Its advantage, where present, was at most 0.015, below the 0.02 margin, and a moving average matched it. State-blind early schedules did best.
+- No superiority claim is supported.
+- Implementation status per stage: `docs/ARCHITECTURE_COMPLIANCE.md`.
 
 ## Setup and run (Windows PowerShell, from this folder)
 

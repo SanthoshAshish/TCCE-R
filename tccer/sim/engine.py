@@ -10,7 +10,7 @@ Per epoch k:
 import networkx as nx
 import numpy as np
 
-from tccer.consensus.algorithm import run_epoch
+from tccer.consensus.algorithm import local_disagreement, run_epoch_state
 from tccer.consensus.monitor import summarize
 from tccer.core.debt import volatility
 from tccer.core.selector import EMPTY_SELECTION, MutationPipeline
@@ -54,7 +54,8 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch
         # 2. consensus
         live = np.flatnonzero(state.live_mask())
         u, v = state.eu[live], state.ev[live]
-        err = run_epoch(x0_all[k], u, v, lambda t: trace.transient_up(k, t)[live], cfg.rounds_per_epoch)
+        err, x_end = run_epoch_state(x0_all[k], u, v, lambda t: trace.transient_up(k, t)[live], cfg.rounds_per_epoch)
+        delta = local_disagreement(x_end, u, v)       # (2) monitor: local disagreement at the end of the epoch
         rep = summarize(err, cfg.eps)
 
         # 3. resilience metrics
@@ -65,6 +66,8 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch
             "final_error": rep.final_error,
             "conv_round": rep.conv_round if rep.conv_round is not None else -1,
             "rate": rep.rate,
+            "local_disagreement_total": float(delta.sum() / 2),   # = sum over live links of (x_i - x_j)^2
+            "local_disagreement_max": float(delta.max()) if len(delta) else 0.0,
             "lambda2": lambda2(state.n, u, v) if comps == 1 else 0.0,
             "components": comps,
             "C": vulnerability(g),
