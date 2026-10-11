@@ -1,0 +1,38 @@
+scenarios:
+  S1_rgg40_bursty:
+    tau: 0.6351580664
+    kappa_E: 0.4170759342
+    kappa_s: 0.2297036267
+  S2_rgg40_background:
+    tau: 0.5802550626
+    kappa_E: 0.4276687661
+    kappa_s: 0.2369421651
+  S3_rgg80_bursty:
+    tau: 0.6485184102
+    kappa_E: 0.4865839214
+    kappa_s: 0.2639897595
+tau_quantile: 0.75
+calibration_seeds:
+- 200
+- 201
+- 202
+- 203
+- 204
+- 205
+- 206
+- 207
+- 208
+- 209
+- 210
+- 211
+- 212
+- 213
+- 214
+- 215
+- 216
+- 217
+- 218
+- 219
+feasibility: 0.15
+smoke: false
+git_commit: ec0fb7525026fdb97101e68295c7a32bfb02f42a
