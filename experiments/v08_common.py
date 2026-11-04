@@ -60,3 +60,11 @@ def derive_from_b8(b8_cfg, M):
     out = {a: b8_cfg for a in ("B5", "B6", "B7")}
     out["H1"] = replace(b8_cfg, v08_front=HYBRID_F[M])
     return out
+
+
+def choose(grid_means, M):
+    """Threshold whose mean calibration count is closest to M (ties: larger threshold); feasible iff the relative gap is
+    at most FEASIBILITY. A gap exactly at the limit is accepted (1e-9 absolute tolerance on the comparison; the v0.6
+    version of this rule rejected 2.55 vs M = 3 by a floating-point rounding of 2e-16). Returns (thr, mean, ok)."""
+    best = min(grid_means, key=lambda tm: (round(abs(tm[1] - M), 9), -tm[0]))
+    return best[0], best[1], abs(best[1] - M) <= FEASIBILITY * M + 1e-9

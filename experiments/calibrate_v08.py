@@ -16,10 +16,10 @@ import pandas as pd
 import yaml
 
 from experiments.amend_v06_rev4 import empirical_pmf, pmf_string
-from experiments.calibrate_v06 import choose, static_constants
+from experiments.calibrate_v06 import static_constants
 from experiments.v08_common import (ARM_POLICY, CAL_OUT, CALIBRATED_ARMS, CALIBRATION_RUN_CAP, CELLS, FEASIBILITY,
                                     FROZEN_DIR, SCENARIOS, SMOKE_CAL_SEEDS, SMOKE_FROZEN_DIR, TAU_QUANTILE, TUNING_SEEDS,
-                                    arm_config, assert_seeds, derive_from_b8, frozen_path, git_state, grid, run_tasks,
+                                    arm_config, assert_seeds, choose, derive_from_b8, frozen_path, git_state, grid, run_tasks,
                                     scenario_config, versions, write_json, write_manifest)
 from tccer.config import replace, save_config
 

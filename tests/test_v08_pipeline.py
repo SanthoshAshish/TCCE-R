@@ -162,3 +162,20 @@ def test_validation_analysis_distinguishes_informative_from_uninformative_predic
     assert good["verdict"] == "informative" and good["spearman_dE_win"] > 0.8
     assert bad["verdict"] == "not demonstrated informative" and bad["spearman_dE_win"] < -0.8
     assert null["verdict"] == "not demonstrated informative"
+
+
+# ---- calibration rule ------------------------------------------------------------------------------------------------
+def test_choose_accepts_exact_limit_and_prefers_larger_threshold_on_ties():
+    assert C.choose([(0.583, 2.55), (0.55, 4.5)], 3) == (0.583, 2.55, True)          # exactly -15%: accepted (was a float artefact)
+    assert C.choose([(0.6, 2.549)], 3)[2] is False                                    # just outside the limit
+    assert C.choose([(0.5, 2.0), (0.7, 4.0)], 3)[0] == 0.7                            # tie in distance -> larger threshold
+    assert C.choose([(0.5, 3.4), (0.6, 2.9)], 3)[0] == 0.6
+
+
+def test_amendment_bracket_picks_the_crossing_nearest_to_the_target():
+    from experiments.amend_calibration_v08 import bracket
+    pts = [(0.60, 9.0), (0.65, 4.7), (0.70, 1.85), (0.75, 0.4)]
+    assert bracket(pts, 3) == (0.65, 0.70)
+    assert bracket(pts, 6) == (0.60, 0.65)
+    with pytest.raises(SystemExit):
+        bracket(pts, 20)
