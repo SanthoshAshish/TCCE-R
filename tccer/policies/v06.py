@@ -46,7 +46,7 @@ class V06Policy(Policy):
     def _attempt(self, k, state):
         self._attempted = True
         self.attempts += 1
-        m = self.pipeline.select(state, k, mode="lexicographic", rng=self.rng)
+        m = self._select(k, state)
         if m is None:
             self.failed_attempts += 1
             return None
@@ -56,6 +56,9 @@ class V06Policy(Policy):
         self._attempt_ok = True
         self.on_success(k)
         return m
+
+    def _select(self, k, state):
+        return self.pipeline.select(state, k, mode="lexicographic", rng=self.rng)
 
     def on_success(self, k):
         pass
@@ -150,7 +153,7 @@ class CusumECVArm(CusumEArm):
     name = "v06_cusum_ecv"
 
     def stress(self, obs):
-        wE, wC, wV = ECV_WEIGHTS
+        wE, wC, wV = ECV_WEIGHTS if self.cfg.v08_w is None else tuple(float(x) for x in self.cfg.v08_w.split(","))
         return wE * obs["E_hat"] + wC * obs["C"] + wV * obs["V"]
 
 

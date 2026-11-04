@@ -81,6 +81,32 @@ class Config:
     v06_count_pmf: Optional[str] = None    # rev. 4, A6/A7 only: "p0,p1,...,pM" = probabilities of an intended
                                            #   count of 0..M per seed; None = intended count is mutation_cap (rev. 3)
 
+    # --- v0.8 options (revised study; all defaults reproduce v0.7 exactly) ---
+    graph_family: str = "rgg"       # "rgg" | "er" (Erdos-Renyi) | "ba" (Barabasi-Albert scale-free)
+    er_p_init: float = 0.12         # er: initial link probability (unused for ba; ba uses ba_m)
+    er_p_pot: float = 0.20          # er/ba: probability that a non-initial pair is a candidate link
+    ba_m: int = 2                   # ba: links per new node
+    shock_epoch: int = -1           # abrupt topology change: one large correlated outage starting at this epoch
+    shock_radius: float = 0.30
+    shock_len: int = 15
+    obs_noise: float = 0.0          # controller sees E, C, V corrupted by N(0, obs_noise^2) (clipped to [0, 1])
+    obs_delay: int = 0              # controller sees E, C, V from this many epochs ago
+    v08_w: Optional[str] = None     # "wE,wC,wV" override of the A4/A5/RCPR stress weights (sensitivity only)
+    j_alpha: float = 1.0            # RCPR objective weights (docs/PROTOCOL_v0.8.md)
+    j_beta: float = 0.5
+    j_gamma: float = 0.05
+    j_delta: float = 1.0
+    risk_eps: float = 0.20          # empirical disconnection-risk tolerance of the RCPR constraint
+    pred_horizon_extra: int = 3     # prediction horizon H = link_setup_epochs + pred_horizon_extra
+    cand_k: int = 10                # candidates evaluated per decision epoch
+    v08_front: int = 0              # hybrid H1: number F of front-loaded rewirings before risk-aware adaptation (0 = plain B8)
+    rcpr_c_rewire: float = 0.25     # predictor: rewiring cost c0 (C(a) = c0 + c1 * [a releases a live link])
+    rcpr_c_release: float = 0.75    # predictor: extra cost c1 of releasing a link that is currently working
+    hz_window: int = 10             # hazard estimator: number of recent epochs used
+    hz_prior_h: float = 0.02        # hazard estimator: prior per-epoch link failure probability
+    hz_prior_r: float = 0.10        # hazard estimator: prior per-epoch repair probability
+    hz_prior_w: float = 20.0        # hazard estimator: prior weight in pseudo link-epochs
+
     # --- Baselines ---
     reactive_threshold: float = 0.5
     period: int = 5
@@ -109,6 +135,33 @@ class Config:
             errors.append(f"feedback_rule must be 'before_after' or 'counterfactual'; got {self.feedback_rule!r}")
         if self.rounds_per_epoch < 1 or self.epochs < 1:
             errors.append("epochs and rounds_per_epoch must be >= 1")
+        # v0.8 options: reject invalid values only (defaults are unchanged and valid)
+        if self.graph_family not in ("rgg", "er", "ba"):
+            errors.append(f"graph_family must be 'rgg', 'er' or 'ba'; got {self.graph_family!r}")
+        if self.graph_family == "er" and not (0.0 < self.er_p_init <= 1.0):
+            errors.append(f"er_p_init must be in (0, 1] for graph_family='er'; got {self.er_p_init}")
+        if self.graph_family != "rgg" and not (0.0 <= self.er_p_pot <= 1.0):
+            errors.append(f"er_p_pot must be in [0, 1]; got {self.er_p_pot}")
+        if self.graph_family == "ba" and not (1 <= self.ba_m < self.n_nodes):
+            errors.append(f"ba_m must satisfy 1 <= ba_m < n_nodes; got {self.ba_m}")
+        if self.obs_noise < 0 or self.obs_delay < 0 or int(self.obs_delay) != self.obs_delay:
+            errors.append(f"obs_noise must be >= 0 and obs_delay a non-negative integer; got {self.obs_noise}, {self.obs_delay}")
+        if self.shock_epoch >= 0 and (self.shock_radius <= 0 or self.shock_len < 1):
+            errors.append("shock_radius must be > 0 and shock_len >= 1 when shock_epoch >= 0")
+        if self.v08_w is not None:
+            try:
+                w = [float(x) for x in str(self.v08_w).split(",")]
+                if len(w) != 3 or min(w) < 0 or sum(w) <= 0:
+                    raise ValueError
+            except ValueError:
+                errors.append(f"v08_w must be 'wE,wC,wV' (three non-negative numbers, not all zero); got {self.v08_w!r}")
+        if self.cand_k < 1 or self.pred_horizon_extra < 0 or self.v08_front < 0:
+            errors.append("cand_k must be >= 1; pred_horizon_extra and v08_front must be >= 0")
+        bad_hz = not (0 < self.hz_prior_h < 1 and 0 < self.hz_prior_r < 1)
+        if min(self.rcpr_c_rewire, self.rcpr_c_release, self.hz_prior_w) < 0 or self.hz_window < 1 or bad_hz:
+            errors.append("rcpr_c_* and hz_prior_w must be >= 0, hz_window >= 1, hz_prior_h and hz_prior_r in (0, 1)")
+        if min(self.j_alpha, self.j_beta, self.j_gamma, self.j_delta, self.risk_eps) < 0:
+            errors.append("j_alpha, j_beta, j_gamma, j_delta and risk_eps must be >= 0")
         if errors:
             raise ValueError("Invalid configuration:\n  - " + "\n  - ".join(errors))
 

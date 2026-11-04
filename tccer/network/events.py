@@ -36,6 +36,13 @@ class FailureTrace:
                     self.burst[k:k + L, hit] = True
                     self.bursts.append((k, centre, L, int(hit.sum())))
 
+        if cfg.shock_epoch >= 0:                  # v0.8: abrupt topology change (one large correlated outage)
+            rng_s = np.random.default_rng([seed, 6])
+            centre = rng_s.random(2)
+            hit = np.linalg.norm(edge_mid - centre, axis=1) <= cfg.shock_radius
+            self.burst[cfg.shock_epoch:cfg.shock_epoch + cfg.shock_len, hit] = True
+            self.bursts.append((cfg.shock_epoch, centre, cfg.shock_len, int(hit.sum())))
+
     def epoch_update(self, k: int, down: np.ndarray) -> np.ndarray:
         """Background Markov process only (bursts are applied on top by the engine)."""
         new = down.copy()

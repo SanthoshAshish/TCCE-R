@@ -7,6 +7,8 @@ Per epoch k:
   4. policy.decide: debt / trigger / evaluator / gate / selector   -> (3)-(7), (9)
   5. apply mutation; takes effect from epoch k+1                   -> (8) Reconfigured Network
 """
+import time
+
 import networkx as nx
 import numpy as np
 
@@ -17,13 +19,13 @@ from tccer.core.debt import volatility
 from tccer.core.selector import EMPTY_SELECTION, MutationPipeline
 from tccer.metrics.resilience import lambda2, vulnerability
 from tccer.network.events import FailureTrace
-from tccer.network.generators import random_geometric
+from tccer.network.generators import make_network
 from tccer.network.scenario import load_scenario
 from tccer.network.state import NetworkState
 from tccer.policies import POLICIES
 
 
-def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch=None):
+def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch=None, timing=None):
     """on_epoch(k, state, mutation): optional read-only observer called at the end of every epoch
     (used by the network visualizer). It must not modify `state`."""
     if cfg.scenario_file:                     # v0.5: user-supplied topology / values / scripted events
@@ -32,7 +34,7 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch
         scripted = sc.scripted_down
     else:                                     # seed-generated network (v0.1-v0.4 behaviour)
         sc = None
-        pos, eu, ev, length, init_idx = random_geometric(cfg.n_nodes, cfg.init_radius, cfg.radio_range, seed)
+        pos, eu, ev, length, init_idx = make_network(cfg, seed)
         scripted = np.zeros((cfg.epochs, len(eu)), dtype=bool)
     state = NetworkState(pos, eu, ev, length, init_idx)
     trace = FailureTrace(cfg, seed, state.P, edge_mid=(pos[eu] + pos[ev]) / 2)
@@ -44,6 +46,8 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch
     record = ExogenousRecord(cfg, state, trace, x0_all)     # what the controller has observed (read-only use)
     policy.attach_context(record)
 
+    rng_obs = np.random.default_rng([seed, 5])
+    true_hist = []
     epoch_rows, round_rows, changes = [], [], []
     background_down = state.down.copy()          # background Markov state; bursts are layered on top
     for k in range(cfg.epochs):
@@ -89,7 +93,17 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch
 
         # 4. policy
         pipeline.last = dict(EMPTY_SELECTION)
-        m = policy.decide(k, obs, state)
+        pobs = obs
+        if cfg.obs_noise > 0 or cfg.obs_delay > 0:        # v0.8: imperfect state information for the controller
+            true_hist.append((obs["E_hat"], obs["C"], obs["V"]))
+            e, c, v = true_hist[max(0, k - cfg.obs_delay)]
+            if cfg.obs_noise > 0:
+                e, c, v = (float(np.clip(x + rng_obs.normal(0, cfg.obs_noise), 0, 1)) for x in (e, c, v))
+            pobs = dict(obs, E_hat=e, C=c, V=v)
+        t_dec = time.perf_counter()
+        m = policy.decide(k, pobs, state)
+        if timing is not None:        # wall-clock telemetry goes to a side channel, never into the scientific rows
+            timing.append(1000 * (time.perf_counter() - t_dec))
 
         # 5. apply
         if m is not None:

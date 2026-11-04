@@ -7,7 +7,7 @@ Resilience-debt driven topology–consensus co-evolution. Python + NetworkX + Nu
 - [`docs/ARCHITECTURE_COMPLIANCE.md`](docs/ARCHITECTURE_COMPLIANCE.md): what is implemented, simplified, deferred, vs the professor's nine-stage specification
 - [`RESULTS_v0.6.md`](RESULTS_v0.6.md): pre-registered trigger-comparison experiment (latest results)
 - [`docs/MATH_SPEC_v0.7.md`](docs/MATH_SPEC_v0.7.md): exact equations, M/R decisions, feedback rules
-- [`docs/PROTOCOL_v0.7.md`](docs/PROTOCOL_v0.7.md): frozen eight-method comparison protocol (not yet run)
+- [`docs/PROTOCOL_v0.7.md`](docs/PROTOCOL_v0.7.md): frozen eight-method comparison protocol (run once on held-out seeds 7000–7059; analysis in `results/v0.7/eval/analysis/REPORT.md`, local and git-ignored)
 - [`RESULTS_SUMMARY.md`](RESULTS_SUMMARY.md): final v0.4 results
 - [`docs/AUDIT_v0.4.md`](docs/AUDIT_v0.4.md): audit findings
 - [`docs/PROTOCOL_v0.4.md`](docs/PROTOCOL_v0.4.md): experiment protocol
@@ -22,12 +22,14 @@ Resilience-debt driven topology–consensus co-evolution. Python + NetworkX + Nu
 | v0.5 scenario files, network pictures, summary.txt, demo config (no algorithm change) | `v0.5` | [`SIMULATOR_GUIDE.md`](SIMULATOR_GUIDE.md) §2–5 | `archive/v0.5/` (example run) |
 | v0.6 pre-registered trigger comparison (8 arms, held-out seeds 6000–6059) | `v0.6` | [`RESULTS_v0.6.md`](RESULTS_v0.6.md) | `archive/v0.6/` |
 | v0.6.1 architecture compliance pass (local-disagreement monitor, config duplicate-key warning, chain tests) | — | [`docs/ARCHITECTURE_COMPLIANCE.md`](docs/ARCHITECTURE_COMPLIANCE.md) | — |
-| v0.7 validation, counterfactual feedback, eight-method protocol and runner (comparison **not yet run**) | `v0.7` | [`docs/PROTOCOL_v0.7.md`](docs/PROTOCOL_v0.7.md) | smoke test only |
+| v0.7 validation, counterfactual feedback, eight-method protocol and runner. Held-out evaluation **run** (seeds 7000–7059, 2,640 runs) at commit `7a81352`; exploratory focused A1/A3/A5 run (seeds 500–559) | `v0.7` (code freeze, before calibration); `baseline-v0.7` (state used for the revision) | [`docs/PROTOCOL_v0.7.md`](docs/PROTOCOL_v0.7.md), [`docs/FOCUSED_v0.7_PLAN.md`](docs/FOCUSED_v0.7_PLAN.md) | `results/v0.7/`, `results/v0.7_focused/` (git-ignored; SHA-256 list in `revision/baseline/baseline_manifest.json`) |
 
 **Current status:**
 - **v0.2–v0.4:** in every pre-specified held-out condition, TCCE-R was significantly worse than a simple reactive baseline on consensus error and λ2, at an equal mutation budget.
 - **v0.6 (pre-registered):** accumulated debt (CUSUM-E) did not add *meaningful* timing information beyond an instantaneous error threshold in any condition. Its advantage, where present, was at most 0.015, below the 0.02 margin, and a moving average matched it. State-blind early schedules did best.
+- **v0.7 held-out (seeds 7000–7059, each scenario × budget cell analysed separately):** full TCCE-R (A5) versus Reactive (A1) was practically equivalent in 4 of the 5 cells where both arms could be calibrated and Reactive was better by less than the 0.02 margin in the fifth (S2, M = 3, Holm p = 0.033); there was no cell where A5 was better. The state-blind Front-loaded schedule (A7) had lower consensus error than A5 in all 6 cells (differences 0.024–0.076, all Holm p < 0.01; the A5-versus-A1 comparison has only 5 evaluable cells). Source: `results/v0.7/eval/analysis/REPORT.md`.
 - No superiority claim is supported.
+- **v0.8 (branch `revision-v0.8`, draft):** adds optional Erdős–Rényi / Barabási–Albert graphs, an abrupt-outage shock, controller-side observation noise/delay and a predictive controller (RCPR) with ablation arms. All options default to off and reproduce v0.7 (see `revision/audit/REPRODUCIBILITY_REPORT.md`). **No v0.8 experiment has been run**; the code has smoke tests only and no frozen protocol yet.
 - Implementation status per stage: `docs/ARCHITECTURE_COMPLIANCE.md`.
 
 ## Setup and run (Windows PowerShell, from this folder)
@@ -37,7 +39,7 @@ python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 
-python -m pytest -q                                                        # 85 tests
+python -m pytest -q                                                        # 234 tests (about 6 min); last full run: see revision/audit/REPRODUCIBILITY_REPORT.md
 python -m experiments.run --config configs/default.yaml --seeds 20 --out results/default
 python -m experiments.analyze results/default
 
