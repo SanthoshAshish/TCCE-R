@@ -1,0 +1,15 @@
+{
+  "run_info": {
+    "mode": "eval",
+    "n_runs": 4500,
+    "seconds": 615.2,
+    "complete": true
+  },
+  "git_commit": "e16a2084a564fc00abae2b0713283fc3a6ab6d18",
+  "git_dirty": [],
+  "frozen_manifest": "verifies",
+  "rows": 360000,
+  "runs_found": 4500,
+  "crn_checked": true,
+  "problems": []
+}

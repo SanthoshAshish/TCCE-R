@@ -1,0 +1,19 @@
+Condition,Comparison (E_X − E_Y),ΔE,95% bootstrap CI,Holm p,Reading
+"S1, M=3",A3 − A1,excluded,not calibratable,n/a,excluded
+"S1, M=3",A5 − A1,excluded,not calibratable,n/a,excluded
+"S1, M=3",A5 − A3,+0.0066,"[-0.0007, +0.0144]",0.308,practically equivalent
+"S1, M=6",A3 − A1,-0.0229,"[-0.0310, -0.0150]",6.89×10⁻⁶,"A3 lower E, ≥ margin"
+"S1, M=6",A5 − A1,-0.0102,"[-0.0195, -0.0011]",0.166,practically equivalent
+"S1, M=6",A5 − A3,+0.0127,"[+0.0059, +0.0200]",0.009,"A3 lower E, < margin"
+"S2, M=3",A3 − A1,-0.0154,"[-0.0268, -0.0051]",0.166,inconclusive
+"S2, M=3",A5 − A1,+0.0075,"[-0.0011, +0.0164]",0.425,practically equivalent
+"S2, M=3",A5 − A3,+0.0228,"[+0.0132, +0.0336]",1.63×10⁻⁴,"A3 lower E, ≥ margin"
+"S2, M=6",A3 − A1,-0.0018,"[-0.0098, +0.0069]",1.000,practically equivalent
+"S2, M=6",A5 − A1,excluded,not calibratable,n/a,excluded
+"S2, M=6",A5 − A3,excluded,not calibratable,n/a,excluded
+"S3, M=3",A3 − A1,-0.0051,"[-0.0090, -0.0013]",0.166,practically equivalent
+"S3, M=3",A5 − A1,-0.0002,"[-0.0043, +0.0038]",1.000,practically equivalent
+"S3, M=3",A5 − A3,+0.0049,"[+0.0021, +0.0077]",0.002,"A3 lower E, < margin"
+"S3, M=6",A3 − A1,-0.0089,"[-0.0129, -0.0049]",2.32×10⁻⁴,"A3 lower E, < margin"
+"S3, M=6",A5 − A1,-0.0037,"[-0.0086, +0.0012]",0.425,practically equivalent
+"S3, M=6",A5 − A3,+0.0052,"[+0.0017, +0.0087]",0.008,"A3 lower E, < margin"

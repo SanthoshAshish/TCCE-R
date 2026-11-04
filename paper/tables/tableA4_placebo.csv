@@ -1,0 +1,5 @@
+v0.6 condition,Feedback updates,"Legacy rule, A5's own updates: success",Legacy rule on Static run (no mutation): 'success'
+d2_M3,152,80.9%,67.8%
+d2_M6,313,79.6%,72.8%
+d8_M3,141,77.3%,67.4%
+d8_M6,295,79.0%,72.5%

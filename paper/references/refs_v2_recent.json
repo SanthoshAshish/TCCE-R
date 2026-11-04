@@ -1,0 +1,816 @@
+[
+ {
+  "doi": "10.1016/j.isatra.2023.08.010",
+  "title": "Topology-based dynamic event-triggered leader-following consensus of multi-agent systems under switching topologies",
+  "authors": [
+   [
+    "S",
+    "Zhang"
+   ],
+   [
+    "J",
+    "Liu"
+   ],
+   [
+    "W",
+    "Wang"
+   ],
+   [
+    "Z",
+    "Zhang"
+   ]
+  ],
+  "venue": "ISA Transactions",
+  "vol": "142",
+  "issue": "",
+  "pages": "299-309",
+  "year": 2023
+ },
+ {
+  "doi": "10.1109/access.2021.3136892",
+  "title": "Adaptive Event-Triggered Consensus of Fractional-Order Nonlinear Multi-Agent Systems",
+  "authors": [
+   [
+    "P",
+    "Xiao"
+   ],
+   [
+    "Z",
+    "Gu"
+   ]
+  ],
+  "venue": "IEEE Access",
+  "vol": "10",
+  "issue": "",
+  "pages": "213-220",
+  "year": 2022
+ },
+ {
+  "doi": "10.1016/j.ins.2023.119594",
+  "title": "Adaptive fault-tolerant consensus control of multi-agent systems with event-triggered inputs",
+  "authors": [
+   [
+    "Y",
+    "Wang"
+   ],
+   [
+    "Y",
+    "Yang"
+   ],
+   [
+    "L",
+    "Wu"
+   ]
+  ],
+  "venue": "Information Sciences",
+  "vol": "650",
+  "issue": "",
+  "pages": "119594",
+  "year": 2023
+ },
+ {
+  "doi": "10.3390/machines11020128",
+  "title": "Precise Dynamic Consensus under Event-Triggered Communication",
+  "authors": [
+   [
+    "I",
+    "Perez-Salesa"
+   ],
+   [
+    "R",
+    "Aldana-Lopez"
+   ],
+   [
+    "C",
+    "Sagues"
+   ]
+  ],
+  "venue": "Machines",
+  "vol": "11",
+  "issue": "2",
+  "pages": "128",
+  "year": 2023
+ },
+ {
+  "doi": "10.1109/access.2023.3250440",
+  "title": "Dynamic Event-Triggered Communication-Based Adaptive Consensus Tracking of Uncertain Nonlinear Multiagent Systems in Pure-Feedback Form",
+  "authors": [
+   [
+    "H",
+    "Kim"
+   ],
+   [
+    "S",
+    "Yoo"
+   ]
+  ],
+  "venue": "IEEE Access",
+  "vol": "11",
+  "issue": "",
+  "pages": "21092-21103",
+  "year": 2023
+ },
+ {
+  "doi": "10.1016/j.ins.2024.121257",
+  "title": "Switching adaptive dynamic event-triggered consensus of nonlinear multi-agent systems under DoS attacks and communication delay",
+  "authors": [
+   [
+    "Y",
+    "Wang"
+   ],
+   [
+    "S",
+    "Yu"
+   ],
+   [
+    "Y",
+    "Zhao"
+   ]
+  ],
+  "venue": "Information Sciences",
+  "vol": "682",
+  "issue": "",
+  "pages": "121257",
+  "year": 2024
+ },
+ {
+  "doi": "10.1016/j.isatra.2026.08.015",
+  "title": "Event-triggered adaptive predefined-time consensus for multi-agent systems under switching topologies",
+  "authors": [
+   [
+    "Z",
+    "Dong"
+   ],
+   [
+    "S",
+    "Shi"
+   ],
+   [
+    "Q",
+    "Ouyang"
+   ],
+   [
+    "J",
+    "Jiang"
+   ]
+  ],
+  "venue": "ISA Transactions",
+  "vol": "",
+  "issue": "",
+  "pages": "",
+  "year": 2026
+ },
+ {
+  "doi": "10.3390/en15155353",
+  "title": "Event-Triggered Security Consensus for Multi-Agent Systems with Markov Switching Topologies under DoS Attacks",
+  "authors": [
+   [
+    "Y",
+    "Tian"
+   ],
+   [
+    "S",
+    "Tian"
+   ],
+   [
+    "H",
+    "Li"
+   ],
+   [
+    "Q",
+    "Han"
+   ],
+   [
+    "X",
+    "Wang"
+   ]
+  ],
+  "venue": "Energies",
+  "vol": "15",
+  "issue": "15",
+  "pages": "5353",
+  "year": 2022
+ },
+ {
+  "doi": "10.1109/tac.2023.3311709",
+  "title": "Consensus Analysis of Random Subgraphs for Distributed Filtering With Link Failures",
+  "authors": [
+   [
+    "S",
+    "Battilotti"
+   ],
+   [
+    "F",
+    "Cacace"
+   ],
+   [
+    "M",
+    "d'Angelo"
+   ]
+  ],
+  "venue": "IEEE Transactions on Automatic Control",
+  "vol": "69",
+  "issue": "4",
+  "pages": "2476-2483",
+  "year": 2024
+ },
+ {
+  "doi": "10.1002/rnc.7367",
+  "title": "Adaptive output consensus of heterogeneous nonlinear multi‐agent system under random link failures with partially unknown transition rates",
+  "authors": [
+   [
+    "Y",
+    "Liu"
+   ],
+   [
+    "H",
+    "Fan"
+   ],
+   [
+    "L",
+    "Liu"
+   ],
+   [
+    "B",
+    "Wang"
+   ]
+  ],
+  "venue": "International Journal of Robust and Nonlinear Control",
+  "vol": "34",
+  "issue": "12",
+  "pages": "7799-7820",
+  "year": 2024
+ },
+ {
+  "doi": "10.1109/tvt.2024.3382617",
+  "title": "Discrete-Time Flocking Control in Multi-Robot Systems With Random Link Failures",
+  "authors": [
+   [
+    "S",
+    "Li"
+   ],
+   [
+    "S",
+    "Zhang"
+   ],
+   [
+    "G",
+    "He"
+   ],
+   [
+    "T",
+    "Jiang"
+   ]
+  ],
+  "venue": "IEEE Transactions on Vehicular Technology",
+  "vol": "73",
+  "issue": "9",
+  "pages": "12290-12304",
+  "year": 2024
+ },
+ {
+  "doi": "10.1109/tsp.2023.3348954",
+  "title": "Decentralized Multitask Online Convex Optimization Under Random Link Failures",
+  "authors": [
+   [
+    "W",
+    "Yan"
+   ],
+   [
+    "X",
+    "Cao"
+   ]
+  ],
+  "venue": "IEEE Transactions on Signal Processing",
+  "vol": "72",
+  "issue": "",
+  "pages": "622-635",
+  "year": 2024
+ },
+ {
+  "doi": "10.1016/j.sysconle.2026.106579",
+  "title": "Resilient consensus of multi-agent systems with time-varying topologies and unmodeled dynamics",
+  "authors": [
+   [
+    "Y",
+    "Fu"
+   ],
+   [
+    "G",
+    "Wen"
+   ],
+   [
+    "D",
+    "Zhao"
+   ],
+   [
+    "Y",
+    "Lv"
+   ]
+  ],
+  "venue": "Systems & Control Letters",
+  "vol": "218",
+  "issue": "",
+  "pages": "106579",
+  "year": 2026
+ },
+ {
+  "doi": "10.1016/j.automatica.2023.111382",
+  "title": "Resilient cluster consensus for discrete-time high-order multi-agent systems against malicious adversaries",
+  "authors": [
+   [
+    "R",
+    "Gao"
+   ],
+   [
+    "G",
+    "Yang"
+   ]
+  ],
+  "venue": "Automatica",
+  "vol": "159",
+  "issue": "",
+  "pages": "111382",
+  "year": 2024
+ },
+ {
+  "doi": "10.1109/tnse.2022.3160073",
+  "title": "Online Algorithms for Network Robustness Under Connectivity Constraints",
+  "authors": [
+   [
+    "D",
+    "Muthirayan"
+   ],
+   [
+    "P",
+    "Khargonekar"
+   ]
+  ],
+  "venue": "IEEE Transactions on Network Science and Engineering",
+  "vol": "9",
+  "issue": "4",
+  "pages": "2266-2277",
+  "year": 2022
+ },
+ {
+  "doi": "10.1007/s41109-024-00624-4",
+  "title": "Link-limited bypass rewiring for enhancing the robustness of complex networks",
+  "authors": [
+   [
+    "M",
+    "Chujyo"
+   ],
+   [
+    "F",
+    "Toriumi"
+   ]
+  ],
+  "venue": "Applied Network Science",
+  "vol": "9",
+  "issue": "1",
+  "pages": "17",
+  "year": 2024
+ },
+ {
+  "doi": "10.3390/math11132942",
+  "title": "Algebraic-Connectivity-Based Multi-USV Distributed Formation Method via Adding a Reverse Edge",
+  "authors": [
+   [
+    "J",
+    "Wang"
+   ],
+   [
+    "Q",
+    "Shan"
+   ],
+   [
+    "J",
+    "Zhu"
+   ],
+   [
+    "X",
+    "Cheng"
+   ],
+   [
+    "B",
+    "Wei"
+   ]
+  ],
+  "venue": "Mathematics",
+  "vol": "11",
+  "issue": "13",
+  "pages": "2942",
+  "year": 2023
+ },
+ {
+  "doi": "10.1109/tie.2024.3472272",
+  "title": "A Topology Reconfiguration Strategy for Containment Control of the Multi-USV System Based on Algebraic Connectivity",
+  "authors": [
+   [
+    "Q",
+    "Shan"
+   ],
+   [
+    "W",
+    "Liu"
+   ],
+   [
+    "T",
+    "Li"
+   ],
+   [
+    "H",
+    "Zhang"
+   ]
+  ],
+  "venue": "IEEE Transactions on Industrial Electronics",
+  "vol": "72",
+  "issue": "5",
+  "pages": "5322-5332",
+  "year": 2025
+ },
+ {
+  "doi": "10.1109/tnse.2024.3417478",
+  "title": "An Online Topology Control Method for Multi-Agent Systems: Distributed Topology Reconfiguration",
+  "authors": [
+   [
+    "Y",
+    "Feng"
+   ],
+   [
+    "F",
+    "Wang"
+   ],
+   [
+    "Z",
+    "Liu"
+   ],
+   [
+    "Z",
+    "Chen"
+   ]
+  ],
+  "venue": "IEEE Transactions on Network Science and Engineering",
+  "vol": "11",
+  "issue": "5",
+  "pages": "4358-4370",
+  "year": 2024
+ },
+ {
+  "doi": "10.1007/s10514-025-10224-5",
+  "title": "Fast k-connectivity restoration in multi-robot systems for robust communication maintenance: algorithmic and learning-based solutions",
+  "authors": [
+   [
+    "G",
+    "Shi"
+   ],
+   [
+    "M",
+    "Ishat-E-Rabban"
+   ],
+   [
+    "G",
+    "Bonner"
+   ],
+   [
+    "P",
+    "Tokekar"
+   ]
+  ],
+  "venue": "Autonomous Robots",
+  "vol": "49",
+  "issue": "4",
+  "pages": "34",
+  "year": 2025
+ },
+ {
+  "doi": "10.33012/navi.552",
+  "title": "Decentralized Connectivity Maintenance for Multi-Robot Systems Under Motion and Sensing Uncertainties",
+  "authors": [
+   [
+    "A",
+    "Shetty"
+   ],
+   [
+    "T",
+    "Hussain,"
+   ],
+   [
+    "G",
+    "Gao"
+   ]
+  ],
+  "venue": "NAVIGATION: Journal of the Institute of Navigation",
+  "vol": "70",
+  "issue": "1",
+  "pages": "navi.552",
+  "year": 2023
+ },
+ {
+  "doi": "10.1109/tnse.2023.3234720",
+  "title": "Connectivity Preservation and Collision Avoidance in Multi-Agent Systems Using Model Predictive Control",
+  "authors": [
+   [
+    "A",
+    "ElHamamsy"
+   ],
+   [
+    "F",
+    "Aghili"
+   ],
+   [
+    "A",
+    "Aghdam"
+   ]
+  ],
+  "venue": "IEEE Transactions on Network Science and Engineering",
+  "vol": "10",
+  "issue": "3",
+  "pages": "1779-1791",
+  "year": 2023
+ },
+ {
+  "doi": "10.1109/tnse.2025.3532475",
+  "title": "Estimator-Based Dual-Model Predictive Control for Multi-AAVs With Connectivity-Preserving",
+  "authors": [
+   [
+    "Z",
+    "Du"
+   ],
+   [
+    "H",
+    "Zhang"
+   ],
+   [
+    "Z",
+    "Wang"
+   ],
+   [
+    "H",
+    "Yan"
+   ]
+  ],
+  "venue": "IEEE Transactions on Network Science and Engineering",
+  "vol": "12",
+  "issue": "3",
+  "pages": "1482-1496",
+  "year": 2025
+ },
+ {
+  "doi": "10.3390/s23031200",
+  "title": "A Novel Scalable Reconfiguration Model for the Postdisaster Network Connectivity of Resilient Power Distribution Systems",
+  "authors": [
+   [
+    "A",
+    "Imteaj"
+   ],
+   [
+    "V",
+    "Akbari"
+   ],
+   [
+    "M",
+    "Amini"
+   ]
+  ],
+  "venue": "Sensors",
+  "vol": "23",
+  "issue": "3",
+  "pages": "1200",
+  "year": 2023
+ },
+ {
+  "doi": "10.1016/j.rineng.2024.102026",
+  "title": "Self-healing radial distribution network reconfiguration based on deep reinforcement learning",
+  "authors": [
+   [
+    "S",
+    "Jo"
+   ],
+   [
+    "J",
+    "Oh"
+   ],
+   [
+    "Y",
+    "Yoon"
+   ],
+   [
+    "Y",
+    "Jin"
+   ]
+  ],
+  "venue": "Results in Engineering",
+  "vol": "22",
+  "issue": "",
+  "pages": "102026",
+  "year": 2024
+ },
+ {
+  "doi": "10.1016/j.jnca.2025.104177",
+  "title": "Multi-agent reinforcement learning based dynamic self-coordinated topology optimization for wireless mesh networks",
+  "authors": [
+   [
+    "Q",
+    "Tang"
+   ],
+   [
+    "W",
+    "Sun"
+   ],
+   [
+    "Z",
+    "Liu"
+   ],
+   [
+    "Q",
+    "Li"
+   ],
+   [
+    "X",
+    "Yuan"
+   ]
+  ],
+  "venue": "Journal of Network and Computer Applications",
+  "vol": "239",
+  "issue": "",
+  "pages": "104177",
+  "year": 2025
+ },
+ {
+  "doi": "10.1109/access.2023.3255794",
+  "title": "Communication Network Reliability Under Geographically Correlated Failures Using Probabilistic Seismic Hazard Analysis",
+  "authors": [
+   [
+    "D",
+    "Jiménez"
+   ],
+   [
+    "J",
+    "Barrera"
+   ],
+   [
+    "H",
+    "Cancela"
+   ]
+  ],
+  "venue": "IEEE Access",
+  "vol": "11",
+  "issue": "",
+  "pages": "31341-31354",
+  "year": 2023
+ },
+ {
+  "doi": "10.1002/net.22138",
+  "title": "Network augmentation for disaster‐resilience against geographically correlated failure",
+  "authors": [
+   [
+    "N",
+    "Andrés‐Thió"
+   ],
+   [
+    "M",
+    "Brazil"
+   ],
+   [
+    "C",
+    "Ras"
+   ],
+   [
+    "D",
+    "Thomas"
+   ]
+  ],
+  "venue": "Networks",
+  "vol": "81",
+  "issue": "4",
+  "pages": "419-444",
+  "year": 2022
+ },
+ {
+  "doi": "10.1109/access.2022.3188659",
+  "title": "An Exceeding Recovery Model for Enhancing Network Resilience Against Cascading Failures",
+  "authors": [
+   [
+    "J",
+    "Li"
+   ],
+   [
+    "Y",
+    "Wang"
+   ],
+   [
+    "J",
+    "Zhong"
+   ]
+  ],
+  "venue": "IEEE Access",
+  "vol": "10",
+  "issue": "",
+  "pages": "71035-71043",
+  "year": 2022
+ },
+ {
+  "doi": "10.1109/tit.2023.3259185",
+  "title": "Spectral CUSUM for Online Network Structure Change Detection",
+  "authors": [
+   [
+    "M",
+    "Zhang"
+   ],
+   [
+    "L",
+    "Xie"
+   ],
+   [
+    "Y",
+    "Xie"
+   ]
+  ],
+  "venue": "IEEE Transactions on Information Theory",
+  "vol": "69",
+  "issue": "7",
+  "pages": "4691-4707",
+  "year": 2023
+ },
+ {
+  "doi": "10.1038/s41598-023-50977-6",
+  "title": "Dynamic network link prediction with node representation learning from graph convolutional networks",
+  "authors": [
+   [
+    "P",
+    "Mei"
+   ],
+   [
+    "Y",
+    "Zhao"
+   ]
+  ],
+  "venue": "Scientific Reports",
+  "vol": "14",
+  "issue": "1",
+  "pages": "538",
+  "year": 2024
+ },
+ {
+  "doi": "10.1016/j.array.2022.100147",
+  "title": "Improving link failure restoration in next-generation wireless sensor networks",
+  "authors": [
+   [
+    "B",
+    "Awoyemi"
+   ],
+   [
+    "B",
+    "Maharaj"
+   ]
+  ],
+  "venue": "Array",
+  "vol": "14",
+  "issue": "",
+  "pages": "100147",
+  "year": 2022
+ },
+ {
+  "doi": "10.1371/journal.pone.0355604",
+  "title": "FRLTC: A new topology control algorithm using federated reinforcement learning for software-defined wireless sensor network in IoT",
+  "authors": [
+   [
+    "L",
+    "Binh"
+   ],
+   [
+    "T",
+    "T. Duong"
+   ],
+   [
+    "D",
+    "Le"
+   ]
+  ],
+  "venue": "PLOS One",
+  "vol": "21",
+  "issue": "8",
+  "pages": "e0355604",
+  "year": 2026
+ },
+ {
+  "doi": "10.1007/s11227-022-04614-0",
+  "title": "A distributed formal-based model for self-healing behaviors in autonomous systems: from failure detection to self-recovery",
+  "authors": [
+   [
+    "I",
+    "Hafaiedh"
+   ],
+   [
+    "M",
+    "Slimane"
+   ]
+  ],
+  "venue": "The Journal of Supercomputing",
+  "vol": "78",
+  "issue": "17",
+  "pages": "18725-18753",
+  "year": 2022
+ }
+]

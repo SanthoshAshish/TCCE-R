@@ -1,0 +1,686 @@
+{
+  "OlfatiSaberMurray2004": {
+    "doi": "10.1109/tac.2004.834113",
+    "title": "Consensus Problems in Networks of Agents With Switching Topology and Time-Delays",
+    "authors": [
+      {
+        "given": "R.",
+        "family": "Olfati-Saber"
+      },
+      {
+        "given": "R.M.",
+        "family": "Murray"
+      }
+    ],
+    "venue": "IEEE Transactions on Automatic Control",
+    "volume": "49",
+    "issue": "9",
+    "pages": "1520-1533",
+    "year": 2004,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "OlfatiSaberFaxMurray2007": {
+    "doi": "10.1109/jproc.2006.887293",
+    "title": "Consensus and Cooperation in Networked Multi-Agent Systems",
+    "authors": [
+      {
+        "given": "Reza",
+        "family": "Olfati-Saber"
+      },
+      {
+        "given": "J. Alex",
+        "family": "Fax"
+      },
+      {
+        "given": "Richard M.",
+        "family": "Murray"
+      }
+    ],
+    "venue": "Proceedings of the IEEE",
+    "volume": "95",
+    "issue": "1",
+    "pages": "215-233",
+    "year": 2007,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Jadbabaie2003": {
+    "doi": "10.1109/tac.2003.812781",
+    "title": "Coordination of groups of mobile autonomous agents using nearest neighbor rules",
+    "authors": [
+      {
+        "given": "A.",
+        "family": "Jadbabaie"
+      },
+      {
+        "given": "Jie",
+        "family": "Lin"
+      },
+      {
+        "given": "A.S.",
+        "family": "Morse"
+      }
+    ],
+    "venue": "IEEE Transactions on Automatic Control",
+    "volume": "48",
+    "issue": "6",
+    "pages": "988-1001",
+    "year": 2003,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "XiaoBoyd2004": {
+    "doi": "10.1016/j.sysconle.2004.02.022",
+    "title": "Fast linear iterations for distributed averaging",
+    "authors": [
+      {
+        "given": "Lin",
+        "family": "Xiao"
+      },
+      {
+        "given": "Stephen",
+        "family": "Boyd"
+      }
+    ],
+    "venue": "Systems & Control Letters",
+    "volume": "53",
+    "issue": "1",
+    "pages": "65-78",
+    "year": 2004,
+    "type": "journal-article",
+    "publisher": "Elsevier BV",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "XiaoBoydLall2005": {
+    "doi": "10.1109/ipsn.2005.1440896",
+    "title": "A scheme for robust distributed sensor fusion based on average consensus",
+    "authors": [
+      {
+        "given": "Lin",
+        "family": "Xiao"
+      },
+      {
+        "given": "S.",
+        "family": "Boyd"
+      },
+      {
+        "given": "S.",
+        "family": "Lall"
+      }
+    ],
+    "venue": "IPSN 2005. Fourth International Symposium on Information Processing in Sensor Networks, 2005.",
+    "volume": null,
+    "issue": null,
+    "pages": "63-70",
+    "year": 2005,
+    "type": "proceedings-article",
+    "publisher": "IEEE",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": [
+      "Crossref has no date; year 2005 is taken from the venue name in the same record ('IPSN 2005. Fourth International Symposium on Information Processing in Sensor Networks')"
+    ]
+  },
+  "KarMoura2008": {
+    "doi": "10.1109/tsp.2008.920143",
+    "title": "Sensor Networks With Random Links: Topology Design for Distributed Consensus",
+    "authors": [
+      {
+        "given": "S.",
+        "family": "Kar"
+      },
+      {
+        "given": "J.M.F.",
+        "family": "Moura"
+      }
+    ],
+    "venue": "IEEE Transactions on Signal Processing",
+    "volume": "56",
+    "issue": "7",
+    "pages": "3315-3326",
+    "year": 2008,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "KarMoura2009": {
+    "doi": "10.1109/tsp.2008.2007111",
+    "title": "Distributed Consensus Algorithms in Sensor Networks With Imperfect Communication: Link Failures and Channel Noise",
+    "authors": [
+      {
+        "given": "S.",
+        "family": "Kar"
+      },
+      {
+        "given": "J.M.F.",
+        "family": "Moura"
+      }
+    ],
+    "venue": "IEEE Transactions on Signal Processing",
+    "volume": "57",
+    "issue": "1",
+    "pages": "355-369",
+    "year": 2009,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Fiedler1973": {
+    "doi": "10.21136/cmj.1973.101168",
+    "title": "Algebraic connectivity of graphs",
+    "authors": [
+      {
+        "given": "Miroslav",
+        "family": "Fiedler"
+      }
+    ],
+    "venue": "Czechoslovak Mathematical Journal",
+    "volume": "23",
+    "issue": "2",
+    "pages": "298-305",
+    "year": 1973,
+    "type": "journal-article",
+    "publisher": "Institute of Mathematics, Czech Academy of Sciences",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "GhoshBoyd2006": {
+    "doi": "10.1109/cdc.2006.377282",
+    "title": "Growing Well-connected Graphs",
+    "authors": [
+      {
+        "given": "Arpita",
+        "family": "Ghosh"
+      },
+      {
+        "given": "Stephen",
+        "family": "Boyd"
+      }
+    ],
+    "venue": "Proceedings of the 45th IEEE Conference on Decision and Control",
+    "volume": null,
+    "issue": null,
+    "pages": "6605-6611",
+    "year": 2006,
+    "type": "proceedings-article",
+    "publisher": "IEEE",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Sydney2013": {
+    "doi": "10.1016/j.amc.2012.11.002",
+    "title": "Optimizing algebraic connectivity by edge rewiring",
+    "authors": [
+      {
+        "given": "Ali",
+        "family": "Sydney"
+      },
+      {
+        "given": "Caterina",
+        "family": "Scoglio"
+      },
+      {
+        "given": "Don",
+        "family": "Gruenbacher"
+      }
+    ],
+    "venue": "Applied Mathematics and Computation",
+    "volume": "219",
+    "issue": "10",
+    "pages": "5465-5479",
+    "year": 2013,
+    "type": "journal-article",
+    "publisher": "Elsevier BV",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Zavlanos2011": {
+    "doi": "10.1109/jproc.2011.2157884",
+    "title": "Graph-theoretic connectivity control of mobile robot networks",
+    "authors": [
+      {
+        "given": "M. M.",
+        "family": "Zavlanos"
+      },
+      {
+        "given": "M. B.",
+        "family": "Egerstedt"
+      },
+      {
+        "given": "G. J.",
+        "family": "Pappas"
+      }
+    ],
+    "venue": "Proceedings of the IEEE",
+    "volume": "99",
+    "issue": "9",
+    "pages": "1525-1540",
+    "year": 2011,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Santi2005": {
+    "doi": "10.1145/1089733.1089736",
+    "title": "Topology control in wireless ad hoc and sensor networks",
+    "authors": [
+      {
+        "given": "Paolo",
+        "family": "Santi"
+      }
+    ],
+    "venue": "ACM Computing Surveys",
+    "volume": "37",
+    "issue": "2",
+    "pages": "164-194",
+    "year": 2005,
+    "type": "journal-article",
+    "publisher": "Association for Computing Machinery (ACM)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "GrossBlasius2008": {
+    "doi": "10.1098/rsif.2007.1229",
+    "title": "Adaptive coevolutionary networks: a review",
+    "authors": [
+      {
+        "given": "Thilo",
+        "family": "Gross"
+      },
+      {
+        "given": "Bernd",
+        "family": "Blasius"
+      }
+    ],
+    "venue": "Journal of The Royal Society Interface",
+    "volume": "5",
+    "issue": "20",
+    "pages": "259-271",
+    "year": 2008,
+    "type": "journal-article",
+    "publisher": "The Royal Society",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Sterbenz2010": {
+    "doi": "10.1016/j.comnet.2010.03.005",
+    "title": "Resilience and survivability in communication networks: Strategies, principles, and survey of disciplines",
+    "authors": [
+      {
+        "given": "James P.G.",
+        "family": "Sterbenz"
+      },
+      {
+        "given": "David",
+        "family": "Hutchison"
+      },
+      {
+        "given": "Egemen K.",
+        "family": "Çetinkaya"
+      },
+      {
+        "given": "Abdul",
+        "family": "Jabbar"
+      },
+      {
+        "given": "Justin P.",
+        "family": "Rohrer"
+      },
+      {
+        "given": "Marcus",
+        "family": "Schöller"
+      },
+      {
+        "given": "Paul",
+        "family": "Smith"
+      }
+    ],
+    "venue": "Computer Networks",
+    "volume": "54",
+    "issue": "8",
+    "pages": "1245-1265",
+    "year": 2010,
+    "type": "journal-article",
+    "publisher": "Elsevier BV",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Neumayer2011": {
+    "doi": "10.1109/tnet.2011.2128879",
+    "title": "Assessing the Vulnerability of the Fiber Infrastructure to Disasters",
+    "authors": [
+      {
+        "given": "Sebastian",
+        "family": "Neumayer"
+      },
+      {
+        "given": "Gil",
+        "family": "Zussman"
+      },
+      {
+        "given": "Reuven",
+        "family": "Cohen"
+      },
+      {
+        "given": "Eytan",
+        "family": "Modiano"
+      }
+    ],
+    "venue": "IEEE/ACM Transactions on Networking",
+    "volume": "19",
+    "issue": "6",
+    "pages": "1610-1623",
+    "year": 2011,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "LeBlanc2013": {
+    "doi": "10.1109/jsac.2013.130413",
+    "title": "Resilient Asymptotic Consensus in Robust Networks",
+    "authors": [
+      {
+        "given": "Heath J.",
+        "family": "LeBlanc"
+      },
+      {
+        "given": "Haotian",
+        "family": "Zhang"
+      },
+      {
+        "given": "Xenofon",
+        "family": "Koutsoukos"
+      },
+      {
+        "given": "Shreyas",
+        "family": "Sundaram"
+      }
+    ],
+    "venue": "IEEE Journal on Selected Areas in Communications",
+    "volume": "31",
+    "issue": "4",
+    "pages": "766-781",
+    "year": 2013,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "GencataMukherjee2003": {
+    "doi": "10.1109/tnet.2003.810319",
+    "title": "Virtual-topology adaptation for WDM mesh networks under dynamic traffic",
+    "authors": [
+      {
+        "given": "A.",
+        "family": "Gençata"
+      },
+      {
+        "given": "B.",
+        "family": "Mukherjee"
+      }
+    ],
+    "venue": "IEEE/ACM Transactions on Networking",
+    "volume": "11",
+    "issue": "2",
+    "pages": "236-247",
+    "year": 2003,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": [
+      "Crossref prints the ASCII spelling 'Gencata'; the first author's own thesis prints 'Gençata', used here."
+    ]
+  },
+  "Dimarogonas2012": {
+    "doi": "10.1109/tac.2011.2174666",
+    "title": "Distributed Event-Triggered Control for Multi-Agent Systems",
+    "authors": [
+      {
+        "given": "D. V.",
+        "family": "Dimarogonas"
+      },
+      {
+        "given": "E.",
+        "family": "Frazzoli"
+      },
+      {
+        "given": "K. H.",
+        "family": "Johansson"
+      }
+    ],
+    "venue": "IEEE Transactions on Automatic Control",
+    "volume": "57",
+    "issue": "5",
+    "pages": "1291-1297",
+    "year": 2012,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Tabuada2007": {
+    "doi": "10.1109/tac.2007.904277",
+    "title": "Event-Triggered Real-Time Scheduling of Stabilizing Control Tasks",
+    "authors": [
+      {
+        "given": "Paulo",
+        "family": "Tabuada"
+      }
+    ],
+    "venue": "IEEE Transactions on Automatic Control",
+    "volume": "52",
+    "issue": "9",
+    "pages": "1680-1685",
+    "year": 2007,
+    "type": "journal-article",
+    "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Page1954": {
+    "doi": "10.1093/biomet/41.1-2.100",
+    "title": "Continuous inspection schemes",
+    "authors": [
+      {
+        "given": "E. S.",
+        "family": "Page"
+      }
+    ],
+    "venue": "Biometrika",
+    "volume": "41",
+    "issue": "1-2",
+    "pages": "100-115",
+    "year": 1954,
+    "type": "journal-article",
+    "publisher": "Oxford University Press (OUP)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": [
+      "title converted from capitals to sentence case"
+    ]
+  },
+  "Quattrociocchi2014": {
+    "doi": "10.1371/journal.pone.0087986",
+    "title": "Self-Healing Networks: Redundancy and Structure",
+    "authors": [
+      {
+        "given": "Walter",
+        "family": "Quattrociocchi"
+      },
+      {
+        "given": "Guido",
+        "family": "Caldarelli"
+      },
+      {
+        "given": "Antonio",
+        "family": "Scala"
+      }
+    ],
+    "venue": "PLoS ONE",
+    "volume": "9",
+    "issue": "2",
+    "pages": "e87986",
+    "year": 2014,
+    "type": "journal-article",
+    "publisher": "Public Library of Science (PLoS)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "ChanAkoglu2016": {
+    "doi": "10.1007/s10618-015-0447-5",
+    "title": "Optimizing network robustness by edge rewiring: a general framework",
+    "authors": [
+      {
+        "given": "Hau",
+        "family": "Chan"
+      },
+      {
+        "given": "Leman",
+        "family": "Akoglu"
+      }
+    ],
+    "venue": "Data Mining and Knowledge Discovery",
+    "volume": "30",
+    "issue": "5",
+    "pages": "1395-1425",
+    "year": 2016,
+    "type": "journal-article",
+    "publisher": "Springer Science and Business Media LLC",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Wilcoxon1945": {
+    "doi": "10.2307/3001968",
+    "title": "Individual Comparisons by Ranking Methods",
+    "authors": [
+      {
+        "given": "Frank",
+        "family": "Wilcoxon"
+      }
+    ],
+    "venue": "Biometrics Bulletin",
+    "volume": "1",
+    "issue": "6",
+    "pages": "80-83",
+    "year": 1945,
+    "type": "journal-article",
+    "publisher": "JSTOR",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": [
+      "Crossref gives only the start page (80); 80-83 confirmed by several index listings. Whether the 1945 paper fully develops the SIGNED-RANK test is hedged in the sources consulted: author to verify this attribution against the original."
+    ]
+  },
+  "Efron1979": {
+    "doi": "10.1214/aos/1176344552",
+    "title": "Bootstrap Methods: Another Look at the Jackknife",
+    "authors": [
+      {
+        "given": "B.",
+        "family": "Efron"
+      }
+    ],
+    "venue": "The Annals of Statistics",
+    "volume": "7",
+    "issue": "1",
+    "pages": "1-26",
+    "year": 1979,
+    "type": "journal-article",
+    "publisher": "Institute of Mathematical Statistics",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": [
+      "Crossref record has no page range; pages 1-26 confirmed on the Project Euclid record (projecteuclid.org/euclid.aos/1176344552)"
+    ]
+  },
+  "Lakens2017": {
+    "doi": "10.1177/1948550617697177",
+    "title": "Equivalence Tests",
+    "authors": [
+      {
+        "given": "Daniël",
+        "family": "Lakens"
+      }
+    ],
+    "venue": "Social Psychological and Personality Science",
+    "volume": "8",
+    "issue": "4",
+    "pages": "355-362",
+    "year": 2017,
+    "type": "journal-article",
+    "publisher": "SAGE Publications",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": []
+  },
+  "Barnett2005": {
+    "doi": "10.1093/ije/dyh299",
+    "title": "Regression to the mean: what it is and how to deal with it",
+    "authors": [
+      {
+        "given": "A. G",
+        "family": "Barnett"
+      }
+    ],
+    "venue": "International Journal of Epidemiology",
+    "volume": "34",
+    "issue": "1",
+    "pages": "215-220",
+    "year": 2005,
+    "type": "journal-article",
+    "publisher": "Oxford University Press (OUP)",
+    "verification": "Crossref record matches the requested DOI",
+    "notes": [
+      "Crossref gives the online date 2004-08-27; the issue is Int J Epidemiol 34(1), February 2005 (PubMed 15333621, Ovid listing). Cited by issue year."
+    ]
+  },
+  "Holm1979": {
+    "doi": null,
+    "title": "A simple sequentially rejective multiple test procedure",
+    "authors": [
+      {
+        "given": "Sture",
+        "family": "Holm"
+      }
+    ],
+    "venue": "Scandinavian Journal of Statistics",
+    "volume": "6",
+    "issue": "2",
+    "pages": "65-70",
+    "year": 1979,
+    "type": "journal-article",
+    "url": "https://www.jstor.org/stable/4615733",
+    "verification": "PARTIAL",
+    "notes": [
+      "Not found in Crossref (10.2307/4615733 returns 404). Volume, issue, pages and JSTOR id 4615733 are confirmed only by secondary indexes (GESIS ZIS record; Wikipedia Holm-Bonferroni article). TO VERIFY on the publisher/JSTOR page before submission."
+    ]
+  },
+  "Gencata2003Thesis": {
+    "doi": null,
+    "title": "Topology and bandwidth adaptation in optical WDM backbone networks with dynamic traffic",
+    "authors": [
+      {
+        "given": "Ayşegül",
+        "family": "Gençata"
+      }
+    ],
+    "venue": "PhD thesis, Istanbul Technical University, Institute of Science and Technology",
+    "volume": null,
+    "issue": null,
+    "pages": null,
+    "year": 2003,
+    "type": "thesis",
+    "url": "https://web.itu.edu.tr/gencata/pubs/AGthesis.pdf",
+    "verification": "author-hosted full text read (139 pages)",
+    "notes": [
+      "Cited for the watermark trigger (Sect. 3.3, p. 39) and the history-window variant (Sect. 4.4.5, pp. 64-65). The thesis prints the name 'Ayşegül GENÇATA'; the journal record in Crossref lists 'A. Gencata'. The thesis lists the ToN paper as 'to appear' in April 2003; which thesis parts appear in the journal paper is unverified."
+    ]
+  }
+}

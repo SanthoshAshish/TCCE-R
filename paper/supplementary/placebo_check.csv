@@ -1,0 +1,5 @@
+cell,delay,n_updates,A5_legacy_success_share,static_placebo_legacy_success_share,counterfactual_null_mutation_outcome
+d2_M3,2,152,0.8092105263157895,0.6776315789473685,neutral by construction (delta = 0)
+d2_M6,2,313,0.7955271565495208,0.7284345047923323,neutral by construction (delta = 0)
+d8_M3,8,141,0.7730496453900709,0.6737588652482269,neutral by construction (delta = 0)
+d8_M6,8,295,0.7898305084745763,0.7254237288135593,neutral by construction (delta = 0)

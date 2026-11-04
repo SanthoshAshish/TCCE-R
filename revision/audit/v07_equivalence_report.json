@@ -1,0 +1,128 @@
+{
+ "seeds": [
+  7000,
+  7001,
+  7002,
+  7003,
+  7004,
+  7005,
+  7006,
+  7007,
+  7008,
+  7009
+ ],
+ "n_runs": 440,
+ "all_exact": false,
+ "groups": {
+  "A0_S1_rgg40_bursty": {
+   "rows_old": 800,
+   "rows_new": 800,
+   "columns_compared": 33,
+   "missing_in_new": [],
+   "extra_in_new": [],
+   "differing_columns": {
+    "local_disagreement_max": 3.3881317890172014e-21
+   },
+   "exact_match": false
+  },
+  "A0_S2_rgg40_background": {
+   "rows_old": 800,
+   "rows_new": 800,
+   "columns_compared": 33,
+   "missing_in_new": [],
+   "extra_in_new": [],
+   "differing_columns": {},
+   "exact_match": true
+  },
+  "A0_S3_rgg80_bursty": {
+   "rows_old": 800,
+   "rows_new": 800,
+   "columns_compared": 33,
+   "missing_in_new": [],
+   "extra_in_new": [],
+   "differing_columns": {},
+   "exact_match": true
+  },
+  "S1_rgg40_bursty_M3": {
+   "rows_old": 5600,
+   "rows_new": 5600,
+   "columns_compared": 49,
+   "missing_in_new": [],
+   "extra_in_new": [],
+   "differing_columns": {
+    "local_disagreement_total": 3.3881317890172014e-21,
+    "local_disagreement_max": 3.3881317890172014e-21,
+    "v06_stat": 4.440892098500626e-16,
+    "debt": 4.440892098500626e-16,
+    "theta": 4.440892098500626e-16
+   },
+   "exact_match": false
+  },
+  "S1_rgg40_bursty_M6": {
+   "rows_old": 5600,
+   "rows_new": 5600,
+   "columns_compared": 49,
+   "missing_in_new": [],
+   "extra_in_new": [],
+   "differing_columns": {
+    "local_disagreement_total": 3.3881317890172014e-21,
+    "local_disagreement_max": 3.3881317890172014e-21,
+    "v06_stat": 4.440892098500626e-16,
+    "debt": 4.440892098500626e-16
+   },
+   "exact_match": false
+  },
+  "S2_rgg40_background_M3": {
+   "rows_old": 5600,
+   "rows_new": 5600,
+   "columns_compared": 49,
+   "missing_in_new": [],
+   "extra_in_new": [],
+   "differing_columns": {
+    "local_disagreement_total": 3.3881317890172014e-21,
+    "local_disagreement_max": 3.3881317890172014e-21,
+    "v06_stat": 4.440892098500626e-16,
+    "debt": 4.440892098500626e-16
+   },
+   "exact_match": false
+  },
+  "S2_rgg40_background_M6": {
+   "rows_old": 5600,
+   "rows_new": 5600,
+   "columns_compared": 49,
+   "missing_in_new": [],
+   "extra_in_new": [],
+   "differing_columns": {
+    "local_disagreement_total": 3.3881317890172014e-21,
+    "local_disagreement_max": 3.3881317890172014e-21,
+    "v06_stat": 3.552713678800501e-15,
+    "debt": 3.552713678800501e-15
+   },
+   "exact_match": false
+  },
+  "S3_rgg80_bursty_M3": {
+   "rows_old": 4800,
+   "rows_new": 4800,
+   "columns_compared": 49,
+   "missing_in_new": [],
+   "extra_in_new": [],
+   "differing_columns": {
+    "v06_stat": 8.881784197001252e-16,
+    "debt": 8.881784197001252e-16
+   },
+   "exact_match": false
+  },
+  "S3_rgg80_bursty_M6": {
+   "rows_old": 5600,
+   "rows_new": 5600,
+   "columns_compared": 49,
+   "missing_in_new": [],
+   "extra_in_new": [],
+   "differing_columns": {
+    "v06_stat": 4.440892098500626e-16,
+    "debt": 4.440892098500626e-16
+   },
+   "exact_match": false
+  }
+ }
+}

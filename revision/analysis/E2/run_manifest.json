@@ -1,0 +1,199 @@
+{
+ "command": "python -m experiments.analyze_v08 ",
+ "script_sha256": "eeb1acf5b5301f9963be534e46ff6f9c0b71cb6b2fdfd13a65d2ee43d5255aa1",
+ "git_commit": "e16a2084a564fc00abae2b0713283fc3a6ab6d18",
+ "git_dirty_tracked": [],
+ "python": "3.11.9",
+ "numpy": "2.3.4",
+ "pandas": "2.3.3",
+ "scipy": "1.17.1",
+ "matplotlib": "3.10.8",
+ "bootstrap": {
+  "n": 10000,
+  "seed": 20261010
+ },
+ "margin": 0.02,
+ "families": {
+  "primary": [
+   [
+    "B8",
+    "A1"
+   ],
+   [
+    "B8",
+    "A7"
+   ],
+   [
+    "H1",
+    "A7"
+   ]
+  ],
+  "ablation": [
+   [
+    "B2",
+    "A1"
+   ],
+   [
+    "B3",
+    "A1"
+   ],
+   [
+    "B4",
+    "B2"
+   ],
+   [
+    "B4",
+    "B3"
+   ],
+   [
+    "B5",
+    "B4"
+   ],
+   [
+    "B6",
+    "B5"
+   ],
+   [
+    "B8",
+    "B6"
+   ],
+   [
+    "B8",
+    "B7"
+   ]
+  ],
+  "matched": [
+   [
+    "B8",
+    "A7M"
+   ],
+   [
+    "H1",
+    "A7M"
+   ]
+  ],
+  "continuity_exploratory": [
+   [
+    "A5",
+    "A1"
+   ],
+   [
+    "A5",
+    "A7"
+   ],
+   [
+    "B8",
+    "A5"
+   ],
+   [
+    "H1",
+    "B8"
+   ],
+   [
+    "A7",
+    "A1"
+   ],
+   [
+    "A7M",
+    "A7"
+   ],
+   [
+    "B5",
+    "A1"
+   ]
+  ]
+ },
+ "exclusions": "none (all 4,500 runs analysed)",
+ "input_sha256": {
+  "results/v0.8/E2/eval/COMPLETE": "8cac932742415af9e04f42794bb5ad543c388162c140f5b9ae3ce950a85faa80",
+  "results/v0.8/E2/eval/run_info.json": "fbecb835e795a449baa09e695f4945b65f5779e68e94efdba236df32ccb93459",
+  "results/v0.8/E2/eval/A0_S1_rgg40_bursty/epochs.csv": "3878f8d146f7998fbe6257330291f690a243aa141c361fbbb3da48d2d47b420d",
+  "results/v0.8/E2/eval/A0_S2_rgg40_background/epochs.csv": "d27f8f23a917e93c912254cd76b37d119cac3c621124883fc3e81e2fcb61611a",
+  "results/v0.8/E2/eval/A0_S3_rgg80_bursty/epochs.csv": "101bf838afec6e1a4e66c1b87a6ab05182a7e61d593420c9573ea004ddc3c3bc",
+  "results/v0.8/E2/eval/S1_rgg40_bursty_M3/epochs.csv": "f253c7a8ed7f86ffb55958b1c68a7e007ed418d548e4f79f5e51d8c59229d0b7",
+  "results/v0.8/E2/eval/S1_rgg40_bursty_M6/epochs.csv": "b3750a8bddc0fb202912fa8a4f7f3f37c9a0f53f97226e8791a212f9ad1721de",
+  "results/v0.8/E2/eval/S2_rgg40_background_M3/epochs.csv": "696a92de488b6197f13081a8f4f58f4170cdd7703945709bc14e11c4e9a785bc",
+  "results/v0.8/E2/eval/S2_rgg40_background_M6/epochs.csv": "54b092af039bb800272db9159360b67665e0179e1e83e788f16dd0a9c7474cce",
+  "results/v0.8/E2/eval/S3_rgg80_bursty_M3/epochs.csv": "fdde7bfd9efe8687f54619509fe819f148518906e2c87502b15135f847d6ad30",
+  "results/v0.8/E2/eval/S3_rgg80_bursty_M6/epochs.csv": "87ed93aede5c2bab4d2356aefef3cd3ef8a06a73039ffe18368a40da0f6f1383",
+  "configs/v0.8/frozen/A0_S1_rgg40_bursty.yaml": "de9c74543b212e5fe70076181a8af3ee3ef6bfca631875b41562fd6d36ecf991",
+  "configs/v0.8/frozen/A0_S2_rgg40_background.yaml": "fed02abe1280655fdc3272d3dbbef156041ec26508c4b60127c8f477c0641c6e",
+  "configs/v0.8/frozen/A0_S3_rgg80_bursty.yaml": "d59a05902e3a27be6e35f4ab7a5fa086d2224a606de386ab983ac6e8f0487039",
+  "configs/v0.8/frozen/A1_S1_rgg40_bursty_M3.yaml": "03eb53713dea620e0a85ae4321c7c3dbab01b963d5420ad81aa1ca3b1329c8b7",
+  "configs/v0.8/frozen/A1_S1_rgg40_bursty_M6.yaml": "fc301434f5f548c78b9b2b677c2b6fffc52d6763d6759c29927f300705514dd7",
+  "configs/v0.8/frozen/A1_S2_rgg40_background_M3.yaml": "bde18f9c07c9effc0e95da9e1ebcc8cc2bfac03e0cd6f21359a0e69330034789",
+  "configs/v0.8/frozen/A1_S2_rgg40_background_M6.yaml": "b383881ea4a4883de2ce0a6251711785ffa16232f05055e0c81a6914ea5472a2",
+  "configs/v0.8/frozen/A1_S3_rgg80_bursty_M3.yaml": "f02d401e7529ad299da3d2d40082301f0f2bb87f11b81e409f2dc3ba710f6be8",
+  "configs/v0.8/frozen/A1_S3_rgg80_bursty_M6.yaml": "ffa232c6747248d18ea984066811bf9ffe277c67bc82820fe9d9440cf0e26e1b",
+  "configs/v0.8/frozen/A5_S1_rgg40_bursty_M3.yaml": "59e44c1f372d29548f3e480e5943a7bb7005ad974f0d5269d8be6e88602046bd",
+  "configs/v0.8/frozen/A5_S1_rgg40_bursty_M6.yaml": "ec857d06b79731722b22a61d0c688ea6ba4e4330d4b5a94b006917fc6fc32deb",
+  "configs/v0.8/frozen/A5_S2_rgg40_background_M3.yaml": "b7f0a5b04d0ebd69eddcea07e744fd332ecbacf498a625d18bbb0003ab2c317c",
+  "configs/v0.8/frozen/A5_S2_rgg40_background_M6.yaml": "9607661b70a7a4200ae8f80d0a485e5973c2152465870a908aa5aeb976c4b02d",
+  "configs/v0.8/frozen/A5_S3_rgg80_bursty_M3.yaml": "f61c18417f080f8171bbec4ed3122fd2fc3516e5bd01270a9bf627a1e0fa7cb4",
+  "configs/v0.8/frozen/A5_S3_rgg80_bursty_M6.yaml": "d6b666aedcc1b5bb9c64f02ae81c3c7acf4c837920be2285de5788482090e696",
+  "configs/v0.8/frozen/A7M_S1_rgg40_bursty_M3.yaml": "997e0c37c46bc1dc560b162604ec5880e35b3e72d9d8cbec65aff868350c2e0c",
+  "configs/v0.8/frozen/A7M_S1_rgg40_bursty_M6.yaml": "a3f66250f4c70a0425ebcf8fc9f800115d9547a1a0fe7e83332253a97e2440a4",
+  "configs/v0.8/frozen/A7M_S2_rgg40_background_M3.yaml": "a2fcab107b3fcb1b670e3ce8f294d838709c033734281ccb052e140449e54cf2",
+  "configs/v0.8/frozen/A7M_S2_rgg40_background_M6.yaml": "f8ec3e6983b79d3435a170a051f758fa52abf406635cd738a630a41d4d6acbc3",
+  "configs/v0.8/frozen/A7M_S3_rgg80_bursty_M3.yaml": "32d9244523a33d1dab8c541ebacb1840c0b99adc86177a7397bee81a15df62ec",
+  "configs/v0.8/frozen/A7M_S3_rgg80_bursty_M6.yaml": "0a0841c889f36acc2d701df8c9dbc678fa76a73d4e47ca7feb16db61f29dd1cc",
+  "configs/v0.8/frozen/A7_S1_rgg40_bursty_M3.yaml": "0fe1f1c345c9651cd41e82db0dab9d59d3d8d85d178bbbcde41c060a16282545",
+  "configs/v0.8/frozen/A7_S1_rgg40_bursty_M6.yaml": "7fc781d8f3cf9fc7a6a658a693b37b02b47e53ed7f291707276e839a67530da2",
+  "configs/v0.8/frozen/A7_S2_rgg40_background_M3.yaml": "84486d7b564894e49b690232d82b3031c02476a77e4878ff98d5040e65db442d",
+  "configs/v0.8/frozen/A7_S2_rgg40_background_M6.yaml": "f2c8e67aec816e09d818db99369fec4f2b2c7d90c9acfc73f28606f3c026b11e",
+  "configs/v0.8/frozen/A7_S3_rgg80_bursty_M3.yaml": "32365896eb3876cd049fc2bac4769ea5d6a16b91a433215b9f54b0f4f63ef4f7",
+  "configs/v0.8/frozen/A7_S3_rgg80_bursty_M6.yaml": "e9a487421ac5024dc30bbc00197cbaff383ec743ff119d6732583095809552e9",
+  "configs/v0.8/frozen/B2_S1_rgg40_bursty_M3.yaml": "8fcdae3a06ca0f6ad6f7436bf2f18762bebfc7b30734176f7efb4acdc50ecc5c",
+  "configs/v0.8/frozen/B2_S1_rgg40_bursty_M6.yaml": "c3a7a8e2d12c05e00c5252011bc0bbb64550cbbf89ee6c9b21ae5aabf549bf24",
+  "configs/v0.8/frozen/B2_S2_rgg40_background_M3.yaml": "17caf2fce754b5ce66ceb2c81e83670cdb31334df5298134993d1fbdb2c92c7b",
+  "configs/v0.8/frozen/B2_S2_rgg40_background_M6.yaml": "fb9da971389ae94086ee7435cba6a7c176be36fa29bbea791bb13f9be11b5053",
+  "configs/v0.8/frozen/B2_S3_rgg80_bursty_M3.yaml": "66f5194c8500013fcecf6337d62b5bdd88fbda736842d6f160c641808cfa96dc",
+  "configs/v0.8/frozen/B2_S3_rgg80_bursty_M6.yaml": "cd97d8cee4de93d7ec5bd3feb4f5479e6aa9069305a33fb27a959111ed773d00",
+  "configs/v0.8/frozen/B3_S1_rgg40_bursty_M3.yaml": "4c625395397bff90557d8da4c0aaf3d3ece14c5f8f27422a09960d906cd7080d",
+  "configs/v0.8/frozen/B3_S1_rgg40_bursty_M6.yaml": "238a3e54f4b8ffef9a062db8b47629d7bb6b91c34c032c9f290a96f0625646fa",
+  "configs/v0.8/frozen/B3_S2_rgg40_background_M3.yaml": "5c16e95d2ef5f460bcbd533a9ba2909471cfded0ce36c92dcc8e5e0a48a3d22f",
+  "configs/v0.8/frozen/B3_S2_rgg40_background_M6.yaml": "68d6800cde84a56b698cc9fab5f37bad8beb223926541aa9024c5271f592b092",
+  "configs/v0.8/frozen/B3_S3_rgg80_bursty_M3.yaml": "c2ec191263a938815e0f6846748041bd7367a172a849509ab2b50148c1402ed7",
+  "configs/v0.8/frozen/B3_S3_rgg80_bursty_M6.yaml": "dc4411829bed69431133b05c7f67f5ef2eaf5b0554519518883f333ab2cf1ee0",
+  "configs/v0.8/frozen/B4_S1_rgg40_bursty_M3.yaml": "72fc19f9c73f01fd0291eac85368e1a00422910861d5b7ea7665300fe3783d32",
+  "configs/v0.8/frozen/B4_S1_rgg40_bursty_M6.yaml": "05758691d294b914ce64af10dab3218cf0519d922fca36de0c716a40cf6f2026",
+  "configs/v0.8/frozen/B4_S2_rgg40_background_M3.yaml": "aebe5a65fb2e45da70a2a6ce5ae651083ee978951455b6422d3ab1c57be4bdf2",
+  "configs/v0.8/frozen/B4_S2_rgg40_background_M6.yaml": "bfab2986f74c99c7e838da4a3350853544da8ea2bd8ea5a6a7c050ec85bf109a",
+  "configs/v0.8/frozen/B4_S3_rgg80_bursty_M3.yaml": "864dee2f9077edbee8a8a5fb6f503351c4b60b04865ea50f9d682488a9dbafa0",
+  "configs/v0.8/frozen/B4_S3_rgg80_bursty_M6.yaml": "66d24247b037baa2c5df6723a5ff65655fef75efa954b427fcb91229541cf106",
+  "configs/v0.8/frozen/B5_S1_rgg40_bursty_M3.yaml": "59e44c1f372d29548f3e480e5943a7bb7005ad974f0d5269d8be6e88602046bd",
+  "configs/v0.8/frozen/B5_S1_rgg40_bursty_M6.yaml": "9f1a39a36ee295a341980369854ee7d8411798c478a4c504d39c2f02a44c0d8d",
+  "configs/v0.8/frozen/B5_S2_rgg40_background_M3.yaml": "92dde116fa6afc2794912cc3932c8f0f070327bb7f293b54b223f7f5a2db4e56",
+  "configs/v0.8/frozen/B5_S2_rgg40_background_M6.yaml": "df83e547d06ea17b7adeae5213105ecfa4c41be112f1768360c480474fb3662b",
+  "configs/v0.8/frozen/B5_S3_rgg80_bursty_M3.yaml": "8ebd3c5cbbf3f48ad7fe56855cd6dd60532c4bcfbef380852e9a3cd29de4d1fd",
+  "configs/v0.8/frozen/B5_S3_rgg80_bursty_M6.yaml": "144d1b8535883bc5da2382c02b119620cb601e5817e1904821bbd25b1d30c9b7",
+  "configs/v0.8/frozen/B6_S1_rgg40_bursty_M3.yaml": "59e44c1f372d29548f3e480e5943a7bb7005ad974f0d5269d8be6e88602046bd",
+  "configs/v0.8/frozen/B6_S1_rgg40_bursty_M6.yaml": "9f1a39a36ee295a341980369854ee7d8411798c478a4c504d39c2f02a44c0d8d",
+  "configs/v0.8/frozen/B6_S2_rgg40_background_M3.yaml": "92dde116fa6afc2794912cc3932c8f0f070327bb7f293b54b223f7f5a2db4e56",
+  "configs/v0.8/frozen/B6_S2_rgg40_background_M6.yaml": "df83e547d06ea17b7adeae5213105ecfa4c41be112f1768360c480474fb3662b",
+  "configs/v0.8/frozen/B6_S3_rgg80_bursty_M3.yaml": "8ebd3c5cbbf3f48ad7fe56855cd6dd60532c4bcfbef380852e9a3cd29de4d1fd",
+  "configs/v0.8/frozen/B6_S3_rgg80_bursty_M6.yaml": "144d1b8535883bc5da2382c02b119620cb601e5817e1904821bbd25b1d30c9b7",
+  "configs/v0.8/frozen/B7_S1_rgg40_bursty_M3.yaml": "59e44c1f372d29548f3e480e5943a7bb7005ad974f0d5269d8be6e88602046bd",
+  "configs/v0.8/frozen/B7_S1_rgg40_bursty_M6.yaml": "9f1a39a36ee295a341980369854ee7d8411798c478a4c504d39c2f02a44c0d8d",
+  "configs/v0.8/frozen/B7_S2_rgg40_background_M3.yaml": "92dde116fa6afc2794912cc3932c8f0f070327bb7f293b54b223f7f5a2db4e56",
+  "configs/v0.8/frozen/B7_S2_rgg40_background_M6.yaml": "df83e547d06ea17b7adeae5213105ecfa4c41be112f1768360c480474fb3662b",
+  "configs/v0.8/frozen/B7_S3_rgg80_bursty_M3.yaml": "8ebd3c5cbbf3f48ad7fe56855cd6dd60532c4bcfbef380852e9a3cd29de4d1fd",
+  "configs/v0.8/frozen/B7_S3_rgg80_bursty_M6.yaml": "144d1b8535883bc5da2382c02b119620cb601e5817e1904821bbd25b1d30c9b7",
+  "configs/v0.8/frozen/B8_S1_rgg40_bursty_M3.yaml": "59e44c1f372d29548f3e480e5943a7bb7005ad974f0d5269d8be6e88602046bd",
+  "configs/v0.8/frozen/B8_S1_rgg40_bursty_M6.yaml": "9f1a39a36ee295a341980369854ee7d8411798c478a4c504d39c2f02a44c0d8d",
+  "configs/v0.8/frozen/B8_S2_rgg40_background_M3.yaml": "92dde116fa6afc2794912cc3932c8f0f070327bb7f293b54b223f7f5a2db4e56",
+  "configs/v0.8/frozen/B8_S2_rgg40_background_M6.yaml": "df83e547d06ea17b7adeae5213105ecfa4c41be112f1768360c480474fb3662b",
+  "configs/v0.8/frozen/B8_S3_rgg80_bursty_M3.yaml": "8ebd3c5cbbf3f48ad7fe56855cd6dd60532c4bcfbef380852e9a3cd29de4d1fd",
+  "configs/v0.8/frozen/B8_S3_rgg80_bursty_M6.yaml": "144d1b8535883bc5da2382c02b119620cb601e5817e1904821bbd25b1d30c9b7",
+  "configs/v0.8/frozen/H1_S1_rgg40_bursty_M3.yaml": "25d131a0cb790baecccd10d702bec6afcc82635d72b23f4342304ff241165742",
+  "configs/v0.8/frozen/H1_S1_rgg40_bursty_M6.yaml": "d6ba83ebb55430c17282d07145d0e6a08a726793ebd4ac210960bcd69ba55766",
+  "configs/v0.8/frozen/H1_S2_rgg40_background_M3.yaml": "e234c1285314dfd936d97d50ee89e104135ecf1de2668d15604c8178b818f20f",
+  "configs/v0.8/frozen/H1_S2_rgg40_background_M6.yaml": "b7ef81857480fcb78ee09b78515732a8edd9edafc8e5fd6a147000a7ac0ed3af",
+  "configs/v0.8/frozen/H1_S3_rgg80_bursty_M3.yaml": "353726dfe3da27bc3d4ba13b211f6801987872d1cd113729747f38aa8d8b64cb",
+  "configs/v0.8/frozen/H1_S3_rgg80_bursty_M6.yaml": "eb7ea3c1bf313757638c6855ef7c29ddb777898d8d977c158ccb01dfc43d44f4",
+  "configs/v0.8/frozen/MANIFEST.sha256": "6e959a475f31b7bd57908e878159c09c59630439990734a745320a87662a2103",
+  "configs/v0.8/frozen/calibration_report.csv": "553310137f4c75aca830a46cd9245fa718f6713cc243b68d157743709a7d8419",
+  "configs/v0.8/frozen/constants.yaml": "55ad20ecf20cb315d3fef715d41fe8806790570272b319e13c20b15eb366ad06",
+  "configs/v0.8/frozen/control_count_pmf.csv": "57f6da0cd3b493dbd28ecde5774eee943a00683a78d9b028275c1ae5b0c83898"
+ }
+}

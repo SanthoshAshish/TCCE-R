@@ -1,0 +1,50 @@
+{
+ "retrieved": "2026-11-04",
+ "source": "api.crossref.org",
+ "entries": [
+  {
+   "doi": "10.1109/lcsys.2026.3742141",
+   "claimed_title": "Topology Reconfiguration of Multiagent Systems under Link Failures",
+   "claimed_year": 2026,
+   "claimed_venue": "IEEE Control Systems Letters",
+   "crossref_title": "Topology Reconfiguration of Multiagent Systems under Link Failures",
+   "crossref_year": 2026,
+   "crossref_venue": "IEEE Control Systems Letters",
+   "crossref_type": "journal-article",
+   "authors": [
+    "Jonathan Estrada",
+    "Mohamed Djemai",
+    "Bernardino Castillo-Toledo",
+    "Michael Defoort"
+   ],
+   "volume": null,
+   "issue": null,
+   "pages": "1-1",
+   "has_abstract": false,
+   "title_match": true,
+   "year_match": true,
+   "verified": true
+  },
+  {
+   "doi": "10.1016/j.sysconle.2025.106187",
+   "claimed_title": "Consensus of heterogeneous multi-agent system in switching network using model predictive control",
+   "claimed_year": 2025,
+   "claimed_venue": "Systems & Control Letters",
+   "crossref_title": "Consensus of heterogeneous multi-agent system in switching network using model predictive control",
+   "crossref_year": 2025,
+   "crossref_venue": "Systems &amp; Control Letters",
+   "crossref_type": "journal-article",
+   "authors": [
+    "Shibo Han",
+    "Chong Jin Ong"
+   ],
+   "volume": "204",
+   "issue": null,
+   "pages": "106187",
+   "has_abstract": false,
+   "title_match": true,
+   "year_match": true,
+   "verified": true
+  }
+ ]
+}

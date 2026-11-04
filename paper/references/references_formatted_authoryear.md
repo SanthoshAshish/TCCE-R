@@ -1,0 +1,28 @@
+- [Barnett2005] Barnett AG (2005) Regression to the mean: what it is and how to deal with it. International Journal of Epidemiology 34(1):215–220. https://doi.org/10.1093/ije/dyh299
+- [ChanAkoglu2016] Chan H, Akoglu L (2016) Optimizing network robustness by edge rewiring: a general framework. Data Mining and Knowledge Discovery 30(5):1395–1425. https://doi.org/10.1007/s10618-015-0447-5
+- [Dimarogonas2012] Dimarogonas DV, Frazzoli E, Johansson KH (2012) Distributed Event-Triggered Control for Multi-Agent Systems. IEEE Transactions on Automatic Control 57(5):1291–1297. https://doi.org/10.1109/tac.2011.2174666
+- [Efron1979] Efron B (1979) Bootstrap Methods: Another Look at the Jackknife. The Annals of Statistics 7(1):1–26. https://doi.org/10.1214/aos/1176344552
+- [Fiedler1973] Fiedler M (1973) Algebraic connectivity of graphs. Czechoslovak Mathematical Journal 23(2):298–305. https://doi.org/10.21136/cmj.1973.101168
+- [GencataMukherjee2003] Gençata A, Mukherjee B (2003) Virtual-topology adaptation for WDM mesh networks under dynamic traffic. IEEE/ACM Transactions on Networking 11(2):236–247. https://doi.org/10.1109/tnet.2003.810319
+- [Gencata2003Thesis] Gençata A (2003) Topology and bandwidth adaptation in optical WDM backbone networks with dynamic traffic. PhD thesis, Istanbul Technical University, Institute of Science and Technology. https://web.itu.edu.tr/gencata/pubs/AGthesis.pdf
+- [GhoshBoyd2006] Ghosh A, Boyd S (2006) Growing Well-connected Graphs. In: Proceedings of the 45th IEEE Conference on Decision and Control, pp 6605–6611. https://doi.org/10.1109/cdc.2006.377282
+- [GrossBlasius2008] Gross T, Blasius B (2008) Adaptive coevolutionary networks: a review. Journal of The Royal Society Interface 5(20):259–271. https://doi.org/10.1098/rsif.2007.1229
+- [Holm1979] Holm S (1979) A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics 6(2):65–70. https://www.jstor.org/stable/4615733  [DOI NOT VERIFIED]
+- [Jadbabaie2003] Jadbabaie A, Lin J, Morse AS (2003) Coordination of groups of mobile autonomous agents using nearest neighbor rules. IEEE Transactions on Automatic Control 48(6):988–1001. https://doi.org/10.1109/tac.2003.812781
+- [KarMoura2008] Kar S, Moura JMF (2008) Sensor Networks With Random Links: Topology Design for Distributed Consensus. IEEE Transactions on Signal Processing 56(7):3315–3326. https://doi.org/10.1109/tsp.2008.920143
+- [KarMoura2009] Kar S, Moura JMF (2009) Distributed Consensus Algorithms in Sensor Networks With Imperfect Communication: Link Failures and Channel Noise. IEEE Transactions on Signal Processing 57(1):355–369. https://doi.org/10.1109/tsp.2008.2007111
+- [Lakens2017] Lakens D (2017) Equivalence Tests. Social Psychological and Personality Science 8(4):355–362. https://doi.org/10.1177/1948550617697177
+- [LeBlanc2013] LeBlanc HJ, Zhang H, Koutsoukos X, Sundaram S (2013) Resilient Asymptotic Consensus in Robust Networks. IEEE Journal on Selected Areas in Communications 31(4):766–781. https://doi.org/10.1109/jsac.2013.130413
+- [Neumayer2011] Neumayer S, Zussman G, Cohen R, Modiano E (2011) Assessing the Vulnerability of the Fiber Infrastructure to Disasters. IEEE/ACM Transactions on Networking 19(6):1610–1623. https://doi.org/10.1109/tnet.2011.2128879
+- [OlfatiSaberMurray2004] Olfati-Saber R, Murray RM (2004) Consensus Problems in Networks of Agents With Switching Topology and Time-Delays. IEEE Transactions on Automatic Control 49(9):1520–1533. https://doi.org/10.1109/tac.2004.834113
+- [OlfatiSaberFaxMurray2007] Olfati-Saber R, Fax JA, Murray RM (2007) Consensus and Cooperation in Networked Multi-Agent Systems. Proceedings of the IEEE 95(1):215–233. https://doi.org/10.1109/jproc.2006.887293
+- [Page1954] Page ES (1954) Continuous inspection schemes. Biometrika 41(1-2):100–115. https://doi.org/10.1093/biomet/41.1-2.100
+- [Quattrociocchi2014] Quattrociocchi W, Caldarelli G, Scala A (2014) Self-Healing Networks: Redundancy and Structure. PLoS ONE 9(2):e87986. https://doi.org/10.1371/journal.pone.0087986
+- [Santi2005] Santi P (2005) Topology control in wireless ad hoc and sensor networks. ACM Computing Surveys 37(2):164–194. https://doi.org/10.1145/1089733.1089736
+- [Sterbenz2010] Sterbenz JPG, Hutchison D, Çetinkaya EK, Jabbar A, Rohrer JP, Schöller M, Smith P (2010) Resilience and survivability in communication networks: Strategies, principles, and survey of disciplines. Computer Networks 54(8):1245–1265. https://doi.org/10.1016/j.comnet.2010.03.005
+- [Sydney2013] Sydney A, Scoglio C, Gruenbacher D (2013) Optimizing algebraic connectivity by edge rewiring. Applied Mathematics and Computation 219(10):5465–5479. https://doi.org/10.1016/j.amc.2012.11.002
+- [Tabuada2007] Tabuada P (2007) Event-Triggered Real-Time Scheduling of Stabilizing Control Tasks. IEEE Transactions on Automatic Control 52(9):1680–1685. https://doi.org/10.1109/tac.2007.904277
+- [Wilcoxon1945] Wilcoxon F (1945) Individual Comparisons by Ranking Methods. Biometrics Bulletin 1(6):80–83. https://doi.org/10.2307/3001968
+- [XiaoBoyd2004] Xiao L, Boyd S (2004) Fast linear iterations for distributed averaging. Systems & Control Letters 53(1):65–78. https://doi.org/10.1016/j.sysconle.2004.02.022
+- [XiaoBoydLall2005] Xiao L, Boyd S, Lall S (2005) A scheme for robust distributed sensor fusion based on average consensus. In: IPSN 2005. Fourth International Symposium on Information Processing in Sensor Networks, 2005., pp 63–70. https://doi.org/10.1109/ipsn.2005.1440896
+- [Zavlanos2011] Zavlanos MM, Egerstedt MB, Pappas GJ (2011) Graph-theoretic connectivity control of mobile robot networks. Proceedings of the IEEE 99(9):1525–1540. https://doi.org/10.1109/jproc.2011.2157884

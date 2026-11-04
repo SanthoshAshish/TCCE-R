@@ -1,0 +1,218 @@
+{
+  "n_runs": 4500,
+  "validation_problems": [],
+  "primary": {
+    "S1_rgg40_bursty_M3|B8-A1": {
+      "mean_diff": -0.024765736044190613,
+      "boot_lo": -0.03298517656200509,
+      "boot_hi": -0.01663820806668794,
+      "holm_p": 1.7122731899649176e-05,
+      "verdict": "first arm meaningfully better"
+    },
+    "S1_rgg40_bursty_M3|B8-A7": {
+      "mean_diff": 0.047003392850591845,
+      "boot_lo": 0.031699943054008334,
+      "boot_hi": 0.06227325339388959,
+      "holm_p": 4.715343064032777e-06,
+      "verdict": "second arm meaningfully better"
+    },
+    "S1_rgg40_bursty_M3|H1-A7": {
+      "mean_diff": 0.0012309731819696444,
+      "boot_lo": -0.009011956378312851,
+      "boot_hi": 0.010773057935360895,
+      "holm_p": 1.0,
+      "verdict": "practically equivalent"
+    },
+    "S1_rgg40_bursty_M6|B8-A1": {
+      "mean_diff": -0.04116607000191668,
+      "boot_lo": -0.04969622320088573,
+      "boot_hi": -0.03242732254746316,
+      "holm_p": 1.6160110754308663e-08,
+      "verdict": "first arm meaningfully better"
+    },
+    "S1_rgg40_bursty_M6|B8-A7": {
+      "mean_diff": 0.05552226063750273,
+      "boot_lo": 0.03830528017878456,
+      "boot_hi": 0.07289166460366997,
+      "holm_p": 3.0331935662043516e-06,
+      "verdict": "second arm meaningfully better"
+    },
+    "S1_rgg40_bursty_M6|H1-A7": {
+      "mean_diff": 0.0017855395157949895,
+      "boot_lo": -0.009628484833842835,
+      "boot_hi": 0.012545622715987505,
+      "holm_p": 1.0,
+      "verdict": "practically equivalent"
+    },
+    "S2_rgg40_background_M3|B8-A1": {
+      "mean_diff": -0.018314837054210727,
+      "boot_lo": -0.027540910537678973,
+      "boot_hi": -0.010118865401663396,
+      "holm_p": 0.00014218376873678456,
+      "verdict": "first arm better, below minimum meaningful effect"
+    },
+    "S2_rgg40_background_M3|B8-A7": {
+      "mean_diff": 0.04176686073405057,
+      "boot_lo": 0.02415959103927422,
+      "boot_hi": 0.05884813037467909,
+      "holm_p": 0.0004989680272391922,
+      "verdict": "second arm meaningfully better"
+    },
+    "S2_rgg40_background_M3|H1-A7": {
+      "mean_diff": 0.0016338285510035092,
+      "boot_lo": -0.013263349058383422,
+      "boot_hi": 0.016228792489448536,
+      "holm_p": 1.0,
+      "verdict": "practically equivalent"
+    },
+    "S2_rgg40_background_M6|B8-A1": {
+      "mean_diff": -0.013979052578208386,
+      "boot_lo": -0.02313778091263882,
+      "boot_hi": -0.00435463797650809,
+      "holm_p": 0.024605262052472286,
+      "verdict": "first arm better, below minimum meaningful effect"
+    },
+    "S2_rgg40_background_M6|B8-A7": {
+      "mean_diff": 0.019537915920094035,
+      "boot_lo": 0.0027426178622528556,
+      "boot_hi": 0.035761453986511,
+      "holm_p": 0.15738532731238236,
+      "verdict": "inconclusive"
+    },
+    "S2_rgg40_background_M6|H1-A7": {
+      "mean_diff": -0.009499923754830311,
+      "boot_lo": -0.024090956934171886,
+      "boot_hi": 0.004273231944997446,
+      "holm_p": 1.0,
+      "verdict": "inconclusive"
+    },
+    "S3_rgg80_bursty_M3|B8-A1": {
+      "mean_diff": -0.014441926005252239,
+      "boot_lo": -0.017809850174078972,
+      "boot_hi": -0.011130252639270399,
+      "holm_p": 2.490694012187985e-08,
+      "verdict": "first arm better, below minimum meaningful effect"
+    },
+    "S3_rgg80_bursty_M3|B8-A7": {
+      "mean_diff": 0.009604392546555587,
+      "boot_lo": 0.00406217343015611,
+      "boot_hi": 0.015160489143398443,
+      "holm_p": 0.024605262052472286,
+      "verdict": "second arm better, below minimum meaningful effect"
+    },
+    "S3_rgg80_bursty_M3|H1-A7": {
+      "mean_diff": -0.006143067770544474,
+      "boot_lo": -0.010275154075098403,
+      "boot_hi": -0.0021929127166300747,
+      "holm_p": 0.15738532731238236,
+      "verdict": "practically equivalent"
+    },
+    "S3_rgg80_bursty_M6|B8-A1": {
+      "mean_diff": -0.022725383238855208,
+      "boot_lo": -0.026929234177189214,
+      "boot_hi": -0.018561466629177924,
+      "holm_p": 1.2456054570598167e-09,
+      "verdict": "first arm meaningfully better"
+    },
+    "S3_rgg80_bursty_M6|B8-A7": {
+      "mean_diff": 0.01035103873888042,
+      "boot_lo": 0.004087708064117641,
+      "boot_hi": 0.01682544438660434,
+      "holm_p": 0.01295293378822421,
+      "verdict": "second arm better, below minimum meaningful effect"
+    },
+    "S3_rgg80_bursty_M6|H1-A7": {
+      "mean_diff": -0.0031270859082124496,
+      "boot_lo": -0.007958384755956163,
+      "boot_hi": 0.0017347610000017627,
+      "holm_p": 0.2734201086634621,
+      "verdict": "practically equivalent"
+    }
+  },
+  "matched": {
+    "S1_rgg40_bursty_M3|B8-A7M": {
+      "mean_diff": 0.05751380915232925,
+      "boot_lo": 0.04348864586265549,
+      "boot_hi": 0.07199735493842323,
+      "holm_p": 5.529812166418019e-08,
+      "verdict": "second arm meaningfully better"
+    },
+    "S1_rgg40_bursty_M3|H1-A7M": {
+      "mean_diff": 0.01174138948370705,
+      "boot_lo": 0.003861253199857426,
+      "boot_hi": 0.01953147154688289,
+      "holm_p": 0.022563162472143954,
+      "verdict": "second arm better, below minimum meaningful effect"
+    },
+    "S1_rgg40_bursty_M6|B8-A7M": {
+      "mean_diff": 0.07136308809395166,
+      "boot_lo": 0.05516913039653214,
+      "boot_hi": 0.08807437620611115,
+      "holm_p": 3.40333095449089e-08,
+      "verdict": "second arm meaningfully better"
+    },
+    "S1_rgg40_bursty_M6|H1-A7M": {
+      "mean_diff": 0.017626366972243932,
+      "boot_lo": 0.0069325950955945745,
+      "boot_hi": 0.027662536606562427,
+      "holm_p": 0.002049941865970147,
+      "verdict": "second arm better, below minimum meaningful effect"
+    },
+    "S2_rgg40_background_M3|B8-A7M": {
+      "mean_diff": 0.06148289312121529,
+      "boot_lo": 0.04741402638111577,
+      "boot_hi": 0.07515119405658789,
+      "holm_p": 4.663669611831433e-08,
+      "verdict": "second arm meaningfully better"
+    },
+    "S2_rgg40_background_M3|H1-A7M": {
+      "mean_diff": 0.02134986093816824,
+      "boot_lo": 0.010432480770198153,
+      "boot_hi": 0.03241350979862101,
+      "holm_p": 0.0014222730473754074,
+      "verdict": "second arm meaningfully better"
+    },
+    "S2_rgg40_background_M6|B8-A7M": {
+      "mean_diff": 0.04152173380851786,
+      "boot_lo": 0.026212153367311506,
+      "boot_hi": 0.056285071629462835,
+      "holm_p": 4.481316595310335e-05,
+      "verdict": "second arm meaningfully better"
+    },
+    "S2_rgg40_background_M6|H1-A7M": {
+      "mean_diff": 0.01248389413359351,
+      "boot_lo": -0.0006594642178878213,
+      "boot_hi": 0.025232187276972743,
+      "holm_p": 0.04097372482759154,
+      "verdict": "second arm better, below minimum meaningful effect"
+    },
+    "S3_rgg80_bursty_M3|B8-A7M": {
+      "mean_diff": 0.01460046362028198,
+      "boot_lo": 0.009306119715523212,
+      "boot_hi": 0.01989308103710063,
+      "holm_p": 2.623056726929464e-05,
+      "verdict": "second arm better, below minimum meaningful effect"
+    },
+    "S3_rgg80_bursty_M3|H1-A7M": {
+      "mean_diff": -0.0011469966968180793,
+      "boot_lo": -0.005320553229593646,
+      "boot_hi": 0.0026060149075033258,
+      "holm_p": 0.5314879489046715,
+      "verdict": "practically equivalent"
+    },
+    "S3_rgg80_bursty_M6|B8-A7M": {
+      "mean_diff": 0.01793636578933108,
+      "boot_lo": 0.01254766764786625,
+      "boot_hi": 0.023717105648080532,
+      "holm_p": 1.127449957075195e-06,
+      "verdict": "second arm better, below minimum meaningful effect"
+    },
+    "S3_rgg80_bursty_M6|H1-A7M": {
+      "mean_diff": 0.004458241142238207,
+      "boot_lo": 0.0001848825255445518,
+      "boot_hi": 0.008855859973540972,
+      "holm_p": 0.21065681144662673,
+      "verdict": "practically equivalent"
+    }
+  }
+}
