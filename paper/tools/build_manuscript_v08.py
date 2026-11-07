@@ -348,6 +348,8 @@ def resolve(m):
     a = arg.split("|")
     if kind == "T":
         return TABLE_TEXT[arg]
+    if kind == "F":                       # Revision 2: generated section/appendix text (paper/tools/make_r2_section.py)
+        return open(f"{TABLE_DIR}/{arg}.md", encoding="utf-8").read().strip()
     if kind == "v":
         return fmt(float(rowof(a[0], a[1], a[2])[a[3]]), a[4])
     if kind == "ci":
