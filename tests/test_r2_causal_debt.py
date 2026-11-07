@@ -227,3 +227,17 @@ def test_calibration_script_fixes_c1_constants_and_guards_seeds():
     assert R2_SEEDS == tuple(range(8300, 8320))
     with pytest.raises(Exception):
         assert_seeds(tuple(range(9000, 9060)), range(8300, 8320), "R2 calibration")
+
+
+def test_amendment_1_rule_and_seed_guards():
+    import pandas as pd
+    from experiments.calibrate_r2a import GRID_CAP, SEEDS, capped_means
+    from experiments.run_r2 import AM_SEEDS, EVAL_SEEDS
+    from experiments.v08_common import assert_seeds
+    assert SEEDS == tuple(range(8400, 8420)) and AM_SEEDS == tuple(range(9200, 9260)) and GRID_CAP == 6
+    assert not set(SEEDS) & set(range(8300, 8320)) and not set(AM_SEEDS) & set(EVAL_SEEDS)     # fresh seeds
+    with pytest.raises(Exception):
+        assert_seeds(tuple(range(9100, 9160)), range(9200, 9260), "amended")
+    d = pd.DataFrame({"scenario": "s", "arm": "C1", "threshold": 1.0, "seed": range(4), "count": [0, 2, 5, 6]})
+    assert capped_means(d, 3)["count"].iloc[0] == (0 + 2 + 3 + 3) / 4              # count under cap M = min(count, M)
+    assert capped_means(d, 6)["count"].iloc[0] == (0 + 2 + 5 + 6) / 4

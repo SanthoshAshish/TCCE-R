@@ -22,6 +22,7 @@ EVAL_SEEDS = tuple(range(9100, 9160))
 SMOKE_SEEDS = (8202, 8203)
 FROZEN_DIR, SMOKE_FROZEN_DIR = "configs/r2/frozen", "results/r2/smoke/frozen"
 EVAL_OUT, SMOKE_OUT = "results/r2/main/eval", "results/r2/smoke/run"
+AM_SEEDS, AM_FROZEN, AM_OUT = tuple(range(9200, 9260)), "configs/r2a/frozen", "results/r2a/main/eval"   # Amendment 1
 POLICY = {**{a: ARM_POLICY[a] for a in ("A0", "A1", "A7", "A7M", "B8")}, "C1": "r2_causal"}
 ARMS = ("A1", "A7", "A7M", "B8", "C1")
 
@@ -43,13 +44,16 @@ def build_jobs(frozen, seeds):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["smoke", "eval"], required=True)
+    ap.add_argument("--amended", action="store_true", help="Amendment 1: seeds 9200-9259, configs/r2a/frozen -> results/r2a/main/eval (eval only)")
     ap.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) - 1))
     a = ap.parse_args()
     smoke = a.mode == "smoke"
-    seeds = SMOKE_SEEDS if smoke else EVAL_SEEDS
-    assert_seeds(seeds, range(8200, 8220) if smoke else range(9100, 9160), f"R2 {a.mode}")
-    frozen = SMOKE_FROZEN_DIR if smoke else FROZEN_DIR
-    out = SMOKE_OUT if smoke else EVAL_OUT
+    if a.amended and smoke:
+        raise SystemExit("--amended is for --mode eval only")
+    seeds = SMOKE_SEEDS if smoke else (AM_SEEDS if a.amended else EVAL_SEEDS)
+    assert_seeds(seeds, range(8200, 8220) if smoke else (range(9200, 9260) if a.amended else range(9100, 9160)), f"R2 {a.mode}")
+    frozen = SMOKE_FROZEN_DIR if smoke else (AM_FROZEN if a.amended else FROZEN_DIR)
+    out = SMOKE_OUT if smoke else (AM_OUT if a.amended else EVAL_OUT)
     listed = verify_manifest(os.path.join(frozen, "MANIFEST.sha256"))
     git = git_state()
     if smoke:
