@@ -157,7 +157,7 @@ def efficiency_tables(ps):
 
 
 def fig_E(summ, out):
-    fig, axes = plt.subplots(2, 3, figsize=(12, 6))
+    fig, axes = plt.subplots(2, 3, figsize=(13, 6.5))
     order = ["A1", "A7", "A7M", "B8", "C1"]
     for ax, cell in zip(axes.ravel(), CELL_LIST):
         s = summ[summ.cell == cell].set_index("arm")
@@ -174,9 +174,9 @@ def fig_E(summ, out):
         ax.invert_yaxis()
         ax.grid(axis="x")
         ax.set_title(cell.replace("_", " "))
-        ax.set_xlabel("mean E (95% t-interval); dashed: Static")
+        ax.set_xlabel("mean E")
     fig.suptitle("Revision 2 main evaluation: mean consensus error (lower is better)", y=1.0)
-    fig.tight_layout()
+    fig.tight_layout(w_pad=2.5, h_pad=1.5)
     v8._save(fig, out, "fig_E_by_cell")
 
 

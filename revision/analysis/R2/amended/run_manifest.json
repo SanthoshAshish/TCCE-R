@@ -1,0 +1,93 @@
+{
+ "command": "python -m experiments.analyze_r2 --amended",
+ "script_sha256": "3af20085ed576e5aefe23422b7c7cdb841218d342c58dd4612c3b76c3861f92f",
+ "git_commit": "14b7359321bdf79193bc0d84140c2faa7bd3b600",
+ "families": {
+  "primary": [
+   [
+    "C1",
+    "A7"
+   ],
+   [
+    "C1",
+    "A7M"
+   ],
+   [
+    "C1",
+    "A1"
+   ],
+   [
+    "C1",
+    "B8"
+   ]
+  ],
+  "reference": [
+   [
+    "B8",
+    "A1"
+   ],
+   [
+    "B8",
+    "A7"
+   ],
+   [
+    "B8",
+    "A7M"
+   ]
+  ]
+ },
+ "margin": 0.02,
+ "bootstrap": {
+  "n": 10000,
+  "seed": 20261010
+ },
+ "input_sha256": {
+  "results/r2a/main/eval/COMPLETE": "c2dddea7c13179650a286a3b38a2a364191ee2ca9f89e2a8f512675727e4e8ae",
+  "results/r2a/main/eval/run_info.json": "904fb7227a151977fb53462813e045786a48ff55f97ddccd92bc4d7648fb6d39",
+  "results/r2a/main/eval/A0_S1_rgg40_bursty/epochs.csv": "06691aec73687d6f519abe964b627c3b4efe7eed68a8af4a637f58b011a66309",
+  "results/r2a/main/eval/A0_S2_rgg40_background/epochs.csv": "dba6aa6d047735cbc0490e9853e98f513a998167468d296ef3f2be49bcd63e83",
+  "results/r2a/main/eval/A0_S3_rgg80_bursty/epochs.csv": "5a9c5c25a9da5cd6959df9a6a7fda493360b2c5201502bde2ce757fc7221db4c",
+  "results/r2a/main/eval/S1_rgg40_bursty_M3/epochs.csv": "c15035ef5876a6829d333c56c347ec55e980a9f10f745cbe0c91bd14b0c55e9f",
+  "results/r2a/main/eval/S1_rgg40_bursty_M6/epochs.csv": "126277aa699791ee272a9b180387a542a570989ff46653bcc8bd1026ca88ff04",
+  "results/r2a/main/eval/S2_rgg40_background_M3/epochs.csv": "0aaa96f819fdad395ac494bcb469e3b38c16157210d4699135c65096879eb86c",
+  "results/r2a/main/eval/S2_rgg40_background_M6/epochs.csv": "b8481c35f32156d45ee95760cde1f32dd050dad41e927c8f28376e4219154d18",
+  "results/r2a/main/eval/S3_rgg80_bursty_M3/epochs.csv": "c90d38173b1f9db86347283ecb4008041f6155f5b8f5b78e97a7d8be19c90973",
+  "results/r2a/main/eval/S3_rgg80_bursty_M6/epochs.csv": "9cefd9edaa6cc10d32052be6d24703461917dfe2b15e55152b90d203e8f42f24",
+  "configs/r2a/frozen/A0_S1_rgg40_bursty.yaml": "58f1cbd6cb16937f164ac8b23d67e5666379cd42e10fc8647463aa1ce75c1f52",
+  "configs/r2a/frozen/A0_S2_rgg40_background.yaml": "8ca162d930e5f10c9b8190330302ca6fc933c5e1e4318928dcd7180911bb3545",
+  "configs/r2a/frozen/A0_S3_rgg80_bursty.yaml": "1ba09f993225ac52cfae81b9609e69b4c09ca48e94a82bb9876f7d95c65c5d55",
+  "configs/r2a/frozen/A1_S1_rgg40_bursty_M3.yaml": "39deb78ab03bea4c9130db53935cc2af3eef965b982436bed5047e60ff2028d6",
+  "configs/r2a/frozen/A1_S1_rgg40_bursty_M6.yaml": "bb3952b0a961764b26a95c1f778ccac82c1b8bd8fd60f8008e903787a99e25cd",
+  "configs/r2a/frozen/A1_S2_rgg40_background_M3.yaml": "93251f8731a1070773bfa215dad9a4e65a723fc40b2b824902de26226472fb07",
+  "configs/r2a/frozen/A1_S2_rgg40_background_M6.yaml": "ebde0bc0e4b29f0bf8ff66e8e7e927f9675aad0c4ccfa5e130ede54f4842b196",
+  "configs/r2a/frozen/A1_S3_rgg80_bursty_M3.yaml": "616666f047f32ac0489250702df996e4553216a45caf7745950846c1cc3e924a",
+  "configs/r2a/frozen/A1_S3_rgg80_bursty_M6.yaml": "3b70c2f9883a246d45f6d881e216d89ba7c34b7b3f2d762090886dda13d25a17",
+  "configs/r2a/frozen/A7M_S1_rgg40_bursty_M3.yaml": "4efd0f21e6cc9f688b80ec7306a969865d8fddd0cc05953d74d132b21f636351",
+  "configs/r2a/frozen/A7M_S1_rgg40_bursty_M6.yaml": "94128bbe4230b2af2f0a6241841d88be62eb34ee6cffb1999c058bac4e40a46c",
+  "configs/r2a/frozen/A7M_S2_rgg40_background_M3.yaml": "bcef5f6ba9bb9c225f36930d1729247af0275f8ae8fa256e35fb94619b99bfbb",
+  "configs/r2a/frozen/A7M_S2_rgg40_background_M6.yaml": "86243f08340cdca7ff23061712c680b4d7015a6d9b11b9ed72bd94fab2dd490a",
+  "configs/r2a/frozen/A7M_S3_rgg80_bursty_M3.yaml": "d1b4c69c0b7895473d9b0017b97682bc792718bc38708eada1d9c07b2b83d095",
+  "configs/r2a/frozen/A7M_S3_rgg80_bursty_M6.yaml": "91e9e9b7aace417cd062f8e1a85b3f3e0c0c439774e6bbf9c16bf03d5e38e3fe",
+  "configs/r2a/frozen/A7_S1_rgg40_bursty_M3.yaml": "1b7d05e26f295ab0b6a8bbf6f9865188bdc339d4dd4edd232d739e3f6e1814c9",
+  "configs/r2a/frozen/A7_S1_rgg40_bursty_M6.yaml": "e32e979c11b838bb62a34a5cf2d682255c38785e2bfee820e1fc7caf6fc443c6",
+  "configs/r2a/frozen/A7_S2_rgg40_background_M3.yaml": "18c491e563a6290cb915842cb7a9e23a5635f4e48a53ab40b3fa07cf3bfe0d6a",
+  "configs/r2a/frozen/A7_S2_rgg40_background_M6.yaml": "f58e70eee4db112ac6123f3aeddd2e46040ad492f46769939765b43de3554b7a",
+  "configs/r2a/frozen/A7_S3_rgg80_bursty_M3.yaml": "3f9eb472f537679b819c15a8b08df75d7583603df3f3fe6f8b60eeee48461f87",
+  "configs/r2a/frozen/A7_S3_rgg80_bursty_M6.yaml": "b09c84d4f16045799186304aad87233045a98031b190b8c4da95617b78c69137",
+  "configs/r2a/frozen/B8_S1_rgg40_bursty_M3.yaml": "d8bc19de325ae822138c9ac63b482cd8b984ca2b9a7a7c93c2d8f4a54dd685a9",
+  "configs/r2a/frozen/B8_S1_rgg40_bursty_M6.yaml": "0a5db7888ae6550902837740ea3568cf1642d04f1cdf6082111998f4014b3154",
+  "configs/r2a/frozen/B8_S2_rgg40_background_M3.yaml": "e535f03b027bb707c1b1b167ffeaf4ef50bedb524c5c9756a20d7f7fd80192d9",
+  "configs/r2a/frozen/B8_S3_rgg80_bursty_M3.yaml": "28445f6c82c4e72566c773c4487fb88d786bedde5c4a5d13e8e1f7de54ca8783",
+  "configs/r2a/frozen/B8_S3_rgg80_bursty_M6.yaml": "ff4bf871dfc4b9a7565a9c9853c1988a9c50baf3e00f6000839f3abffa9ee007",
+  "configs/r2a/frozen/C1_S1_rgg40_bursty_M3.yaml": "a1f7376825efd1901d80db6209b3bbb17fd197732ccfcb36b1581bf7007a96eb",
+  "configs/r2a/frozen/C1_S1_rgg40_bursty_M6.yaml": "d874dff11b4b9fe538305d8ec1d64d08525c64ab4a56a36a13c6ad72f5b2bd31",
+  "configs/r2a/frozen/C1_S2_rgg40_background_M3.yaml": "afbc3ffdf330c9786a34b8346c575da979f2209dadff66c32bdf0ebbf74403af",
+  "configs/r2a/frozen/C1_S2_rgg40_background_M6.yaml": "758752a54a67a0cf81aebe4c6820457b83edb717cb64d0d0b81bf69525575179",
+  "configs/r2a/frozen/C1_S3_rgg80_bursty_M3.yaml": "4c4969132848bc9f109f514fbf8b33cde62e9319144a77640a324ac1f18721ee",
+  "configs/r2a/frozen/C1_S3_rgg80_bursty_M6.yaml": "1dbeb47ceb1ec640c381219fdf8e000370d67012381d7dad8407ef814c5ed1cd",
+  "configs/r2a/frozen/MANIFEST.sha256": "fff32de32047eaccff1136908ce5e3b34751c1880293ab0b2b143629dd4505c7",
+  "configs/r2a/frozen/calibration_report.csv": "a6d0e21f80352263b786af15bfd2ea6c12c7bc05b58d50fe996cf90432db0a98",
+  "configs/r2a/frozen/constants.yaml": "228334eb59cd24b2a4063ecdc7fdfa1496621995974714864b4656a78775a5d8",
+  "configs/r2a/frozen/control_count_pmf.csv": "252647b1d2e4225ad529e12e982eca9cdbc1c52bd2ed94ea620267bdb95dd230"
+ }
+}
