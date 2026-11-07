@@ -13,6 +13,7 @@ generator, safety gate and strict edge budget; only *when* and *which candidate*
 import math
 
 from tccer.config import replace
+from tccer.core.causal_debt import CausalDebtLedger
 from tccer.core.feedback import FeedbackEvaluator
 from tccer.core.predict import HazardEstimator, Predictor
 from tccer.core.selector import EMPTY_SELECTION
@@ -115,6 +116,70 @@ class RCPRArm(PredictiveMixin, TCCERArm):
 
     def info(self):
         return {**super().info(), **self.pred_info()}
+
+
+class CausalDebtArm(RCPRArm):
+    """R2-C1 (Revision 2): B8 with the CUSUM debt replaced by the causality-aware ledger (core/causal_debt.py).
+    Everything else (adaptive threshold, counterfactual feedback, predictive selector, cooldown, cap, budget) is B8's,
+    so C1 - B8 isolates the debt accounting. There is no blanket debt reset on a mutation: the ledger settles items."""
+    name = "r2_causal"
+
+    def __init__(self, cfg, pipeline, rng):
+        super().__init__(cfg, pipeline, rng)
+        self.ledger = None
+        self._state = None
+        self._fail_fp, self._fail_k, self._sup_now = None, -1, False
+        self.n_suppressible = self.n_suppressed = self.n_flips = 0
+
+    def decide(self, k, obs, state):
+        if self.ledger is None:
+            self.ledger = CausalDebtLedger(self.cfg, state.n, state.eu, state.ev)
+        self._state = state
+        return super().decide(k, obs, state)
+
+    def update_statistic(self, k, obs):
+        super().update_statistic(k, obs)                  # feedback/threshold update (the CUSUM value is discarded)
+        self.stat = self.ledger.update(self._state, obs["E_hat"], self.hz.rates())
+
+    # -- retry rule (r2_retry): after a failed attempt, re-evaluate only if the decision-relevant state changed -------
+    # The predictor and gate are deterministic functions of (configured, down, ready) and slowly varying hazard
+    # estimates, so re-running them on an unchanged state repeats the previous failure. 'audit' counts the repeats and
+    # how often they would have flipped to a mutation, without changing behaviour; 'state' skips them.
+    def _fp(self, k):
+        st = self._state
+        return (st.configured.tobytes(), st.down.tobytes(), (st.ready_at <= k).tobytes())
+
+    def _suppressible(self, k):
+        hold = self.cfg.link_setup_epochs + self.cfg.pred_horizon_extra      # = prediction horizon H, no new constant
+        return self._fail_fp is not None and k - self._fail_k < hold and self._fail_fp == self._fp(k)
+
+    def wants_attempt(self, k):
+        ok = super().wants_attempt(k)
+        self._sup_now = False
+        if ok and self.cfg.r2_retry != "none" and self._suppressible(k):
+            self._sup_now = True
+            self.n_suppressible += 1
+            if self.cfg.r2_retry == "state":
+                self.n_suppressed += 1
+                return False
+        return ok
+
+    def _select(self, k, state):
+        m = super()._select(k, state)
+        if m is None:
+            if not self._sup_now:                  # an audited repeat must not extend the hold (keeps audit == state)
+                self._fail_fp, self._fail_k = self._fp(k), k
+        else:
+            self._fail_fp = None
+            self.n_flips += int(self._sup_now)
+        return m
+
+    def on_success(self, k):
+        pass                                              # no blanket reset; legacy feedback is not used (counterfactual)
+
+    def info(self):
+        return {**super().info(), **self.ledger.info(), "debt": self.stat, "r2_suppressible": self.n_suppressible,
+                "r2_suppressed": self.n_suppressed, "r2_flips": self.n_flips}
 
 
 class RCPRFixedArm(RCPRArm):
@@ -226,5 +291,5 @@ class HybridArm(RCPRArm):
         return {**super().info(), "hyb_n_front": self.n_front}
 
 
-V08_ARMS = {"B2": InstantB2, "B3": InstantB3, "B4": InstantB4, "B6": RCPRFixedArm, "B7": RCPRLegacyArm,
+V08_ARMS = {"C1": CausalDebtArm, "B2": InstantB2, "B3": InstantB3, "B4": InstantB4, "B6": RCPRFixedArm, "B7": RCPRLegacyArm,
             "B8": RCPRArm, "P1": RCPRNoDebtArm, "H1": HybridArm}

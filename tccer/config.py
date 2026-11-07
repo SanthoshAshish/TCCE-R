@@ -107,6 +107,17 @@ class Config:
     hz_prior_r: float = 0.10        # hazard estimator: prior per-epoch repair probability
     hz_prior_w: float = 20.0        # hazard estimator: prior weight in pseudo link-epochs
 
+    # --- Revision 2: causality-aware debt ledger (tccer/core/causal_debt.py); used only by policy 'r2_causal' ---
+    cd_tau: int = 2                 # episode age (epochs) from which a link failure counts as persistent
+    cd_rho_t: float = 0.25          # charge weight of a temporary (age < tau) episode
+    cd_w_prop: float = 1.5          # charge multiplier of a propagated (adjacent to an earlier failure) episode
+    cd_scar: float = 0.25           # fraction of a persistent episode's accrued debt kept as scar after repair
+    cd_gamma: float = 0.8           # per-epoch scar decay factor while consensus error is at or below cd_e_ok
+    cd_e_ok: float = 0.30           # consensus error regarded as recovered
+    cd_lam_E: float = 1.0           # extra charge per unit consensus error on open damage
+    cd_w_pred: float = 0.0          # weight of the forward (predicted-failure) liability; 0 disables it
+    r2_retry: str = "none"          # re-attempt rule after a failed attempt: none | audit (count only) | state (see CausalDebtArm._suppressible)
+
     # --- Baselines ---
     reactive_threshold: float = 0.5
     period: int = 5
@@ -162,6 +173,14 @@ class Config:
             errors.append("rcpr_c_* and hz_prior_w must be >= 0, hz_window >= 1, hz_prior_h and hz_prior_r in (0, 1)")
         if min(self.j_alpha, self.j_beta, self.j_gamma, self.j_delta, self.risk_eps) < 0:
             errors.append("j_alpha, j_beta, j_gamma, j_delta and risk_eps must be >= 0")
+        if self.r2_retry not in ("none", "audit", "state"):
+            errors.append(f"r2_retry must be 'none', 'audit' or 'state'; got {self.r2_retry!r}")
+        if self.cd_tau < 1 or int(self.cd_tau) != self.cd_tau:
+            errors.append(f"cd_tau must be an integer >= 1; got {self.cd_tau}")
+        if not (0 <= self.cd_rho_t <= 1 and 0 <= self.cd_scar <= 1 and 0 < self.cd_gamma <= 1 and 0 <= self.cd_e_ok <= 1):
+            errors.append("cd_rho_t, cd_scar, cd_e_ok must be in [0, 1] and cd_gamma in (0, 1]")
+        if min(self.cd_w_prop, self.cd_lam_E, self.cd_w_pred) < 0 or self.cd_w_prop < 1:
+            errors.append("cd_w_prop must be >= 1; cd_lam_E and cd_w_pred must be >= 0")
         if errors:
             raise ValueError("Invalid configuration:\n  - " + "\n  - ".join(errors))
 
