@@ -128,6 +128,28 @@ check(f"every referenced table has a caption (captions {sorted(tab_caps)})", tab
 import os
 check("all figure files exist", all(os.path.exists("paper/" + f) for f in re.findall(r"\]\((figures_v0\.8/[^)]+)\)", text)))
 
+# ---- Revision 2 (Section 6.11): claims asserted against the two R2 analysis folders --------------------------------------
+import pandas as pd  # noqa: E402
+_o, _a = (pd.read_csv(f"revision/analysis/R2/{d}/primary_tests.csv") for d in ("main", "amended"))
+_ot, _at = (t[t.status == "tested"] for t in (_o, _a))
+check("R2 amended: C1 has lower error than A7 with a meaningful margin in no condition (abstract/conclusion claim)",
+      not _at[_at.comparison == "C1-A7"].verdict.str.startswith("first arm meaningfully").any())
+check("R2 amended: C1 beats B8 meaningfully in exactly one condition and is meaningfully worse in at least one (mixed)",
+      int(_at[_at.comparison == "C1-B8"].verdict.str.startswith("first arm meaningfully").sum()) == 1
+      and _at[_at.comparison == "C1-B8"].verdict.str.startswith("second arm meaningfully").any())
+check("R2 original: B8 has lower error than C1 in all six conditions (point estimates)",
+      bool((_ot[_ot.comparison == "C1-B8"].mean_diff > 0).all()) and len(_ot[_ot.comparison == "C1-B8"]) == 6)
+_ac = pd.read_csv("revision/analysis/R2/amended/realised_counts.csv")
+_oc = pd.read_csv("revision/analysis/R2/main/realised_counts.csv")
+_M = _ac.cell.str[-1].astype(int)
+check("R2 amended: every arm's mean realised mutations is within 15% of M (budgets matched)",
+      bool(((_ac.mean_mutations - _M).abs() <= 0.15 * _M).all()))
+check("R2 original: C1 realised fewer mutations than B8 in all six conditions (the confound)",
+      bool((_oc[_oc.arm == "C1"].set_index("cell").mean_mutations < _oc[_oc.arm == "B8"].set_index("cell").mean_mutations).all()))
+check("R2 amended: B8 in S2 with M = 6 is excluded (infeasible) and stated in the text",
+      not ((_a.cell == "S2_rgg40_background_M6") & _a.comparison.str.contains("B8") & (_a.status == "tested")).any()
+      and "B8 in S2 with M = 6 was infeasible" in text)
+
 print(f"\n{passed} assertions passed, {len(fails)} failed")
 print("\n--- passages for manual review ---")
 for kw in ("guarantee", "equivalent", "superior", "outperform", "generali", "proved", "prove "):

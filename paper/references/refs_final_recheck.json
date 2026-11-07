@@ -1,0 +1,359 @@
+[
+ {
+  "n": 1,
+  "entry": "Fiedler, M., 1973. Algebraic connectivity of graphs. Czechoslovak Mathematical Journal, 23(2), pp.298\u2013305. https://doi.o",
+  "doi": "10.21136/cmj.1973.101168",
+  "crossref_year": 1973,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 2,
+  "entry": "Xiao, L. and Boyd, S., 2004. Fast linear iterations for distributed averaging. Systems & Control Letters, 53(1), pp.65\u20137",
+  "doi": "10.1016/j.sysconle.2004.02.022",
+  "crossref_year": 2004,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 3,
+  "entry": "Olfati-Saber, R. and Murray, R.M., 2004. Consensus Problems in Networks of Agents With Switching Topology and Time-Delay",
+  "doi": "10.1109/tac.2004.834113",
+  "crossref_year": 2004,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 4,
+  "entry": "Zhang, S., Liu, J., Wang, W. and Zhang, Z., 2023. Topology-based dynamic event-triggered leader-following consensus of m",
+  "doi": "10.1016/j.isatra.2023.08.010",
+  "crossref_year": 2023,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 5,
+  "entry": "Xiao, P. and Gu, Z., 2022. Adaptive Event-Triggered Consensus of Fractional-Order Nonlinear Multi-Agent Systems. IEEE Ac",
+  "doi": "10.1109/access.2021.3136892",
+  "crossref_year": 2022,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 6,
+  "entry": "Wang, Y., Yang, Y. and Wu, L., 2023. Adaptive fault-tolerant consensus control of multi-agent systems with event-trigger",
+  "doi": "10.1016/j.ins.2023.119594",
+  "crossref_year": 2023,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 7,
+  "entry": "Battilotti, S., Cacace, F. and d'Angelo, M., 2024. Consensus Analysis of Random Subgraphs for Distributed Filtering With",
+  "doi": "10.1109/tac.2023.3311709",
+  "crossref_year": 2024,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 8,
+  "entry": "Liu, Y., Fan, H., Liu, L. and Wang, B., 2024. Adaptive output consensus of heterogeneous nonlinear multi\u2010agent system un",
+  "doi": "10.1002/rnc.7367",
+  "crossref_year": 2024,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 9,
+  "entry": "Fu, Y., Wen, G., Zhao, D. and Lv, Y., 2026. Resilient consensus of multi-agent systems with time-varying topologies and ",
+  "doi": "10.1016/j.sysconle.2026.106579",
+  "crossref_year": 2026,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 10,
+  "entry": "Muthirayan, D. and Khargonekar, P.P., 2022. Online Algorithms for Network Robustness Under Connectivity Constraints. IEE",
+  "doi": "10.1109/tnse.2022.3160073",
+  "crossref_year": 2022,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 11,
+  "entry": "Chujyo, M. and Toriumi, F., 2024. Link-limited bypass rewiring for enhancing the robustness of complex networks. Applied",
+  "doi": "10.1007/s41109-024-00624-4",
+  "crossref_year": 2024,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 12,
+  "entry": "Feng, Y., Wang, F., Liu, Z. and Chen, Z., 2024. An Online Topology Control Method for Multi-Agent Systems: Distributed T",
+  "doi": "10.1109/tnse.2024.3417478",
+  "crossref_year": 2024,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 13,
+  "entry": "Estrada, J., Djemai, M., Castillo-Toledo, B. and Defoort, M., 2026. Topology Reconfiguration of Multiagent Systems under",
+  "doi": "10.1109/lcsys.2026.3742141",
+  "crossref_year": 2026,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 14,
+  "entry": "Page, E.S., 1954. Continuous inspection schemes. Biometrika, 41(1-2), pp.100\u2013115. https://doi.org/10.1093/biomet/41.1-2.",
+  "doi": "10.1093/biomet/41.1-2.100",
+  "crossref_year": 1954,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 15,
+  "entry": "Zhang, M., Xie, L. and Xie, Y., 2023. Spectral CUSUM for Online Network Structure Change Detection. IEEE Transactions on",
+  "doi": "10.1109/tit.2023.3259185",
+  "crossref_year": 2023,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 16,
+  "entry": "Ghosh, A. and Boyd, S., 2006. Growing Well-connected Graphs. In: Proceedings of the 45th IEEE Conference on Decision and",
+  "doi": "10.1109/cdc.2006.377282",
+  "crossref_year": 2006,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 17,
+  "entry": "Perez-Salesa, I., Aldana-Lopez, R. and Sagues, C., 2023. Precise Dynamic Consensus under Event-Triggered Communication. ",
+  "doi": "10.3390/machines11020128",
+  "crossref_year": 2023,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 18,
+  "entry": "Kim, H.J. and Yoo, S.J., 2023. Dynamic Event-Triggered Communication-Based Adaptive Consensus Tracking of Uncertain Nonl",
+  "doi": "10.1109/access.2023.3250440",
+  "crossref_year": 2023,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 19,
+  "entry": "Wang, Y., Yu, S. and Zhao, Y., 2024. Switching adaptive dynamic event-triggered consensus of nonlinear multi-agent syste",
+  "doi": "10.1016/j.ins.2024.121257",
+  "crossref_year": 2024,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 20,
+  "entry": "Dong, Z., Shi, S., Ouyang, Q. and Jiang, J., 2026. Event-triggered adaptive predefined-time consensus for multi-agent sy",
+  "doi": "10.1016/j.isatra.2026.08.015",
+  "crossref_year": 2026,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 21,
+  "entry": "Tian, Y., Tian, S., Li, H., Han, Q. and Wang, X., 2022. Event-Triggered Security Consensus for Multi-Agent Systems with ",
+  "doi": "10.3390/en15155353",
+  "crossref_year": 2022,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 22,
+  "entry": "Li, S., Zhang, S., He, G. and Jiang, T., 2024. Discrete-Time Flocking Control in Multi-Robot Systems With Random Link Fa",
+  "doi": "10.1109/tvt.2024.3382617",
+  "crossref_year": 2024,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 23,
+  "entry": "Yan, W. and Cao, X., 2024. Decentralized Multitask Online Convex Optimization Under Random Link Failures. IEEE Transacti",
+  "doi": "10.1109/tsp.2023.3348954",
+  "crossref_year": 2024,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 24,
+  "entry": "Gao, R. and Yang, G.H., 2024. Resilient cluster consensus for discrete-time high-order multi-agent systems against malic",
+  "doi": "10.1016/j.automatica.2023.111382",
+  "crossref_year": 2024,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 25,
+  "entry": "Han, S. and Ong, C.J., 2025. Consensus of heterogeneous multi-agent system in switching network using model predictive c",
+  "doi": "10.1016/j.sysconle.2025.106187",
+  "crossref_year": 2025,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 26,
+  "entry": "Wang, J., Shan, Q., Zhu, J., Cheng, X. and Wei, B., 2023. Algebraic-Connectivity-Based Multi-USV Distributed Formation M",
+  "doi": "10.3390/math11132942",
+  "crossref_year": 2023,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 27,
+  "entry": "Shan, Q., Liu, W., Li, T. and Zhang, H., 2025. A Topology Reconfiguration Strategy for Containment Control of the Multi-",
+  "doi": "10.1109/tie.2024.3472272",
+  "crossref_year": 2025,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 28,
+  "entry": "Shi, G., Ishat-E-Rabban, M., Bonner, G. and Tokekar, P., 2025. Fast k-connectivity restoration in multi-robot systems fo",
+  "doi": "10.1007/s10514-025-10224-5",
+  "crossref_year": 2025,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 29,
+  "entry": "Shetty, A., Hussain,, T. and Gao, G., 2023. Decentralized Connectivity Maintenance for Multi-Robot Systems Under Motion ",
+  "doi": "10.33012/navi.552",
+  "crossref_year": 2023,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 30,
+  "entry": "ElHamamsy, A., Aghili, F. and Aghdam, A.G., 2023. Connectivity Preservation and Collision Avoidance in Multi-Agent Syste",
+  "doi": "10.1109/tnse.2023.3234720",
+  "crossref_year": 2023,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 31,
+  "entry": "Du, Z., Zhang, H., Wang, Z. and Yan, H., 2025. Estimator-Based Dual-Model Predictive Control for Multi-AAVs With Connect",
+  "doi": "10.1109/tnse.2025.3532475",
+  "crossref_year": 2025,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 32,
+  "entry": "Imteaj, A., Akbari, V. and Amini, M.H., 2023. A Novel Scalable Reconfiguration Model for the Postdisaster Network Connec",
+  "doi": "10.3390/s23031200",
+  "crossref_year": 2023,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 33,
+  "entry": "Jo, S., Oh, J.Y., Yoon, Y.T. and Jin, Y.G., 2024. Self-healing radial distribution network reconfiguration based on deep",
+  "doi": "10.1016/j.rineng.2024.102026",
+  "crossref_year": 2024,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 34,
+  "entry": "Jim\u00e9nez, D., Barrera, J. and Cancela, H., 2023. Communication Network Reliability Under Geographically Correlated Failur",
+  "doi": "10.1109/access.2023.3255794",
+  "crossref_year": 2023,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 35,
+  "entry": "Andr\u00e9s\u2010Thi\u00f3, N., Brazil, M., Ras, C. and Thomas, D., 2022. Network augmentation for disaster\u2010resilience against geograph",
+  "doi": "10.1002/net.22138",
+  "crossref_year": 2022,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 36,
+  "entry": "Li, J., Wang, Y. and Zhong, J., 2022. An Exceeding Recovery Model for Enhancing Network Resilience Against Cascading Fai",
+  "doi": "10.1109/access.2022.3188659",
+  "crossref_year": 2022,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 37,
+  "entry": "Awoyemi, B.S. and Maharaj, B.T., 2022. Improving link failure restoration in next-generation wireless sensor networks. A",
+  "doi": "10.1016/j.array.2022.100147",
+  "crossref_year": 2022,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 38,
+  "entry": "Hafaiedh, I.B. and Slimane, M.B., 2022. A distributed formal-based model for self-healing behaviors in autonomous system",
+  "doi": "10.1007/s11227-022-04614-0",
+  "crossref_year": 2022,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 39,
+  "entry": "Mei, P. and Zhao, Y.h., 2024. Dynamic network link prediction with node representation learning from graph convolutional",
+  "doi": "10.1038/s41598-023-50977-6",
+  "crossref_year": 2024,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 40,
+  "entry": "Tang, Q., Sun, W., Liu, Z., Li, Q. and Yuan, X., 2025. Multi-agent reinforcement learning based dynamic self-coordinated",
+  "doi": "10.1016/j.jnca.2025.104177",
+  "crossref_year": 2025,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 41,
+  "entry": "Binh, L.H., Duong, T.V.T. and Le, D.H., 2026. FRLTC: A new topology control algorithm using federated reinforcement lear",
+  "doi": "10.1371/journal.pone.0355604",
+  "crossref_year": 2026,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 42,
+  "entry": "Wilcoxon, F., 1945. Individual Comparisons by Ranking Methods. Biometrics Bulletin, 1(6), pp.80\u201383. https://doi.org/10.2",
+  "doi": "10.2307/3001968",
+  "crossref_year": 1945,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 43,
+  "entry": "Holm, S., 1979. A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics, 6(2), pp.65",
+  "status": "NO DOI (not machine-verified)"
+ },
+ {
+  "n": 44,
+  "entry": "Efron, B., 1979. Bootstrap Methods: Another Look at the Jackknife. The Annals of Statistics, 7(1), pp.1\u201326. https://doi.",
+  "doi": "10.1214/aos/1176344552",
+  "crossref_year": 1979,
+  "status": "OK",
+  "issues": []
+ },
+ {
+  "n": 45,
+  "entry": "Lakens, D., 2017. Equivalence Tests. Social Psychological and Personality Science, 8(4), pp.355\u2013362. https://doi.org/10.",
+  "doi": "10.1177/1948550617697177",
+  "crossref_year": 2017,
+  "status": "OK",
+  "issues": []
+ }
+]

@@ -77,3 +77,6 @@ Gaps: no relevant reference on **counterfactual / off-policy evaluation of topol
 OlfatiSaberFaxMurray2007, Jadbabaie2003, XiaoBoydLall2005, KarMoura2008, KarMoura2009, Sydney2013, Zavlanos2011, Santi2005, GrossBlasius2008, Sterbenz2010, Neumayer2011, LeBlanc2013, GencataMukherjee2003, Dimarogonas2012, Tabuada2007, Quattrociocchi2014, ChanAkoglu2016, Barnett2005, Gencata2003Thesis
 
 They were dropped to keep the reference list focused and to meet the recency target (>= 80% from 2022-2026 with the sources that could be verified); the target is met only exactly (80.0%), so adding any older reference would break it.
+
+## Final re-check (2026-11-07)
+Live Crossref re-check of all 45 entries (`paper/tools/recheck_refs_final.py`, `paper/references/refs_final_recheck.json`): 44 match on DOI, year, title, first author, volume and first page; Holm (1979) has no DOI (JSTOR URL) and is not machine-verified. One demonstrable correction: Dong2026 now has volume 178, pages 72-84 in Crossref (ISA Transactions, Nov 2026) and the entry was completed. Metadata only; claim support was not re-checked.

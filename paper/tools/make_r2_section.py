@@ -2,6 +2,7 @@
 revision/analysis/R2/main (original, seeds 9100-9159) and revision/analysis/R2/amended (Amendment 1, seeds 9200-9259), plus the two
 calibration reports. All numbers and verdict counts come from those files; nothing is typed by hand.   python paper/tools/make_r2_section.py"""
 import os
+import shutil
 
 import numpy as np
 import pandas as pd
@@ -126,6 +127,9 @@ def main():
     have = {k: os.path.exists(DIRS[k] + "/primary_tests.csv") for k in DIRS}
     D = {k: load(k) for k in DIRS if have[k]}
     L = []
+    for k, name in (("original", "fig_r2_E_original"), ("amended", "fig_r2_E_amended")):
+        if have[k]:
+            shutil.copy(f"{DIRS[k]}/figures/fig_E_by_cell.png", f"paper/figures_v0.8/{name}.png")
     L.append("### 6.11. Revision 2 extension: causality-aware resilience debt (C1)")
     L.append("""
 **What was implemented.** One component of the planned Revision 2 algorithm was built and evaluated: a causality-aware debt ledger (C1) that replaces B8's CUSUM debt. The ledger keeps one liability item per link-failure episode, weights it by the link's first-order share of algebraic connectivity, charges consensus error only to open damage, treats episodes shorter than d + 2 = 4 epochs (setup delay d = 2) as temporary, up-weights failures that begin next to an earlier failure, settles an item when its link is removed by a rewiring or repaired, and keeps a decaying scar after persistent damage. There is no blanket debt reset after a mutation. C1 is B8 with only the debt replaced; the adaptive threshold, counterfactual feedback, predictive selector, cooldown, cap and edge budget are B8's. A retry rule skips re-evaluation after a failed attempt while the decision-relevant state is unchanged. **What was not implemented:** calibrated uncertainty-aware failure prediction, delayed mutation-credit assignment (specified only), the rewire/defer/reserve decision (opportunity-cost optimisation), the long-horizon marginal-gain selector, the formal theoretical results (connectivity, consensus error, budget feasibility, debt stability, optimisation, complexity), Erdős–Rényi, Barabási–Albert and Watts–Strogatz graphs, larger graphs, cascading/correlated/node/unpredictable failure laws, sensitivity analysis and scalability measurements. The ledger's design constants were fixed in advance and not tuned; C1 is a proposal evaluated here, not an established method.""")
@@ -140,12 +144,14 @@ def main():
 **Table 10** Mean consensus error E per arm and condition, with mean realised mutations per run in parentheses (original evaluation, 60 seeds). A1 is excluded in S3, M = 3 (infeasible at calibration).
 
 {means_table(o)}
-**Table 11** Paired differences in E (first − second; negative: first arm lower error), 95% bootstrap CI; * Holm p < 0.05 within the primary family, ** also |ΔE| ≥ 0.02 (original evaluation).
+![Fig. 11. Original evaluation (seeds 9100–9159): mean consensus error per arm with 95% t-intervals; dashed line: Static.](figures_v0.8/fig_r2_E_original.png)
+
+**Table 11** Paired differences in E (first − second; negative: first arm lower error), 95% bootstrap CI; one asterisk marks Holm p < 0.05 within the primary family, two asterisks also |ΔE| ≥ 0.02 (original evaluation).
 
 {tests_table(o)}
-{sentence(o, 'C1-B8')} {sentence(o, 'C1-A7')} {sentence(o, 'C1-A7M')} {sentence(o, 'C1-A1')}
+Fig. 11 shows the mean errors of Table 10 and Table 11 the paired differences. {sentence(o, 'C1-B8')} {sentence(o, 'C1-A7')} {sentence(o, 'C1-A7M')} {sentence(o, 'C1-A1')}
 
-**Realised budgets differed.** Mean realised mutations per condition ranged over {cz[0]} (B8) and {cz[1]} (C1) against the targets M = 3 and 6; the share of runs with no mutation was {zz.get('B8', float('nan')):.2f} for B8 and {zz.get('C1', float('nan')):.2f} for C1. The cause is the calibration rule: it matched the mean count of runs capped at 12, which is a sound match for arms with a narrow count distribution (A1, B8) but not for C1, whose counts were bimodal (many runs with no mutation, others reaching the cap), so the actual cap M reduced C1's mean far below M (on the calibration seeds, 1.55 against 3 in every M = 3 condition). Differences between C1 and B8, A7M or A7 in this evaluation are therefore confounded with unequal reconfiguration budgets.""")
+**Realised budgets differed.** Mean realised mutations per condition ranged over {cz[0]} (B8) and {cz[1]} (C1) against the targets M = 3 and 6; the share of runs with no mutation was {zz.get('B8', float('nan')):.3f} for B8 and {zz.get('C1', float('nan')):.3f} for C1. The cause is the calibration rule: it matched the mean count of runs capped at 12, which is a sound match for arms with a narrow count distribution (A1, B8) but not for C1, whose counts were bimodal (many runs with no mutation, others reaching the cap), so the actual cap M reduced C1's mean far below M (on the calibration seeds, 1.55 against 3 in every M = 3 condition). Differences between C1 and B8, A7M or A7 in this evaluation are therefore confounded with unequal reconfiguration budgets.""")
     if "amended" in D:
         a = D["amended"]
         cz, zz = counts_summary(a)
@@ -155,12 +161,14 @@ def main():
 **Table 12** As Table 10, amended evaluation (60 seeds; mean realised mutations in parentheses).
 
 {means_table(a)}
+![Fig. 12. Amended evaluation (seeds 9200–9259): mean consensus error per arm with 95% t-intervals; dashed line: Static.](figures_v0.8/fig_r2_E_amended.png)
+
 **Table 13** As Table 11, amended evaluation.
 
 {tests_table(a)}
-{sentence(a, 'C1-B8')} {sentence(a, 'C1-A7')} {sentence(a, 'C1-A7M')} {sentence(a, 'C1-A1')} The reference comparisons of B8 are in the repository tables (`revision/analysis/R2/amended/reference_tests.csv`).
+Fig. 12 shows the mean errors of Table 12 and Table 13 the paired differences. {sentence(a, 'C1-B8')} {sentence(a, 'C1-A7')} {sentence(a, 'C1-A7M')} {sentence(a, 'C1-A1')} The reference comparisons of B8 are in the repository tables (`revision/analysis/R2/amended/reference_tests.csv`).
 
-Mean realised mutations ranged over {cz[0]} (B8) and {cz[1]} (C1); the share of runs with no mutation was {zz.get('B8', float('nan')):.2f} (B8) and {zz.get('C1', float('nan')):.2f} (C1).
+Mean realised mutations ranged over {cz[0]} (B8) and {cz[1]} (C1); the share of runs with no mutation was {zz.get('B8', float('nan')):.3f} (B8) and {zz.get('C1', float('nan')):.3f} (C1).
 
 **Table 14** Connectivity, recovery and reconfiguration overhead, amended evaluation (means over 60 seeds; overhead = pending link-epochs + live-link releases).
 
