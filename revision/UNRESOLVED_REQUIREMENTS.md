@@ -78,3 +78,11 @@ Author names, affiliations, funding, competing interests, contributions, reposit
 - **File blocker:** `paper/manuscript_v0.8.docx` is open in Word and locked; the updated files are `paper/manuscript_v0.8_guide_check.docx` and `paper/manuscript_v0.8_guide_check_proof.pdf` and must be copied over the standard names once Word is closed.
 
 **Synchronisation check (2026-11-04):** `paper/manuscript_v0.8.docx` is still locked by an open Word window (owner file `~$nuscript_v0.8.docx` present), so the standard names were NOT updated. Backups of the standard files: `paper/archive_pre_sync_20261104/`. Latest verified files: `paper/manuscript_v0.8_guide_check.docx` and `paper/manuscript_v0.8_guide_check_proof.pdf` (244-word abstract, 5 highlights, 56 claims assertions pass).
+
+## Final submission metadata still required from the authors (2026-11-07; nothing below was invented)
+Placeholders in `paper/manuscript_v0.8.md` / template (search for "TO BE COMPLETED"): author names (2 slots), affiliations (2), corresponding author name and e-mail,
+funding statement, competing-interests statement and the two unticked boxes of the Declaration of interests form, CRediT author contributions, acknowledgements,
+repository URL/DOI (data availability), public code link, and confirmation of the generative-AI declaration (exact tool/version, review-and-responsibility sentence, current journal wording).
+Other open items: the "Draft note" line under the author block must be removed before submission; Holm (1979) has no DOI (JSTOR URL, accessed date given) and is not machine-verified;
+the 36 references from 2022-2026 are verified for existence/metadata only (claim support not checked); publisher-side checks that could not be done (Guide for Authors returned HTTP 403): figure resolution numbers, keyword rules, graphical abstract, cover letter, title-page file.
+Scientific scope not done in Revision 2 (disclosed in Section 6.11 and Limitations): calibrated uncertainty-aware prediction, delayed credit assignment, rewire/defer/reserve optimisation, long-horizon selector, theory, ER/BA/WS and larger graphs, other failure laws, sensitivity, ledger ablations, scalability.
