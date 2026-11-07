@@ -22,10 +22,23 @@ from scipy.sparse.csgraph import connected_components
 
 # ------------------------------------------------------------------ graph helpers
 def _n_components(n, eu, ev):
+    """Number of connected components (isolated nodes count). Union-find in pure Python: identical result to scipy's connected_components but without
+    the sparse-matrix construction overhead that dominated the profile for these small graphs."""
     if len(eu) == 0:
         return n
-    A = csr_matrix((np.ones(len(eu)), (eu, ev)), shape=(n, n))
-    return connected_components(A, directed=False)[0]
+    parent = list(range(n))
+    comps = n
+    for a, b in zip(np.asarray(eu).tolist(), np.asarray(ev).tolist()):
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        while parent[b] != b:
+            parent[b] = parent[parent[b]]
+            b = parent[b]
+        if a != b:
+            parent[a] = b
+            comps -= 1
+    return comps
 
 
 def metropolis_W(n, eu, ev, q=1.0):
@@ -35,17 +48,19 @@ def metropolis_W(n, eu, ev, q=1.0):
     d = np.bincount(eu, weights=np.full(len(eu), q), minlength=n) + np.bincount(ev, weights=np.full(len(eu), q), minlength=n)
     w = q / (1.0 + np.maximum(d[eu], d[ev]))
     W = np.zeros((n, n))
-    np.add.at(W, (eu, ev), w)
-    np.add.at(W, (ev, eu), w)
+    W[eu, ev] = w                      # potential links are unique, so direct assignment equals np.add.at (and is much faster)
+    W[ev, eu] = w
     W[np.diag_indices(n)] = 1.0 - W.sum(axis=1)
     return W
 
 
 def spectral_E(n, eu, ev, T, eps, p_transient=0.0):
-    if _n_components(n, eu, ev) > 1:
+    if len(eu) == 0:
         return 1.0
     vals = np.linalg.eigvalsh(metropolis_W(n, eu, ev, 1.0 - p_transient))
-    lam = np.abs(vals[:-1])                                 # drop the unit eigenvalue (largest)
+    if vals[-2] > 1.0 - 1e-9:                               # the unit eigenvalue is repeated <=> the graph is disconnected (exact component logic:
+        return 1.0                                          # connected graphs with n <= 2000 have a spectral gap far above 1e-9, so this equals the
+    lam = np.abs(vals[:-1])                                 # union-find test it replaced; saves a separate component count per evaluation)
     ms = max(float(np.sum(lam ** (2 * T)) / (n - 1)), 1e-300)
     return float(np.clip(1.0 - min(1.0, -0.5 * np.log(ms) / np.log(1.0 / eps)), 0.0, 1.0))
 
@@ -122,8 +137,16 @@ class GainEstimator:
         self.n, self.eu, self.ev = n, np.asarray(eu), np.asarray(ev)
         self.T, self.eps, self.p_tr, self.d, self.H, self.mode = T_rounds, eps, p_transient, d, H, mode
         self.cal = calibration or CalibrationMap()
+        self.cache = {}            # persistent: the surrogate error is a pure function of the live mask (cleared if the calibration map changes)
 
-    def _E(self, mask, cache):
+    def set_calibration(self, cal: CalibrationMap):
+        self.cal = cal
+        self.cache.clear()
+
+    def _E(self, mask, cache=None):
+        cache = self.cache if cache is None else cache
+        if len(cache) > 400_000:
+            cache.clear()
         key = mask.tobytes()
         v = cache.get(key)
         if v is None:
@@ -149,7 +172,7 @@ class GainEstimator:
         Hs = self.d + self.H
         assert scen.H >= Hs, "scenario horizon must cover setup delay + benefit window"
         S, K = scen.S, len(candidates)
-        cache = {}
+        cache = self.cache
         delta = np.zeros((S, Hs, K))
         for s in range(S):
             dn = scen.down[s, :Hs]

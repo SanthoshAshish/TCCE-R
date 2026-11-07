@@ -41,6 +41,7 @@ class CocroParams:
     Ka: int = 8
     slot: int = 4               # base-policy slot spacing / path stride
     phi: float = 0.98           # CFPE forgetting
+    nb: int = 4                 # CFPE lagged-adjacency hazard buckets (1 = no propagation term: ablation)
     c_op: float = 0.0
     estimator: str = "exact"    # 'exact' spectral surrogate or 'laplacian'
     price: str = "rollout"      # 'rollout' | 'zero' | 'none'
@@ -92,7 +93,7 @@ class CocroArm(Policy):
 
     def _init(self, state):
         p, cfg = self.params, self.cfg
-        self.model = PropagationFailureModel(state.n, state.eu, state.ev, CFPEParams(phi=p.phi))
+        self.model = PropagationFailureModel(state.n, state.eu, state.ev, CFPEParams(phi=p.phi, nb=p.nb))
         self.sampler = ScenarioSampler(self.model)
         self.ge = GainEstimator(state.n, state.eu, state.ev, cfg.rounds_per_epoch, cfg.eps, cfg.p_transient, cfg.link_setup_epochs, p.H,
                                 mode=p.estimator)
@@ -117,7 +118,7 @@ class CocroArm(Policy):
         m_left = (M - self.n_mutations) if M is not None else 10 ** 6
         live, tabu = state.live_mask(), self.pipeline.tabu(k)
         pairs = candidate_pairs(state.n, state.eu, state.ev, state.length, state.configured, live, state.down, tabu, self.pipeline.budget,
-                                self.rules, p.Kr, p.Ka)
+                                self.rules, p.Kr, p.Ka, self.pricer.ana_cache)
         feas = [Mutation(add=a, remove=r) for a, r in pairs if self.pipeline.gate.check(state, Mutation(add=a, remove=r), tabu)[0]]
         self.pipeline.last = dict(EMPTY_SELECTION, n_candidates=len(feas),
                                   select_outcome="no_candidates" if not pairs else ("all_rejected" if not feas else ""))
@@ -204,5 +205,6 @@ register_variant("cocro_l0", price="zero")
 register_variant("cocro_plugin", plug_in=True)
 register_variant("cocro_nocf", cross_fit=False)
 register_variant("cocro_r", reserve_factors=(1.0, 2.0))            # Fix 2 only: budget reservation by a hurdle family (design 12)
+register_variant("cocro_mfg", price="none", shortlist=3)             # COCRO-M selection with the Fix 1 full-horizon rerank (A7 timing)
 register_variant("cocro_fg", shortlist=3)                  # Fix 1: full-horizon rerank of the top-3 candidates (design 2.3/10)
 register_variant("cocro_fgr", shortlist=3, reserve_factors=(1.0, 2.0))   # Fix 1 + Fix 2

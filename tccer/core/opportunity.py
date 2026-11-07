@@ -66,6 +66,7 @@ class RolloutPricer:
     def __init__(self, n, eu, ev, length, estimator, rules: Rules, d, edge_cooldown, budget, T_total, params: RolloutParams = RolloutParams()):
         self.n, self.eu, self.ev, self.length, self.ge = n, np.asarray(eu), np.asarray(ev), np.asarray(length), estimator
         self.rules, self.d, self.cool, self.budget, self.T, self.prm = rules, d, edge_cooldown, budget, T_total, params
+        self.ana_cache = {}        # persistent graph-analysis cache (components, bridges, Fiedler vector per live mask)
 
     # -------------------------------------------------------------- helpers
     def _live(self, conf, ready, down_t, t):
@@ -93,7 +94,7 @@ class RolloutPricer:
                 out[t] = e_c
             if act_policy and t in slot_set and t >= first_slot and m > 0 and self.T - 1 - t > self.d:
                 tabu = (t - touched) < self.cool
-                pairs = candidate_pairs(self.n, self.eu, self.ev, self.length, conf, live, down[t - k - 1], tabu, self.budget, self.rules, 1, 1)
+                pairs = candidate_pairs(self.n, self.eu, self.ev, self.length, conf, live, down[t - k - 1], tabu, self.budget, self.rules, 1, 1, self.ana_cache)
                 if pairs:
                     a, r = pairs[0]
                     li = live.copy()
@@ -130,7 +131,7 @@ class RolloutPricer:
         once per scenario and shared by all candidates (common random numbers). No extrapolation (removes assumption A8 from candidate selection)."""
         tau = self.T - 1 - k
         assert scen.H >= tau, "full-horizon scenarios must reach the end of the run"
-        cache = {} if cache is None else cache
+        cache = self.ge.cache if cache is None else cache
         applied = [self._apply(configured, ready_at, last_touched, m, k) for m in mutations]
         out = np.zeros((scen.S, len(mutations)))
         for s in range(scen.S):
@@ -193,7 +194,7 @@ class RolloutPricer:
         act-continuation hurdles with the highest expected value (ties -> smaller hurdle). Step 3 (test scenarios): re-evaluate with the chosen
         hurdles. Act only if both comparisons favour acting, so the rule is never more eager than the one-step rule."""
         c_op = self.prm.c_op
-        cache = {}
+        cache = self.ge.cache
         Gn, Ww, Wa = self._values(configured, ready_at, last_touched, k, m_left, mutation, scen_test, [0.0], cache)
         adv0 = Wa[:, 0] - c_op - Ww[:, 0]
         n_ = float(Gn.mean() - c_op)
@@ -223,7 +224,7 @@ class RolloutPricer:
         stride = self.prm.slot
         slots_wait = set(range(k + 1, self.T, stride))                   # pi0 slots if we wait: k+1, k+1+stride, ...
         slots_act = set(range(k + 2, self.T, stride))                    # after acting at k the cooldown pushes pi0's first slot to k+2
-        cache = {}
+        cache = self.ge.cache
         conf_a, ready_a, touched_a = self._apply(configured, ready_at, last_touched, mutation, k)
         Wa, Ww, Gn = np.zeros(scen.S), np.zeros(scen.S), np.zeros(scen.S)
         for s in range(scen.S):
