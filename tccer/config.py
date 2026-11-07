@@ -86,6 +86,15 @@ class Config:
     er_p_init: float = 0.12         # er: initial link probability (unused for ba; ba uses ba_m)
     er_p_pot: float = 0.20          # er/ba: probability that a non-initial pair is a candidate link
     ba_m: int = 2                   # ba: links per new node
+    ws_k: int = 4                   # ws (Watts-Strogatz): each node joined to its ws_k nearest ring neighbours (even)
+    ws_p: float = 0.10              # ws: rewiring probability
+    sf_p: float = 0.30              # sf (scale-free, power-law cluster): triangle probability; ba_m links per new node
+    failure_model: str = "legacy"   # "legacy" (unchanged) | "extended" (cascade / node / regime parameters below; tccer/network/failure_models.py)
+    casc_gain: float = 1.0          # extended: failure-hazard multiplier of an up link adjacent to a link that was down in the previous epoch (1 = off)
+    node_rate: float = 0.0          # extended: per-epoch probability that a node fails (all its potential links down); 0 = off
+    node_repair: float = 0.30       # extended: per-epoch node repair probability
+    regime_epoch: int = -1          # extended: from this epoch the link failure probability is multiplied by regime_mult (-1 = off)
+    regime_mult: float = 1.0
     shock_epoch: int = -1           # abrupt topology change: one large correlated outage starting at this epoch
     shock_radius: float = 0.30
     shock_len: int = 15
@@ -147,8 +156,16 @@ class Config:
         if self.rounds_per_epoch < 1 or self.epochs < 1:
             errors.append("epochs and rounds_per_epoch must be >= 1")
         # v0.8 options: reject invalid values only (defaults are unchanged and valid)
-        if self.graph_family not in ("rgg", "er", "ba"):
-            errors.append(f"graph_family must be 'rgg', 'er' or 'ba'; got {self.graph_family!r}")
+        if self.graph_family not in ("rgg", "er", "ba", "ws", "sf"):
+            errors.append(f"graph_family must be 'rgg', 'er', 'ba', 'ws' or 'sf'; got {self.graph_family!r}")
+        if self.graph_family == "ws" and not (2 <= self.ws_k < self.n_nodes and self.ws_k % 2 == 0 and 0.0 <= self.ws_p <= 1.0):
+            errors.append(f"ws needs an even 2 <= ws_k < n_nodes and ws_p in [0, 1]; got {self.ws_k}, {self.ws_p}")
+        if self.graph_family == "sf" and not (1 <= self.ba_m < self.n_nodes and 0.0 <= self.sf_p <= 1.0):
+            errors.append(f"sf needs 1 <= ba_m < n_nodes and sf_p in [0, 1]; got {self.ba_m}, {self.sf_p}")
+        if self.failure_model not in ("legacy", "extended"):
+            errors.append(f"failure_model must be 'legacy' or 'extended'; got {self.failure_model!r}")
+        if self.casc_gain < 1.0 or not (0.0 <= self.node_rate < 1.0) or not (0.0 < self.node_repair <= 1.0) or self.regime_epoch < -1 or self.regime_mult <= 0:
+            errors.append("need casc_gain >= 1, node_rate in [0, 1), node_repair in (0, 1], regime_epoch >= -1 and regime_mult > 0")
         if self.graph_family == "er" and not (0.0 < self.er_p_init <= 1.0):
             errors.append(f"er_p_init must be in (0, 1] for graph_family='er'; got {self.er_p_init}")
         if self.graph_family != "rgg" and not (0.0 <= self.er_p_pot <= 1.0):

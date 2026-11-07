@@ -35,7 +35,8 @@ def _connected(n, iu, ju, mask):
     return nx.is_connected(g)
 
 
-def non_geometric(n: int, family: str, p_init: float, p_pot: float, ba_m: int, seed: int, max_tries: int = 1000):
+def non_geometric(n: int, family: str, p_init: float, p_pot: float, ba_m: int, seed: int, max_tries: int = 1000,
+                  ws_k: int = 4, ws_p: float = 0.1, sf_p: float = 0.3):
     """Erdos-Renyi ("er") or Barabasi-Albert ("ba") initial graph on random node positions.
 
     Positions are only used for link lengths (tie-breaks) and for spatially correlated outages.
@@ -49,7 +50,12 @@ def non_geometric(n: int, family: str, p_init: float, p_pot: float, ba_m: int, s
             u = rng.random(len(iu))
             init = u < p_init
         else:
-            g0 = nx.barabasi_albert_graph(n, ba_m, seed=int(rng.integers(2**31)))
+            if family == "ba":
+                g0 = nx.barabasi_albert_graph(n, ba_m, seed=int(rng.integers(2**31)))
+            elif family == "ws":                   # Watts-Strogatz small world (connected variant)
+                g0 = nx.connected_watts_strogatz_graph(n, ws_k, ws_p, seed=int(rng.integers(2**31)))
+            else:                                  # "sf": power-law cluster (scale-free with tunable clustering)
+                g0 = nx.powerlaw_cluster_graph(n, ba_m, sf_p, seed=int(rng.integers(2**31)))
             key = {(min(a, b), max(a, b)) for a, b in g0.edges()}
             init = np.array([(int(a), int(b)) in key for a, b in zip(iu, ju)])
         pot = init | (rng.random(len(iu)) < p_pot)
@@ -62,4 +68,4 @@ def non_geometric(n: int, family: str, p_init: float, p_pot: float, ba_m: int, s
 def make_network(cfg, seed: int):
     if cfg.graph_family == "rgg":
         return random_geometric(cfg.n_nodes, cfg.init_radius, cfg.radio_range, seed)
-    return non_geometric(cfg.n_nodes, cfg.graph_family, cfg.er_p_init, cfg.er_p_pot, cfg.ba_m, seed)
+    return non_geometric(cfg.n_nodes, cfg.graph_family, cfg.er_p_init, cfg.er_p_pot, cfg.ba_m, seed, ws_k=cfg.ws_k, ws_p=cfg.ws_p, sf_p=cfg.sf_p)

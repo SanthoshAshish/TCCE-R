@@ -18,7 +18,7 @@ from tccer.core.counterfactual import ExogenousRecord
 from tccer.core.debt import volatility
 from tccer.core.selector import EMPTY_SELECTION, MutationPipeline
 from tccer.metrics.resilience import lambda2, vulnerability
-from tccer.network.events import FailureTrace
+from tccer.network.failure_models import make_trace
 from tccer.network.generators import make_network
 from tccer.network.scenario import load_scenario
 from tccer.network.state import NetworkState
@@ -37,7 +37,7 @@ def simulate(cfg, seed: int, policy_name: str, log_rounds: bool = True, on_epoch
         pos, eu, ev, length, init_idx = make_network(cfg, seed)
         scripted = np.zeros((cfg.epochs, len(eu)), dtype=bool)
     state = NetworkState(pos, eu, ev, length, init_idx)
-    trace = FailureTrace(cfg, seed, state.P, edge_mid=(pos[eu] + pos[ev]) / 2)
+    trace = make_trace(cfg, seed, state.P, (pos[eu] + pos[ev]) / 2, eu, ev, state.n)   # 'legacy' (default) = the original FailureTrace, unchanged
     x0_all = np.random.default_rng([seed, 2]).random((cfg.epochs, state.n))
     if sc is not None and sc.initial_values is not None:
         x0_all = sc.initial_values
