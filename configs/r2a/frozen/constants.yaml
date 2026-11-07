@@ -1,0 +1,43 @@
+scenarios:
+  S1_rgg40_bursty:
+    tau: 0.6244045447
+    kappa_E: 0.4060496165
+    kappa_s: 0.2247285899
+  S2_rgg40_background:
+    tau: 0.566917332
+    kappa_E: 0.4065385198
+    kappa_s: 0.227380907
+  S3_rgg80_bursty:
+    tau: 0.652068439
+    kappa_E: 0.4994920814
+    kappa_s: 0.267167397
+tau_quantile: 0.75
+calibration_seeds:
+- 8400
+- 8401
+- 8402
+- 8403
+- 8404
+- 8405
+- 8406
+- 8407
+- 8408
+- 8409
+- 8410
+- 8411
+- 8412
+- 8413
+- 8414
+- 8415
+- 8416
+- 8417
+- 8418
+- 8419
+feasibility: 0.15
+grid_cap: 6
+amendment: 'R2 Amendment 1: count under the actual cap M'
+smoke: false
+git_commit: 03e9554269c34c13e2cb6975dd4df4164c916692
+c1_fixed:
+  cd_tau: setup_delay+2
+  r2_retry: state
