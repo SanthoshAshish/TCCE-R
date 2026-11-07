@@ -46,11 +46,29 @@ class CocroParams:
     price: str = "rollout"      # 'rollout' | 'zero' | 'none'
     plug_in: bool = False
     cross_fit: bool = True
+    reserve_factors: tuple = ()  # Fix 2: hurdle family (multiples of the base policy's reward statistic R* for a*) for budget reservation; () = original one-step rule
+    shortlist: int = 0          # Fix 1: >0 = rerank the top-`shortlist` candidates by the full-horizon gain (0 = original extrapolated-gain argmax)
 
     @staticmethod
     def fast(**kw):
         """Reduced sampling for development-seed diagnostics (documented deviation from the design defaults)."""
         return CocroParams(S_sel=8, S_test=8, H=3, Kr=2, Ka=5, **kw)
+
+
+def select_candidate(ge, pricer, configured, ready_at, last_touched, k, feas, sel_short, sel_full, tau, shortlist, c_op):
+    """Pick the candidate to evaluate. shortlist == 0: argmax of the extrapolated gain G = S_setup + b (tau - d) (original behaviour, assumption A8).
+    shortlist > 0 (Fix 1): shortlist by the cheap extrapolated G, then choose by the FULL-horizon simulated gain on the selection scenarios
+    (sel_full must reach the end of the run; it shares its first d + H epochs with sel_short). Returns a dict with the chosen index and diagnostics."""
+    g = ge.estimate(configured, ready_at, k, sel_short, feas, tau)
+    j0 = int(np.argmax(g.G - c_op))
+    if shortlist <= 0:
+        return dict(j=j0, G=float(g.G[j0]), se=float(g.se[j0]), G_full=math.nan, changed=math.nan)
+    order = np.argsort(-(g.G - c_op), kind="stable")[:min(shortlist, len(feas))]
+    gf = pricer.gain_full_many(configured, ready_at, last_touched, k, [(feas[i].add, feas[i].remove) for i in order], sel_full)
+    mean = gf.mean(axis=0)
+    jj = int(np.argmax(mean))
+    j = int(order[jj])
+    return dict(j=j, G=float(g.G[j]), se=float(g.se[j]), G_full=float(mean[jj]), changed=float(j != j0))
 
 
 class CocroArm(Policy):
@@ -63,13 +81,14 @@ class CocroArm(Policy):
         self.model = self.sampler = self.ge = self.pricer = None
         self.rules = Rules(d_max=cfg.d_max if cfg.degree_fix else None, degree_basis=cfg.degree_basis,
                            failed_link_value=cfg.failed_link_value, strict_budget=cfg.budget_on == "configured")
-        self.stats = dict(evaluated=0, acted=0, deferred=0, no_gain=0, no_cand=0)
+        self.stats = dict(evaluated=0, acted=0, deferred=0, no_gain=0, no_cand=0, reserved=0)
         self._clear()
 
     def _clear(self):
         self.d = dict(cocro_evaluated=0, cocro_n_cand=0, cocro_G=math.nan, cocro_se=math.nan, cocro_N=math.nan, cocro_Lambda=math.nan,
                       cocro_adv=math.nan, cocro_adv_se=math.nan, cocro_W_wait=math.nan, cocro_W_act=math.nan, cocro_lift=math.nan,
-                      cocro_h0=math.nan, cocro_decision="")
+                      cocro_h0=math.nan, cocro_Gfull=math.nan, cocro_rank_changed=math.nan,
+                      cocro_adv_res=math.nan, cocro_res_fw=math.nan, cocro_res_fa=math.nan, cocro_decision="")
 
     def _init(self, state):
         p, cfg = self.params, self.cfg
@@ -109,19 +128,28 @@ class CocroArm(Policy):
         self.d["cocro_evaluated"] = 1
         self.stats["evaluated"] += 1
         Hs = d + p.H
+        sel_full = None
         if p.cross_fit:
-            sel = self.sampler.sample(p.S_sel, Hs, controller_rng(self.base, k, 1), p.plug_in)
+            if p.shortlist > 0 or p.reserve_factors:   # the selection scenarios must reach the end of the run; the sampler's prefix property makes the first Hs epochs identical
+                sel_full = self.sampler.sample(p.S_sel, max(tau, Hs), controller_rng(self.base, k, 1), p.plug_in)
+                sel = ScenarioSet(down=sel_full.down[:, :Hs], node_down=sel_full.node_down[:, :Hs], k=k, thetas=sel_full.thetas)
+            else:
+                sel = self.sampler.sample(p.S_sel, Hs, controller_rng(self.base, k, 1), p.plug_in)
             full = self.sampler.sample(p.S_test, tau, controller_rng(self.base, k, 2), p.plug_in) if p.price == "rollout" else None
         else:
             full = self.sampler.sample(max(p.S_sel, p.S_test), max(tau, Hs), controller_rng(self.base, k, 1), p.plug_in)   # must also cover the selection window d + H
             sel = ScenarioSet(down=full.down[:, :Hs], node_down=full.node_down[:, :Hs], k=k, thetas=full.thetas)
-        g = self.ge.estimate(state.configured, state.ready_at, k, sel, feas, tau)
-        j = int(np.argmax(g.G - p.c_op))
+            sel_full = full
+        pick = select_candidate(self.ge, self.pricer, state.configured, state.ready_at, self.pipeline.last_touched, k, feas, sel, sel_full, tau,
+                                p.shortlist, p.c_op)
+        j = pick["j"]
         a = feas[j]
-        self.d.update(cocro_G=float(g.G[j]), cocro_se=float(g.se[j]), cocro_lift=self.model.lift(), cocro_h0=float(self.model.map_theta().h[0]))
+        gate_gain = pick["G_full"] if p.shortlist > 0 else pick["G"]
+        self.d.update(cocro_G=pick["G"], cocro_se=pick["se"], cocro_Gfull=pick["G_full"], cocro_rank_changed=pick["changed"],
+                      cocro_lift=self.model.lift(), cocro_h0=float(self.model.map_theta().h[0]))
         if p.price == "none":                                    # COCRO-M: spend whenever possible with the best-gain candidate
             act = True
-        elif g.G[j] - p.c_op <= 0:                               # even the selection estimate sees no net gain
+        elif gate_gain - p.c_op <= 0:                            # even the selection estimate (full-horizon if shortlist > 0) sees no net gain
             act = False
             self.stats["no_gain"] += 1
             self.d["cocro_decision"] = "no_gain"
@@ -131,9 +159,19 @@ class CocroArm(Policy):
             self.d["cocro_N"] = n_test
             act = n_test > 0
         else:                                                    # rollout shadow price on the independent (or shared) full-horizon set
-            r = self.pricer.price(state.configured, state.ready_at, self.pipeline.last_touched, k, m_left, (a.add, a.remove), full)
-            self.d.update(cocro_N=r.N, cocro_Lambda=r.Lambda, cocro_adv=r.advantage, cocro_adv_se=r.se, cocro_W_wait=r.W_wait, cocro_W_act=r.W_act)
-            act = r.act
+            if p.reserve_factors:                                # Fix 2: one-step rollout with a hurdle family, hurdles chosen on the independent set sel_full
+                rr = self.pricer.reserve_check(state.configured, state.ready_at, self.pipeline.last_touched, state.down, k, m_left, (a.add, a.remove), sel_full,
+                                               full, p.reserve_factors)
+                self.d.update(cocro_N=rr.N, cocro_Lambda=rr.Lambda, cocro_adv=rr.advantage0, cocro_adv_se=rr.se0, cocro_W_wait=rr.W_wait0,
+                              cocro_W_act=rr.W_act0, cocro_adv_res=rr.advantage, cocro_res_fw=rr.f_wait, cocro_res_fa=rr.f_act)
+                act = rr.act
+                if rr.checked and not rr.act:                    # the one-step rule said act, the hurdle comparison says keep the unit
+                    self.stats["reserved"] += 1
+                    self.d["cocro_decision"] = "reserve"
+            else:
+                r = self.pricer.price(state.configured, state.ready_at, self.pipeline.last_touched, k, m_left, (a.add, a.remove), full)
+                self.d.update(cocro_N=r.N, cocro_Lambda=r.Lambda, cocro_adv=r.advantage, cocro_adv_se=r.se, cocro_W_wait=r.W_wait, cocro_W_act=r.W_act)
+                act = r.act
         if not act:
             self.stats["deferred"] += 1
             self.d["cocro_decision"] = self.d["cocro_decision"] or "defer"
@@ -148,7 +186,8 @@ class CocroArm(Policy):
 
     def info(self):
         return dict(self.d, cocro_acted_total=self.stats["acted"], cocro_deferred_total=self.stats["deferred"],
-                    cocro_no_gain_total=self.stats["no_gain"], cocro_evaluated_total=self.stats["evaluated"])
+                    cocro_no_gain_total=self.stats["no_gain"], cocro_evaluated_total=self.stats["evaluated"],
+                    cocro_reserved_total=self.stats["reserved"])
 
 
 def register_variant(name, **overrides):
@@ -164,3 +203,6 @@ register_variant("cocro_m", price="none")
 register_variant("cocro_l0", price="zero")
 register_variant("cocro_plugin", plug_in=True)
 register_variant("cocro_nocf", cross_fit=False)
+register_variant("cocro_r", reserve_factors=(1.0, 2.0))            # Fix 2 only: budget reservation by a hurdle family (design 12)
+register_variant("cocro_fg", shortlist=3)                  # Fix 1: full-horizon rerank of the top-3 candidates (design 2.3/10)
+register_variant("cocro_fgr", shortlist=3, reserve_factors=(1.0, 2.0))   # Fix 1 + Fix 2
