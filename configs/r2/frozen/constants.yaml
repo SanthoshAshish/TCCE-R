@@ -1,0 +1,42 @@
+scenarios:
+  S1_rgg40_bursty:
+    tau: 0.6238032118
+    kappa_E: 0.3860278284
+    kappa_s: 0.2134074833
+  S2_rgg40_background:
+    tau: 0.5565981054
+    kappa_E: 0.3870641485
+    kappa_s: 0.2182157621
+  S3_rgg80_bursty:
+    tau: 0.6495388874
+    kappa_E: 0.4801830556
+    kappa_s: 0.2550489892
+tau_quantile: 0.75
+calibration_seeds:
+- 8300
+- 8301
+- 8302
+- 8303
+- 8304
+- 8305
+- 8306
+- 8307
+- 8308
+- 8309
+- 8310
+- 8311
+- 8312
+- 8313
+- 8314
+- 8315
+- 8316
+- 8317
+- 8318
+- 8319
+feasibility: 0.15
+calibration_run_cap: 12
+smoke: false
+git_commit: b76dd6907026d5754db32ba2efa35905d7ca8802
+c1_fixed:
+  cd_tau: setup_delay+2
+  r2_retry: state
