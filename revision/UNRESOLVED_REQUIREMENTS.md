@@ -79,10 +79,22 @@ Author names, affiliations, funding, competing interests, contributions, reposit
 
 **Synchronisation check (2026-11-04):** `paper/manuscript_v0.8.docx` is still locked by an open Word window (owner file `~$nuscript_v0.8.docx` present), so the standard names were NOT updated. Backups of the standard files: `paper/archive_pre_sync_20261104/`. Latest verified files: `paper/manuscript_v0.8_guide_check.docx` and `paper/manuscript_v0.8_guide_check_proof.pdf` (244-word abstract, 5 highlights, 56 claims assertions pass).
 
-## Final submission metadata still required from the authors (2026-11-07; nothing below was invented)
-Placeholders in `paper/manuscript_v0.8.md` / template (search for "TO BE COMPLETED"): author names (2 slots), affiliations (2), corresponding author name and e-mail,
-funding statement, competing-interests statement and the two unticked boxes of the Declaration of interests form, CRediT author contributions, acknowledgements,
-repository URL/DOI (data availability), public code link, and confirmation of the generative-AI declaration (exact tool/version, review-and-responsibility sentence, current journal wording).
-Other open items: the "Draft note" line under the author block must be removed before submission; Holm (1979) has no DOI (JSTOR URL, accessed date given) and is not machine-verified;
-the 36 references from 2022-2026 are verified for existence/metadata only (claim support not checked); publisher-side checks that could not be done (Guide for Authors returned HTTP 403): figure resolution numbers, keyword rules, graphical abstract, cover letter, title-page file.
-Scientific scope not done in Revision 2 (disclosed in Section 6.11 and Limitations): calibrated uncertainty-aware prediction, delayed credit assignment, rewire/defer/reserve optimisation, long-horizon selector, theory, ER/BA/WS and larger graphs, other failure laws, sensitivity, ledger ablations, scalability.
+## Submission metadata: status after the author-detail synchronization (2026-11-07)
+Source of supplied details: `paper/TCCE-R UPDATE VERSION.docx` (and its PDF), cross-checked against the hand-edited `paper/manuscript_v0.8_guide_check.docx`. Nothing below was invented.
+
+**Resolved (taken from the supplied files; manuscript, template and DOCX/PDF updated):**
+- Author names and order: Y. Santhosh Ashish, E. Kishan Kumar, P. Navyambika, Vinay Gupta. (Spacing discrepancy: the guide-check file has "Y.Santhosh Ashish", "E.Kishan Kumar", "P.Navyambika"; the update version, used here, has a space after each initial. The spellings are identical.)
+- GitHub repository / code availability: https://github.com/SanthoshAshish/TCCE-R/tree/revision-v0.8 (data availability and code availability statements reused from the update version; Revision 2 evaluation commits d7f6a40 and 14b7359 added). No DOI is assigned (stated in the text).
+- The reproducibility paragraph and the provenance limitation (analysis scripts now committed; raw outputs git-ignored) follow the update version.
+- The "Draft note" line was removed from the title block.
+
+**Still requires author input (the supplied files contain only placeholders for these):**
+- Affiliations of all four authors; which author is the corresponding author and the corresponding e-mail address (the update version says "[Affiliations and corresponding-author email: AUTHOR CONFIRMATION REQUIRED]"; no e-mail or affiliation appears in any project file).
+- Funding statement; competing-interests statement and the two unticked boxes of the Declaration of interests form; CRediT roles per author.
+- Acknowledgements. Professor Deethi G was named in the synchronization request but appears in **no** project file, so no acknowledgement wording, role or affiliation was supplied and none was written; the heading is left as a placeholder.
+- Generative-AI declaration: the update-version wording is used as supplied; the authors must confirm it, give the model/version if the journal requires it, and confirm review and responsibility.
+- Optional: an archived release/DOI (for example Zenodo) for the repository; raw per-run logs are not in the repository (available on request or to be deposited).
+- Publisher-side items not verifiable (Guide for Authors returned HTTP 403): figure resolution numbers, keyword rules, graphical abstract, cover letter, title-page file.
+
+**Other open items:** Holm (1979) has no DOI (JSTOR URL with accessed date) and is not machine-verified; the 36 references from 2022-2026 were verified for existence and bibliographic metadata only (live Crossref re-check: 44 of 45 match; claim support not checked).
+**Scientific scope not done in Revision 2 (disclosed in Section 6.11 and Limitations):** calibrated uncertainty-aware prediction, delayed credit assignment, rewire/defer/reserve optimisation, long-horizon selector, theory, ER/BA/WS and larger graphs, other failure laws, sensitivity, ledger ablations, scalability.

@@ -10,18 +10,11 @@
 
 # When Does Resilience-Aware Topology Adaptation Help Consensus? A Budget-Constrained Comparison of Reactive, Front-Loaded and Predictive Rewiring
 
-**[Author 1 — to be completed]¹, [Author 2 — to be completed]²∗**
+**Y. Santhosh Ashish, E. Kishan Kumar, P. Navyambika, Vinay Gupta**
 
-¹[Affiliation 1 — to be completed]
+[Affiliations — AUTHOR INPUT REQUIRED]
 
-²[Affiliation 2 — to be completed]
-
-∗Corresponding author: [name and e-mail — to be completed]
-
-> Draft note (remove before submission): revised manuscript (v0.8). Every result-dependent number in the Abstract, Results, Tables and Discussion is generated from `revision/analysis/E2/` (held-out evaluation, seeds 9000–9059) or `results/v0.8/E1/` (development seeds) by `paper/tools/build_manuscript_v08.py`; the qualitative claims are asserted against those files by `paper/tools/check_claims_v08.py`. Items that could not be verified are marked **[UNRESOLVED]**. The previous (v0.7) manuscript is preserved unchanged in `paper/manuscript.md`. Author, affiliation, funding, interest and contribution details are placeholders.
-
-
-
+Corresponding author: [name and e-mail — AUTHOR INPUT REQUIRED]
 
 ## Abstract
 
@@ -277,31 +270,31 @@ The earlier pre-registered evaluation (seeds 7000–7059; commit 7a81352; 2,640 
 6. **Metrics.** Time to consensus is heavily censored; wasted releases and detection metrics were not computed; recovery is anchored to the static arm's disconnections.
 7. **Mechanisms.** The B6 − B5 effect and its tension with E1 are unexplained; no ablation of the predictive model's internal terms was run.
 8. **Revision 2 scope.** Only the causality-aware debt ledger (C1) and an exact-state retry rule were implemented. Calibrated uncertainty-aware prediction, delayed credit assignment, rewire/defer/reserve optimisation, the long-horizon selector, the theoretical analysis, other graph families (Erdős–Rényi, Barabási–Albert, Watts–Strogatz), larger graphs, other failure laws, sensitivity analysis, ablation of the ledger's components and scalability measurements were **not** done. The amended calibration saturates the budget (most runs reach the cap for every arm), so the amended comparison is about timing and selection at near-equal budgets and says little about arms that would use fewer mutations; B8 in S2 with M = 6 was infeasible in the amended calibration and is excluded there. The ledger's constants were fixed, not tuned, and the amended evaluation reuses the same three scenarios.
-9. **Provenance.** Raw outputs and results are git-ignored; their integrity is recorded by SHA-256 hashes; the analysis script was not yet committed when this manuscript was drafted.
+9. **Provenance.** The analysis scripts, generated tables and figures and supporting audit materials are included in the repository branch linked in Section 9. Raw per-run outputs remain outside the tracked repository (git-ignored); the analysis manifests record SHA-256 hashes of every input. Readers should consult the repository README for the current layout and reproduction instructions.
 
 ## 9. Reproducibility
 
-Code: `tccer/`, `experiments/`; calibration seeds 8000–8019, development seeds 8100–8119, held-out seeds 9000–9059. Pass-1 calibration ran at commit 047d7c7, Amendment 1 and the frozen configuration are commit e16a208 (`configs/v0.8/frozen`, manifest of 78 entries; pass 1 kept in `configs/v0.8/frozen_pass1`); the held-out evaluation ran once at e16a208 on a clean tracked tree (`results/v0.8/E2/eval/run_info.json`). Commands: `python -m experiments.calibrate_v08`; `python -m experiments.amend_calibration_v08`; `python -m experiments.run_v08 --mode eval`; `python -m experiments.validate_predictor_v08` (E1, development seeds); `python -m experiments.analyze_v08` (analysis, outputs in `revision/analysis/E2/` with input hashes in `run_manifest.json`); `python paper/tools/build_manuscript_v08.py`; `python paper/tools/check_claims_v08.py`. The earlier v0.7 evidence is preserved (`results/v0.7`, a read-only backup with SHA-256 checksums, and `configs/v0.7`). Environment: Python 3.11.9, numpy 2.3.4, scipy 1.17.1, pandas 2.3.3. Revision 2 (Section 6.11): original calibration seeds 8300–8319 and held-out 9100–9159 (`configs/r2/frozen`, commits d15b74c, d7f6a40, analysis 4e4435d); Amendment 1 calibration seeds 8400–8419 and held-out 9200–9259 (`configs/r2a/frozen`, `docs/R2_AMENDMENT_1.md`, commit f0f2ff9); commands `python -m experiments.calibrate_r2`, `run_r2 --mode eval`, `analyze_r2`, and the same with `calibrate_r2a` and `--amended`; outputs in `revision/analysis/R2/main` and `revision/analysis/R2/amended`. No DOI or public release exists yet **[UNRESOLVED]**. Re-running reproduces results up to floating-point round-off (a replay of the v0.7 held-out data matched all decision-bearing fields exactly and derived diagnostics to within 3.6e-15).
+Code and reproducibility artifacts are available in the project repository: https://github.com/SanthoshAshish/TCCE-R/tree/revision-v0.8 (branch revision-v0.8). Code: `tccer/`, `experiments/`; calibration seeds 8000–8019, development seeds 8100–8119, held-out seeds 9000–9059. Pass-1 calibration ran at commit 047d7c7, Amendment 1 and the frozen configuration are commit e16a208 (`configs/v0.8/frozen`, manifest of 78 entries; pass 1 kept in `configs/v0.8/frozen_pass1`); the held-out evaluation ran once at e16a208 on a clean tracked tree (`results/v0.8/E2/eval/run_info.json`). Commands: `python -m experiments.calibrate_v08`; `python -m experiments.amend_calibration_v08`; `python -m experiments.run_v08 --mode eval`; `python -m experiments.validate_predictor_v08` (E1, development seeds); `python -m experiments.analyze_v08` (analysis, outputs in `revision/analysis/E2/` with input hashes in `run_manifest.json`); `python paper/tools/build_manuscript_v08.py`; `python paper/tools/check_claims_v08.py`. The earlier v0.7 evidence is preserved (`results/v0.7`, a read-only backup with SHA-256 checksums, and `configs/v0.7`). Environment: Python 3.11.9, numpy 2.3.4, scipy 1.17.1, pandas 2.3.3. Revision 2 (Section 6.11): original calibration seeds 8300–8319 and held-out 9100–9159 (`configs/r2/frozen`, commits d15b74c, d7f6a40, analysis 4e4435d); Amendment 1 calibration seeds 8400–8419 and held-out 9200–9259 (`configs/r2a/frozen`, `docs/R2_AMENDMENT_1.md`, commit f0f2ff9); commands `python -m experiments.calibrate_r2`, `run_r2 --mode eval`, `analyze_r2`, and the same with `calibrate_r2a` and `--amended`; outputs in `revision/analysis/R2/main` and `revision/analysis/R2/amended`. No DOI or archived release (for example on Zenodo) exists yet **[UNRESOLVED]**. Re-running reproduces results up to floating-point round-off (a replay of the v0.7 held-out data matched all decision-bearing fields exactly and derived diagnostics to within 3.6e-15).
 
 ## 10. Conclusion
 
 In six simulated conditions, a predictive, risk-filtered rewiring controller (B8) had lower consensus error than a reactive threshold in every condition (beyond the 0.02 margin in three), but a front-loaded schedule (A7, and the exact-budget A7M) had lower error than B8 in every point estimate, and a hybrid that front-loads before adapting (H1) only matched A7. The bridge and volatility signals, the adaptive threshold and the counterfactual feedback showed no measurable benefit, and accumulation into a debt gave only small, confounded differences; the predictive selector is associated with B8's gain over A1, but the selector's mechanism and its tension with a development-seed validation are unresolved. The results are bounded by a small simulated scope, a centralised controller, mean-count calibration (with a very low threshold in S2, M = 6) and 60 seeds per condition. A causality-aware debt variant added in Revision 2 (C1) did not beat the front-loaded schedules in any condition under budget-matched calibration and was mixed against B8; most of the planned Revision 2 algorithm and theory remain unimplemented (Section 8). We therefore present a framework and a controlled evaluation, not evidence of superiority, together with the protocol and diagnostics needed to audit and extend it.
 
-**Funding:** [TO BE COMPLETED]
+**Funding:** [AUTHOR CONFIRMATION REQUIRED: state the funding source(s), grant number(s), or “This research received no specific grant from any funding agency in the public, commercial, or not-for-profit sectors,” if accurate.]
 
-**Declaration of competing interests:** [TO BE COMPLETED — see the Declaration of interests form at the end of the document]
+**Declaration of competing interests:** [AUTHOR CONFIRMATION REQUIRED: confirm whether any financial or personal relationships could have influenced the work; use the target journal’s required wording. See also the Declaration of interests form at the end of the document.]
 
-**CRediT authorship contribution statement:** [TO BE COMPLETED by the authors]
+**CRediT authorship contribution statement:** [AUTHOR CONFIRMATION REQUIRED: assign each CRediT role to the appropriate author(s), with every author’s approval.]
 
 **Ethics approval and consent:** Not applicable (simulation only; no human or animal data).
 
-**Data availability statement:** Per-run logs and analysis outputs: `results/v0.8/E2/eval/` (git-ignored; hashes in `revision/analysis/E2/run_manifest.json`), `revision/analysis/E2/`; v0.7: `results/v0.7/`. [Repository URL / DOI — TO BE COMPLETED]
+**Data availability statement:** The code, frozen configurations, analysis scripts, audit materials and analysis manifests are available at https://github.com/SanthoshAshish/TCCE-R/tree/revision-v0.8. Raw per-run evaluation logs are not included in the tracked repository; they may be made available by the authors on reasonable request or deposited in a suitable repository before submission, subject to the target journal’s policy. No DOI is currently assigned.
 
-**Code availability:** `tccer/`, `experiments/`, `paper/tools/` in the project repository, commit e16a208 for the evaluation. [Public link — TO BE COMPLETED]
+**Code availability:** Source code, experiment scripts and manuscript tools are available at https://github.com/SanthoshAshish/TCCE-R/tree/revision-v0.8. The reported v0.8 held-out evaluation corresponds to commit e16a208; the Revision 2 original evaluation ran at commit d7f6a40 and the amended evaluation at commit 14b7359; the branch also contains the manuscript and analysis/audit updates.
 
-**Declaration of generative AI and AI-assisted technologies in the manuscript preparation process:** During the preparation of this work the author(s) used an AI model (Claude, Anthropic) in order to assist with drafting, code and analysis scripting. [TO BE COMPLETED/CONFIRMED BY THE AUTHORS: exact tool and version, the statement that the author(s) reviewed and edited the content and take full responsibility for it, and the journal's current wording.] The figures are produced by scripts from result files; no image was generated by a generative-AI image tool.
+**Declaration of generative AI and AI-assisted technologies in the manuscript preparation process:** The current draft records use of Claude (Anthropic) to assist with drafting, code and analysis scripting. [AUTHOR CONFIRMATION REQUIRED before submission: verify that this description is accurate, identify the model/version if required by the journal, confirm that all authors reviewed and edited the content and take responsibility for it, and adapt the statement to the journal’s policy.] The figures are produced by scripts from result files; no figure was generated with a generative-AI image tool.
 
-**Acknowledgements:** [TO BE COMPLETED]
+**Acknowledgements:** [AUTHOR CONFIRMATION REQUIRED: add acknowledgements if applicable, or remove this heading if none are needed and the journal permits.]
 
 ## References
 
