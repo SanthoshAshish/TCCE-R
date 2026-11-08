@@ -1,0 +1,1 @@
+**Table 3** Development-stage adoption rules (seeds 8520–8539, four cells). Mean ΔE is the second-named variant minus the first-named; a rule passes only if mean ΔE is at most the threshold, ΔE ≤ 0 in at least 3 of 4 cells, and mean z ≤ −1.5. No rule passed.

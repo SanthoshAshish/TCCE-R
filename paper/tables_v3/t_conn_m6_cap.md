@@ -1,0 +1,1 @@
+**Table 7** Secondary measures, M = 6 (means over 150 seeds; descriptive, no tests). Disconnected share: fraction of epochs with a disconnected live graph; longest disconnection and anchored recovery in epochs; overhead: pending link-epochs plus live-link releases.

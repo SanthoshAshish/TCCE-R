@@ -1,0 +1,1 @@
+**Table 4** Mean consensus error E (SD over 150 seeds) per arm and condition; lower is better. Static has no mutations; B8 was not calibrated for S2, M = 6; the rollout variant was run in S1 and S2 only.

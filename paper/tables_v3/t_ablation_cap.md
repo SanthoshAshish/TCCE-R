@@ -1,0 +1,1 @@
+**Table 6** Ablations relative to COCRO-M (ΔE = variant minus COCRO-M; positive: the variant has higher error), mean [95% bootstrap CI]. * Holm p < 0.05 within the 36-test family; ** also |ΔE| ≥ 0.01.
