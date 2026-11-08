@@ -102,6 +102,10 @@ The protocol (`docs/PROTOCOL_R3.md`), the research questions, the primary compar
 
 The choice between the rollout and the selection-only variants was fixed before the held-out run by a mechanical rule on the development ablation (seeds 8520–8539): a component was to be adopted only if all of the following held across the four development cells: the mean paired ΔE was at most a threshold (−0.010 for the rollout timing, −0.005 for the full-horizon rerank and the reservation variants), ΔE was non-positive in at least three of the four cells, and the mean of ΔE divided by its standard error was at most −1.5. Table 3 shows the outcome. No rule passed, so the simpler variant was kept and the final algorithm is `cocro_m` (final decision: {{V:step2_final}}).
 
+Fig. 2 shows the same comparison graphically.
+
+![Fig. 2. Development-stage adoption rules: mean paired ΔE per rule (bars) against the adoption threshold (orange marks). No rule reaches its threshold.](figures_v3/fig_step2.png)
+
 {{F:t_step2_cap}}
 
 {{F:t_step2}}
@@ -114,27 +118,31 @@ Tier A (the six random-geometric-graph conditions above) was run in full. Tier B
 
 ### 6.1. Overall error
 
-Table 4 gives mean E per arm and condition and Fig. 2 the corresponding intervals. COCRO-M had the lowest mean error among the non-exploratory arms in every condition.
+Table 4 gives mean E per arm and condition and Fig. 3 the corresponding intervals. COCRO-M had the lowest mean error among the non-exploratory arms in every condition.
 
 {{F:t_means_cap}}
 
 {{F:t_means}}
 
-![Fig. 2. Mean consensus error by arm and condition with 95% intervals over 150 seeds; the dashed line is Static. COCRO + rollout was run in S1 and S2 only.](figures_v3/fig_E_by_cell.png)
+![Fig. 3. Mean consensus error by arm and condition with 95% intervals over 150 seeds; the dashed line is Static. COCRO + rollout was run in S1 and S2 only.](figures_v3/fig_E_by_cell.png)
 
 ### 6.2. Primary comparisons
 
-COCRO-M had lower mean error than the comparator in all {{V:n_primary}} primary tests (Holm p ≤ {{V:primary_max_holm}}). Against A7M the paired differences were {{V:rng_A7M}} (ΔE, COCRO-M minus comparator), against B8 {{V:rng_B8}} and against C1 {{V:rng_C1}}. Of the 17 differences, {{V:m001_all}} exceeded the 0.01 margin and {{V:m002_all}} the 0.02 margin. Against A7M the margin 0.01 was exceeded in {{V:m001_A7M}} of 6 conditions and the margin 0.02 in {{V:m002_A7M}}; in the two 80-node conditions the difference was statistically detectable but below the margin. Relative to A7M the reduction in mean E was {{V:rel_A7M}} ({{V:rel_A7M_s1s2}} in the 40-node conditions). Table 5 and Fig. 3 give the differences with intervals; the full test table (dz, both verdicts) is in Appendix A.
+COCRO-M had lower mean error than the comparator in all {{V:n_primary}} primary tests (Holm p ≤ {{V:primary_max_holm}}). Against A7M the paired differences were {{V:rng_A7M}} (ΔE, COCRO-M minus comparator), against B8 {{V:rng_B8}} and against C1 {{V:rng_C1}}. Of the 17 differences, {{V:m001_all}} exceeded the 0.01 margin and {{V:m002_all}} the 0.02 margin. Against A7M the margin 0.01 was exceeded in {{V:m001_A7M}} of 6 conditions and the margin 0.02 in {{V:m002_A7M}}; in the two 80-node conditions the difference was statistically detectable but below the margin. Relative to A7M the reduction in mean E was {{V:rel_A7M}} ({{V:rel_A7M_s1s2}} in the 40-node conditions). Table 5 and Fig. 5 give the differences with intervals; Fig. 4 shows the per-seed distribution of the differences, which is wide: COCRO-M is lower on average, but not on every seed; the full test table (dz, both verdicts) is in Appendix A.
+
+![Fig. 4. Per-seed paired differences (COCRO-M minus comparator) by condition; violins show the distribution over 150 seeds, with the median and range marked.](figures_v3/fig_perseed.png)
 
 {{F:t_primary_cap}}
 
 {{F:t_primary}}
 
-![Fig. 3. Paired differences in mean E (COCRO-M minus comparator) with 95% bootstrap intervals; the band is the 0.01 margin.](figures_v3/fig_primary_forest.png)
+![Fig. 5. Paired differences in mean E (COCRO-M minus comparator) with 95% bootstrap intervals; the band is the 0.01 margin.](figures_v3/fig_primary_forest.png)
 
 ### 6.3. Component ablations
 
 Table 6 gives the ablation differences relative to COCRO-M (positive: the ablated variant has higher error). Removing the multi-candidate removal set (k1) or replacing the spectral with the Laplacian surrogate (lap) increased error in {{V:abl_k1_worse}} and {{V:abl_lap_worse}} of 6 conditions respectively (Holm p < 0.05); the increase exceeded 0.01 in {{V:abl_k1_beyond}} and {{V:abl_lap_beyond}} conditions. Posterior sampling (plug) and the propagation term (nb1) showed no Holm-significant effect in any condition (ranges {{V:abl_plug_rng}} and {{V:abl_nb1_rng}}), and a single scenario (s1) a small, significant increase in {{V:abl_s1_sig}} conditions (range {{V:abl_s1_rng}}). The full-horizon rerank did not improve on COCRO-M ({{V:abl_mfg_rng}}; no significant effect). The data therefore support the candidate breadth and the spectral surrogate as useful components and do **not** support the propagation term or posterior sampling as measurably useful in this environment; they remain part of the model for generality, not for demonstrated benefit.
+
+![Fig. 6. Ablations relative to COCRO-M: paired ΔE with 95% bootstrap intervals (blue: Holm p < 0.05; grey: not significant); the band is the 0.01 margin.](figures_v3/fig_ablation.png)
 
 {{F:t_ablation_cap}}
 
@@ -148,6 +156,14 @@ The rollout variant was run in S1 and S2 for cost reasons and is exploratory. Ag
 
 COCRO-M's gains in error did not come with comparable gains in connectivity. Tables 7 and 8 give the disconnected share, longest disconnection, anchored recovery, worst-case E, overhead and realised mutations. COCRO-M had a slightly smaller disconnected share than A7M in {{V:disc_cocro_m_vs_A7M}} conditions, but the difference is small, and the predictive controller B8 had a smaller disconnected share and shorter recovery than COCRO-M in all five conditions in which it was run, at a higher error. The debt controller C1 and the rollout variant were also better than COCRO-M on disconnection or recovery in several conditions (see the tables). COCRO-M therefore resembles the front-loaded schedule in these measures and does not match the more conservative controllers. COCRO-M realised exactly M mutations in all conditions (budget utilisation 100%), whereas B8 and C1 left a small part of the budget unspent.
 
+Figs. 7–9 show the same measures graphically.
+
+![Fig. 7. Disconnected share, longest disconnection and anchored recovery by arm and condition (means over 150 seeds; B8 absent in S2, M = 6; the rollout variant run in S1 and S2 only).](figures_v3/fig_connectivity.png)
+
+![Fig. 8. Mean E against realised mutations per run (left) and against reconfiguration overhead (right); one point per arm and condition.](figures_v3/fig_tradeoff.png)
+
+![Fig. 9. Worst-case E (mean over seeds of the per-run maximum) by arm and condition.](figures_v3/fig_worst.png)
+
 {{F:t_conn_m6_cap}}
 
 {{F:t_conn_m6}}
@@ -158,17 +174,21 @@ COCRO-M's gains in error did not come with comparable gains in connectivity. Tab
 
 ### 6.6. Cost and per-mutation efficiency
 
-Table 9 reports decision time. COCRO-M's per-epoch decision time was {{V:cocro_m_vs_A7M_ms}} times that of A7M and below B8 and C1 in the conditions where those were run. Times were measured with parallel workers on one machine and under load, so they are indicative only. Table 10 gives the error reduction per mutation relative to Static; COCRO-M had the highest value in all six conditions. Fig. 4 shows error against decision time.
+Table 9 reports decision time. COCRO-M's per-epoch decision time was {{V:cocro_m_vs_A7M_ms}} times that of A7M and below B8 and C1 in the conditions where those were run. Times were measured with parallel workers on one machine and under load, so they are indicative only. Table 10 gives the error reduction per mutation relative to Static; COCRO-M had the highest value in all six conditions. Fig. 10 shows the efficiency, Fig. 11 error against decision time and Fig. 12 decision time in all conditions.
 
 {{F:t_cost_cap}}
 
 {{F:t_cost}}
 
+![Fig. 10. Error reduction per realised mutation relative to Static, by arm and condition.](figures_v3/fig_efficiency.png)
+
 {{F:t_eff_cap}}
 
 {{F:t_eff}}
 
-![Fig. 4. Mean E against decision time per epoch (log scale), M = 6.](figures_v3/fig_cost_error.png)
+![Fig. 11. Mean E against decision time per epoch (log scale), M = 6.](figures_v3/fig_cost_error.png)
+
+![Fig. 12. Decision time per epoch (log scale) by arm and condition; measured under load, indicative only.](figures_v3/fig_time.png)
 
 ### 6.7. Earlier studies (context)
 
