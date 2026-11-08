@@ -206,6 +206,7 @@ def is_wide(nc, longest):
 
 def switch(landscape):
     global in_land
+    return                                   # V3: portrait only (wide tables use a smaller font)
     sec = doc.add_section(WD_SECTION.NEW_PAGE)
     setup_section(sec, landscape)
     in_land = landscape
@@ -288,7 +289,7 @@ while i < len(lines):
         nc = len(rows[0])
         if is_wide(nc, max((len(c) for r in rows for c in r[2:]), default=0)) and not in_land:
             switch(True)
-        fs = 10.5 if nc <= 3 else 9.5 if nc <= 6 else (9 if in_land else 8.5)
+        fs = 10.5 if nc <= 3 else 9.5 if nc <= 5 else 8.5 if nc <= 7 else 7.5
         t = doc.add_table(rows=len(rows), cols=nc)
         t.autofit = True
         table_rules(t)
@@ -301,7 +302,10 @@ while i < len(lines):
                 runs(c.paragraphs[0], row[ci] if ci < len(row) else "", size=fs, bold=(ri == 0))
                 fmt_par(c.paragraphs[0], WD_ALIGN_PARAGRAPH.LEFT, 1.0, 1, keep_next=(ri < 2))
         sp = doc.add_paragraph()
-        fmt_par(sp, WD_ALIGN_PARAGRAPH.LEFT, 1.0, 6)
+        fmt_par(sp, WD_ALIGN_PARAGRAPH.LEFT, 1.0, 0)
+        sp.paragraph_format.space_after = Pt(0)
+        r_ = sp.add_run(" ")
+        r_.font.size = Pt(4)
         nxt = i + 1
         while nxt < len(lines) and not lines[nxt].strip():
             nxt += 1
