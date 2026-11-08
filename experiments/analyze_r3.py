@@ -73,9 +73,10 @@ def load_and_validate(eval_dir, tier, seeds, cells, smoke=False):
 
 def per_seed(df, timing):
     rows = []
+    statics = {(c, s): g for (c, a, s), g in df[df.arm == "A0"].groupby(["cell", "arm", "seed"])}      # precomputed: same lookup, no repeated full-table filtering
     for (cell, arm, seed), g in df.groupby(["cell", "arm", "seed"]):
-        static = df[(df.cell == cell) & (df.arm == "A0") & (df.seed == seed)]
-        r = run_metrics(g, static if len(static) else g)
+        static = statics.get((cell, seed))
+        r = run_metrics(g, static if static is not None else g)
         r.update(cell=cell, arm=arm, seed=seed, M=int(cell.rsplit("_M", 1)[1]))
         rows.append(r)
     ps = pd.DataFrame(rows).merge(timing, on=["cell", "arm", "seed"], how="left")

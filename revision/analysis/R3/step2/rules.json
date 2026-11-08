@@ -1,0 +1,185 @@
+{
+ "rules": {
+  "R-sel:m-family (cocro_mfg vs cocro_m)": {
+   "mean_d": -0.003968257991784976,
+   "cells_nonpositive": 4,
+   "n_cells": 4,
+   "mean_z": -0.7410334739183952,
+   "cond_a": false,
+   "cond_b": true,
+   "cond_c": false,
+   "adopt": false,
+   "per_cell": {
+    "S1_M3": [
+     -0.0012,
+     0.0021
+    ],
+    "S1_M6": [
+     -0.0073,
+     0.005
+    ],
+    "S2_M3": [
+     -0.0014,
+     0.0053
+    ],
+    "S2_M6": [
+     -0.0059,
+     0.0091
+    ]
+   }
+  },
+  "R-sel:roll-family (cocro_fg vs cocro)": {
+   "mean_d": 0.0010789722482054441,
+   "cells_nonpositive": 1,
+   "n_cells": 4,
+   "mean_z": 0.02638204630456592,
+   "cond_a": false,
+   "cond_b": false,
+   "cond_c": false,
+   "adopt": false,
+   "per_cell": {
+    "S1_M3": [
+     -0.0092,
+     0.0053
+    ],
+    "S1_M6": [
+     0.0024,
+     0.0055
+    ],
+    "S2_M3": [
+     0.0017,
+     0.0053
+    ],
+    "S2_M6": [
+     0.0094,
+     0.0086
+    ]
+   }
+  },
+  "R-roll:plain (cocro vs cocro_m)": {
+   "mean_d": -0.0011101891126230252,
+   "cells_nonpositive": 3,
+   "n_cells": 4,
+   "mean_z": -0.10285829152486581,
+   "cond_a": false,
+   "cond_b": true,
+   "cond_c": false,
+   "adopt": false,
+   "per_cell": {
+    "S1_M3": [
+     0.0112,
+     0.0072
+    ],
+    "S1_M6": [
+     -0.0029,
+     0.005
+    ],
+    "S2_M3": [
+     -0.0036,
+     0.0066
+    ],
+    "S2_M6": [
+     -0.0091,
+     0.0109
+    ]
+   }
+  },
+  "R-roll:fg (cocro_fg vs cocro_mfg)": {
+   "mean_d": 0.003937041127367393,
+   "cells_nonpositive": 1,
+   "n_cells": 4,
+   "mean_z": 0.5458515317831665,
+   "cond_a": false,
+   "cond_b": false,
+   "cond_c": false,
+   "adopt": false,
+   "per_cell": {
+    "S1_M3": [
+     0.0032,
+     0.0081
+    ],
+    "S1_M6": [
+     0.0068,
+     0.0072
+    ],
+    "S2_M3": [
+     -0.0005,
+     0.005
+    ],
+    "S2_M6": [
+     0.0062,
+     0.0066
+    ]
+   }
+  },
+  "R-res:plain (cocro_r vs cocro)": {
+   "mean_d": 0.001916145323211561,
+   "cells_nonpositive": 1,
+   "n_cells": 4,
+   "mean_z": 0.15983984431278903,
+   "cond_a": false,
+   "cond_b": false,
+   "cond_c": false,
+   "adopt": false,
+   "per_cell": {
+    "S1_M3": [
+     0.0006,
+     0.0009
+    ],
+    "S1_M6": [
+     -0.0027,
+     0.0017
+    ],
+    "S2_M3": [
+     0.0035,
+     0.0054
+    ],
+    "S2_M6": [
+     0.0063,
+     0.0068
+    ]
+   }
+  },
+  "R-res:fg (cocro_fgr vs cocro_fg)": {
+   "mean_d": -0.0030918836750895963,
+   "cells_nonpositive": 3,
+   "n_cells": 4,
+   "mean_z": -0.30262559416427975,
+   "cond_a": false,
+   "cond_b": true,
+   "cond_c": false,
+   "adopt": false,
+   "per_cell": {
+    "S1_M3": [
+     0.0028,
+     0.0022
+    ],
+    "S1_M6": [
+     -0.0009,
+     0.0017
+    ],
+    "S2_M3": [
+     -0.0052,
+     0.0066
+    ],
+    "S2_M6": [
+     -0.009,
+     0.0078
+    ]
+   }
+  }
+ },
+ "decision": {
+  "rollout_adopted": false,
+  "family": "selection-only",
+  "reservation_adopted": false,
+  "final": "cocro_m"
+ },
+ "thresholds": {
+  "sel": -0.005,
+  "roll": -0.01,
+  "res": -0.005
+ },
+ "seeds": "8520-8539",
+ "seconds": 642
+}
